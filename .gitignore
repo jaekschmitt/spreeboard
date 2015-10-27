@@ -1,0 +1,5 @@
+node_modules
+client/public/vendor
+logs/*.txt
+.DS_Store
+.sass-cache/*
