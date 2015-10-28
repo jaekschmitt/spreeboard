@@ -13,6 +13,10 @@ global.appRoot = path.dirname(require.main.filename);
 
 require('./config/express')(app);
 
+// register application routes
+
+require('./config/routes')(app);
+
 // start our server
 
 app.listen(port, function() {

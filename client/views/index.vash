@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spreeboard</title>
+</head>
+<body>
+
+    <h2>Hello World!</h2>
+
+    <script type="text/javascript" src="vendor/angular/angular.min.js"></script>
+</body>
+</html>
