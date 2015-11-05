@@ -4,9 +4,10 @@ var express = require('express'),
     session = require('express-session'),
     methodOverride = require('method-override'),    
     multer = require('multer'),
+    flash = require('connect-flash'),
     path = require('path');    
 
-module.exports = function(app) {
+module.exports = function(app, passport) {
 
     // register our parsers
 
@@ -23,6 +24,8 @@ module.exports = function(app) {
         cookie: { maxAge: 3600000 }
     }));
 
+    app.use(flash());
+
     // view registration
 
     var clientRoot = path.join(global.appRoot,'client');
@@ -35,6 +38,10 @@ module.exports = function(app) {
     app.use(express.static(clientRoot));
     app.use(express.static(path.join(clientRoot, 'app')));
     app.use(express.static(path.join(clientRoot, 'public')));
+
+    // passport middleware setup    
+    app.use(passport.initialize());
+    app.use(passport.session());    
 
     // set up cors middleware
 

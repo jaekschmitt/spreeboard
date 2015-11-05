@@ -1,21 +1,30 @@
 var logger = require('./config/logger'),
     express = require('express'),
+    passport = require('passport'),
     path = require('path');
     
 var app = express(),
-    port = process.env.PORT || 8080;
+    port = process.env.PORT || 8888;
+
+// create globals
+
+global.__base = __dirname + "/";
 
 // expose root of application
 
 global.appRoot = path.dirname(require.main.filename);
 
-// bootstrap application settings
+// connect to our mongo database
+require('./config/mongoose-db');
 
-require('./config/express')(app);
+// bootstrap passport config
+require('./config/passport')(passport);
+
+// bootstrap application settings
+require('./config/express')(app, passport);
 
 // register application routes
-
-require('./config/routes')(app);
+require('./config/routes')(app, passport);
 
 // start our server
 

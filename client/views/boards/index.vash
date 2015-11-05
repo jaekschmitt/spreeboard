@@ -1,0 +1,13 @@
+@html.extend('layouts/base-layout', function(model) {
+    @html.block('content', function(model) {
+    
+        <div class="list-group col-sm-8 col-sm-offset-2">
+
+        @model.boards.forEach(function(b) {
+            <a href="boards/@b.id" class="list-group-item">@b.name</a>
+        })
+
+        </div>
+
+    })
+})
