@@ -9,5 +9,13 @@
 
         </div>
 
+        @if(model.user.roles.indexOf('admin') > 0) {
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <a href="/boards/new" class="btn btn-lg btn-default">Add Board</a>
+            </div>
+        </div>
+        }
+
     })
 })

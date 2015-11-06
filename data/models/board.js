@@ -6,10 +6,13 @@ var boardSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
+    project: {},
     
     created_at: {
         type: Date,
-        required: true
+        required: true,
+        default: new Date()
     },
 
     updated_at: {

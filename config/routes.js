@@ -5,7 +5,8 @@ var boards = controllers.boards,
     users = controllers.users;
 
 var authorization = require('./middlewares/authorization'),
-    authed = authorization.requiresLogin;
+    authed = authorization.requiresLogin,
+    roles = authorization.requiresRoles;
 
 module.exports = function(app, passport) {
 
@@ -30,11 +31,12 @@ module.exports = function(app, passport) {
         failureRedirect: '/login'
     }), users.authCallback);
 
-    // Boards
-app.get('/boards/new', boards.new);
+    // Boards    
+
+    app.get('/boards/new', authed, roles('admin'), boards.new);
     app.get('/boards/:id', boards.show);
-    app.get('/boards', boards.list);
-    
+    app.get('/boards', authed, boards.list);
+    app.post('/boards', authed, boards.create);
     app.put('/boards/:id', boards.update);
     app.delete('/boards/:id', boards.delete);
 

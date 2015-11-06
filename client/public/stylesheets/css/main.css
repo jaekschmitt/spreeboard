@@ -1,4 +1,10 @@
+i.fa {
+  line-height: 1.5; }
+
 #TopMenu {
   margin-bottom: 20px; }
+
+#NewBoard .dev-stages {
+  margin-bottom: 3rem; }
 
 /*# sourceMappingURL=main.css.map */

@@ -25,6 +25,10 @@ function(accessToken, refreshToken, profile, done) {
                 provider: 'gitlab',
                 gitlab: profile._json
             });
+
+            // user is a developer, add the role
+            user.roles.push('developer');
+
             user.save(function (err) {
                 if (err) console.log(err);
                 return done(err, user);
