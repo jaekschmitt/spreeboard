@@ -44,7 +44,7 @@
 
                 <div class="row dev-stages">
                     <div class="col-lg-10">
-                        <input class="form-control" type="text" placeholder="Enter stages of development" data-bind="value: vertical">
+                        <input class="form-control" type="text" placeholder="Enter stages of development" data-bind="value: vertical, valueUpdate: 'afterkeydown', enterKey: add">
                     </div>                    
                     <div class="col-lg-2">
                         <button class="btn btn-primary" data-bind="click: add">Add</button>
