@@ -14,6 +14,8 @@
         this.remove = removeVertical;
 
         function addVertical() {            
+            if(!self.vertical().length) return;
+
             self.verticals.push(self.vertical());
             self.vertical('');
         }

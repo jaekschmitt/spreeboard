@@ -2,7 +2,8 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     session = require('express-session'),
-    cookieSession = require('cookie-session'),
+    MongoStore = require('connect-mongo')(session),
+    mongoose = require('mongoose'),
     methodOverride = require('method-override'),
     multer = require('multer'),
     flash = require('connect-flash'),
@@ -22,7 +23,9 @@ module.exports = function(app, passport) {
         secret: 'ilovescotchscotchyscotchscotch',
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 3600000 }
+        store: new MongoStore({
+            mongooseConnection: mongoose.connection
+        })
     }));
 
     app.use(flash());
