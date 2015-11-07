@@ -22,10 +22,7 @@
 <body>
 
     @html.include('helpers/top-menu')
-    
-    <div class="container">
-        @html.block('content')
-    </div>
+    @html.block('content')    
     
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/vendor/tether/dist/js/tether.min.js" type="text/javascript"></script>

@@ -1,62 +1,65 @@
 @html.extend('layouts/base-layout', function(model) {
     @html.block('content', function(model) {
 
-    <div id="NewBoard" class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            
-            <form action="/boards" method="post" role="form">
+    <div id="NewBoard" class="container">
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
                 
-                <div class="form-group">
-                    <label for="name" class="control-label">Name</label>
-                    <input type="text" class="form-control" name="name" value="@model.name">
-                </div>
-
-                <div class="form-group">
-                    <label for="project" class="control-label">Project</label>
-                    <select name="project" class="form-control c-select">
-                        <option value="0" selected disabled>Please select a project...</option>
-                        @model.projects.forEach(function(p) {
-                        <option value="@p.id">@p.name</option>
-                        })
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="control-label">Stages</label>                    
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <span>Backlog</span>
-                            <i class="pull-right fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Backlog is a required stage. It will contain all unstarted tasks."></i>                            
-                        </li>
+                <form action="/boards" method="post" role="form">
                     
-                        <!-- ko foreach: verticals -->
-                        <li class="list-group-item">
-                            <span data-bind="text: $data"></span>
-                            <a class="pull-right text-danger" href="" data-bind="click: remove.bind($data)"><i class="fa fa-remove"></i></a>
-                        </li>
-                        <!-- /ko -->
-                    </ul>
-                                        
-                    <!-- ko foreach: verticals -->
-                    <input type="hidden" data-bind="attr: { name: 'stages[' + $index() + ']', value: $data }">
-                    <!-- /ko -->
-                </div>
-
-                <div class="row dev-stages">
-                    <div class="col-lg-10">
-                        <input class="form-control" type="text" placeholder="Enter stages of development" data-bind="value: vertical, valueUpdate: 'afterkeydown', enterKey: add">
-                    </div>                    
-                    <div class="col-lg-2">
-                        <button class="btn btn-primary" data-bind="click: add">Add</button>
+                    <div class="form-group">
+                        <label for="name" class="control-label">Name</label>
+                        <input type="text" class="form-control" name="name" value="@model.name">
                     </div>
-                </div>
 
-                <div class="form-group text-center">
-                    <button class="btn btn-lg btn-default" type="submit">Create Board</button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <label for="project" class="control-label">Project</label>
+                        <select name="project" class="form-control c-select">
+                            <option value="0" selected disabled>Please select a project...</option>
+                            @model.projects.forEach(function(p) {
+                            <option value="@p.id">@p.name</option>
+                            })
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label">Stages</label>                    
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <span>Backlog</span>
+                                <i class="pull-right fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Backlog is a required stage. It will contain all unstarted tasks."></i>                            
+                            </li>
+                        
+                            <!-- ko foreach: verticals -->
+                            <li class="list-group-item">
+                                <span data-bind="text: $data"></span>
+                                <a class="pull-right text-danger" href="" data-bind="click: remove.bind($data)"><i class="fa fa-remove"></i></a>
+                            </li>
+                            <!-- /ko -->
+                        </ul>
+                                            
+                        <!-- ko foreach: verticals -->
+                        <input type="hidden" data-bind="attr: { name: 'stages[' + $index() + ']', value: $data }">
+                        <!-- /ko -->
+                    </div>
 
+                    <div class="row dev-stages">
+                        <div class="col-lg-10">
+                            <input class="form-control" type="text" placeholder="Enter stages of development" data-bind="value: vertical, valueUpdate: 'afterkeydown', enterKey: add">
+                        </div>                    
+                        <div class="col-lg-2">
+                            <button class="btn btn-primary" data-bind="click: add">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-lg btn-default" type="submit">Create Board</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        
     </div>  
 
     })

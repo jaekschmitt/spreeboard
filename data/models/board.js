@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var boardSchema = new mongoose.Schema({
+var BoardSchema = new mongoose.Schema({
 
     name: {
         type: String,
@@ -8,7 +8,13 @@ var boardSchema = new mongoose.Schema({
     },
 
     project: {},
-    
+    stages: {
+        type: Array,
+        required: true
+    },
+
+    created_by: {},
+
     created_at: {
         type: Date,
         required: true,
@@ -21,4 +27,22 @@ var boardSchema = new mongoose.Schema({
 
 });
 
-mongoose.model('Board', boardSchema);
+/**
+* Virtuals
+*/
+
+BoardSchema
+    .virtual('labelName')
+    .get(function() {
+        return '(b) ' + this.name.toLowerCase().replace(' ', '-');
+    });
+
+/**
+* Schema Methods
+*/
+
+BoardSchema.methods = {    
+
+};
+
+mongoose.model('Board', BoardSchema);

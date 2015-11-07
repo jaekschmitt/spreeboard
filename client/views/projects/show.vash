@@ -1,0 +1,9 @@
+@html.extend('layouts/base-layout', function(model) {
+    @html.block('content', function(model) {
+
+    <div id="Project" class="container">
+
+    </div>
+
+    })  
+})

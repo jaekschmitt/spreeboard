@@ -1,7 +1,62 @@
 @html.extend('layouts/base-layout', function(model) {
     @html.block('content', function(model) {
 
-    
+    <div class="board">
+            
+        <div class="collapse board-filters">
+            <div class="bg-inverse p-a">
+                <h4>Filters</h4>
+                <span class="text-muted">Here is were you will be able to filter your shit...eventually.</span>
+            </div>
+        </div>
+        <nav class="navbar navbar-nav board-actions">
+            <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".board-filters">&#9776; @model.board.name</button>
+            <div class="dropdown pull-right">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="add-dropdown" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-plus text-success"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="add-dropdown">
+                    <a class="dropdown-item" href="#">Project</a>
+                    <a class="dropdown-item" href="#">Task</a>
+                </div>
+            </div>
+        </nav>
 
-    })  
+    
+        <div class="stages">
+        
+        @model.stages.forEach(function(s) {
+            <div class="stage">
+                <h4 class="stage-header">@s.name</h4>
+                
+                <div class="stage-issues">
+                
+                @s.issues.forEach(function(i) {
+                    <div class="stage-issue card">
+                        <div class="card-block header-block">
+                            <h4 class="card-title">@i.title</h4>
+                        </div>
+                        <div class="card-block content-block">
+                            <p class="card-text">@(i.description.length > 200 ? i.description.substring(0, 200) + '...' : i.description)</p>
+                            <a class="card-link text-danger">delete</a>
+                            <a class="card-link">edit</a>
+                        </div>
+                    </div>
+                })
+                
+                </div>
+
+            </div>
+        })    
+        
+        </div>
+
+    </div>
+
+    })
+
+    @html.block('scripts', function() {
+        <script src="/scripts/boards/stage-layout.js" type="text/javascript"></script>
+    })
+
 })

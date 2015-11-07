@@ -3,3 +3,56 @@
         margin-bottom: 3rem;
     }
 }
+
+.board {
+    margin-top: -20px; // reversing top navigation margin    
+
+    &-actions {
+        border-bottom: 1px solid $bg-muted;
+
+        h4 {
+            display: inline-block;
+        }
+    }
+
+    .stages {        
+        display: -webkit-flex;        
+        display: flex;
+        height: 100%;        
+
+        .stage {
+            flex: 1;
+            display: inline-block;                
+
+            border-right: 1px solid $bg-muted;
+            
+            &:last-child {
+                border-right: none;
+            }
+
+            .stage-header {                
+                padding: 10px;
+                margin: 0;
+                
+                text-align: center;
+                text-transform: capitalize;
+
+                background-color: $bg-light;
+            }
+
+            .stage-issues {
+                padding: 15px;                                        
+
+                .stage-issue {
+                    .header-block {
+                        padding-bottom: 0;
+                    }
+
+                    .content-block {
+                        padding-top: 0;
+                    }
+                }
+            }            
+        }
+    }
+}

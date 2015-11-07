@@ -1,21 +1,25 @@
 @html.extend('layouts/base-layout', function(model) {
     @html.block('content', function(model) {
+
+        <div class="container">        
     
-        <div class="list-group col-sm-8 col-sm-offset-2">
+            <div class="list-group col-sm-8 col-sm-offset-2">
 
-        @model.boards.forEach(function(b) {
-            <a href="boards/@b.id" class="list-group-item">@b.name</a>
-        })
+            @model.boards.forEach(function(b) {
+                <a href="boards/@b.id" class="list-group-item">@b.name</a>
+            })
 
-        </div>
-
-        @if(model.user.roles.indexOf('admin') > 0) {
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3 text-center">
-                <a href="/boards/new" class="btn btn-lg btn-default">Add Board</a>
             </div>
-        </div>
-        }
 
+            @if(model.user.roles.indexOf('admin') > 0) {
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 text-center">
+                    <a href="/boards/new" class="btn btn-lg btn-default">Add Board</a>
+                </div>
+            </div>
+            }
+
+        </div>
+        
     })
 })

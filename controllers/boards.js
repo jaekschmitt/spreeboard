@@ -7,10 +7,20 @@ var logger = require(__base + 'config/logger'),
     _boards = require(__base + 'lib/boards');
 
 exports.show = function(req, res, next) {
-    Board.findOne({
-        id: req.params.id
-    }).exec(function(err, board) {
-        res.render('boards/show');
+    var args = {
+        boardId: req.params.id,
+        user: req.user
+    };
+
+    _boards.fetch(args, function(err, results) {
+        if(err) return res.redirect('/boards');
+
+        logger.crit(JSON.stringify(results.stages, null, 4));
+
+        res.render('boards/show', {
+            board: results.board,
+            stages: results.stages
+        });
     });
 };
 

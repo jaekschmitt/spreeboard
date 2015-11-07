@@ -33,6 +33,7 @@
     "passport": "^0.3.0",
     "passport-gitlab": "^0.5.0",
     "passport-local": "^1.0.0",
+    "request": "^2.65.0",
     "vash": "^0.10.0",
     "winston": "^0.8.3"
   }

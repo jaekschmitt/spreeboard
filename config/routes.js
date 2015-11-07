@@ -2,6 +2,7 @@ var logger = require('./logger'),
     controllers = require(__base + 'controllers');
 
 var boards = controllers.boards,
+    projects = controllers.projects,
     users = controllers.users;
 
 var authorization = require('./middlewares/authorization'),
@@ -31,13 +32,15 @@ module.exports = function(app, passport) {
         failureRedirect: '/login'
     }), users.authCallback);
 
-    // Boards    
-
+    // Boards
     app.get('/boards/new', authed, roles('admin'), boards.new);
     app.get('/boards/:id', boards.show);
     app.get('/boards', authed, boards.list);
     app.post('/boards', authed, boards.create);
     app.put('/boards/:id', boards.update);
     app.delete('/boards/:id', boards.delete);
+
+    // Projects
+    app.get('/projects/new', projects.new);
 
 };

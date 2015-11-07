@@ -7,4 +7,33 @@ i.fa {
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }
 
+.board {
+  margin-top: -20px; }
+  .board-actions {
+    border-bottom: 1px solid #eceeef; }
+    .board-actions h4 {
+      display: inline-block; }
+  .board .stages {
+    display: -webkit-flex;
+    display: flex;
+    height: 100%; }
+    .board .stages .stage {
+      flex: 1;
+      display: inline-block;
+      border-right: 1px solid #eceeef; }
+      .board .stages .stage:last-child {
+        border-right: none; }
+      .board .stages .stage .stage-header {
+        padding: 10px;
+        margin: 0;
+        text-align: center;
+        text-transform: capitalize;
+        background-color: #f7f7f9; }
+      .board .stages .stage .stage-issues {
+        padding: 15px; }
+        .board .stages .stage .stage-issues .stage-issue .header-block {
+          padding-bottom: 0; }
+        .board .stages .stage .stage-issues .stage-issue .content-block {
+          padding-top: 0; }
+
 /*# sourceMappingURL=main.css.map */
