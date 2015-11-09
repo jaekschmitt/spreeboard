@@ -30,6 +30,7 @@
     "mongoose": "^4.2.3",
     "morgan": "^1.5.1",
     "multer": "^0.1.7",
+    "oauth-shim": "^1.0.0",
     "passport": "^0.3.0",
     "passport-gitlab": "^0.5.0",
     "passport-local": "^1.0.0",

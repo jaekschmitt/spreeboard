@@ -45,5 +45,8 @@
         @html.block('auth')
     </div>
     
+    <script src="/vendor/hello/dist/hello.min.js" type="text/javascript"></script>
+    <script src="/scripts/auth/gitlab-auth.js" type="text/javascript"></script>        
+    
 </body>
 </html>

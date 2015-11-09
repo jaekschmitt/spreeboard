@@ -43,7 +43,7 @@
                     <div class="col-xs-12 text-center">
                         
                         <a href="/auth/gitlab" class="btn btn-lg btn-default">Login With Gitlab</a>
-                        
+                        <button onclick="hello('gitlab').login()">Login gitlab</button>
                     </div>
                 </div>
 

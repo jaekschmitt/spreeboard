@@ -1,5 +1,6 @@
 var logger = require('./config/logger'),
     express = require('express'),
+    oauthshim = require('oauth-shim'),
     passport = require('passport'),
     path = require('path');
     
