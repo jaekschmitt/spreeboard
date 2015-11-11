@@ -1,0 +1,51 @@
+<div id="NewBoard" class="container">
+        
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            
+            <form role="form">
+                
+                <div class="form-group">
+                    <label for="name" class="control-label">Name</label>
+                    <input type="text" class="form-control" ng-model="board.name">
+                </div>
+
+                <div class="form-group">
+                    <label for="project" class="control-label">Project</label>
+                    <select name="project" class="form-control c-select" ng-model="board.project">
+                        <option value="0" selected disabled>Please select a project...</option>                        
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="control-label">Stages</label>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span>Backlog</span>
+                            <i class="pull-right fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Backlog is a required stage. It will contain all unstarted tasks."></i>                            
+                        </li>
+                                            
+                        <li class="list-group-item" ng-repeat="s in stages">
+                            <span>{{s}}</span>
+                            <a class="pull-right text-danger" href="" ng-click="removeStage(s)"><i class="fa fa-remove"></i></a>
+                        </li>                    
+                    </ul>
+                </div>
+
+                <div class="row dev-stages">
+                    <div class="col-lg-10">
+                        <input class="form-control" type="text" placeholder="Enter stages of development" ng-model="stage">
+                    </div>                    
+                    <div class="col-lg-2">
+                        <button class="btn btn-primary" ng-click="addStage(stage)">Add</button>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-lg btn-default" type="button" ng-click="createBoard()">Create Board</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>

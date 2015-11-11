@@ -7,6 +7,11 @@ i.fa {
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }
 
+#EditBoard .dev-stages {
+  margin-bottom: 3rem; }
+#EditBoard .nav-tabs {
+  margin-bottom: 1rem; }
+
 .board {
   margin-top: -20px; }
   .board-actions {

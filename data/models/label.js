@@ -14,7 +14,11 @@ var labelSchema = new Schema({
         ref: 'Board'
     },
 
-    server_info: {},
+    type: {
+        type: String,
+        required: true,
+        enum: ['board', 'stage', 'label']
+    },
 
     created_at: {
         type: Date,
@@ -27,5 +31,11 @@ var labelSchema = new Schema({
     }
 
 });
+
+labelSchema
+    .virtual('serverName')
+    .get(function() {
+        return '(s) ' + this.name.toLowerCase().replace(' ', '-');
+    });
 
 mongoose.model('Label', labelSchema);

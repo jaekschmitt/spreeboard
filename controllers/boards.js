@@ -2,9 +2,27 @@ var logger = require(__base + 'config/logger'),
     config = require(__base + 'config/config'),
     glUtils = require(__base + 'lib/gitlab'),    
     async = require('async'),
+    _ = require('lodash'),
     mongoose = require('mongoose'),
     Board = mongoose.model('Board'),
+    Label = mongoose.model('Label'),
     _boards = require(__base + 'lib/boards');
+
+exports.load = function(req, res, next, id) {
+    async.parallel({
+        boardFetch: function(cb) { Board.findOne({ _id: id }).exec(cb) },
+        labelFetch: function(cb) { Label.find({ board: id }).exec(cb) }
+    }, function(err, results) {
+        if(err) return next(err);        
+
+        req.board = results.boardFetch;
+
+        var groupedLabels = _.groupBy(results.labelFetch, 'type');        
+        req.board.labels = groupedLabels['label'] || [];
+
+        next();
+    });
+};
 
 exports.show = function(req, res, next) {
     var args = {
@@ -15,8 +33,6 @@ exports.show = function(req, res, next) {
     _boards.fetch(args, function(err, results) {
         if(err) return res.redirect('/boards');
 
-        logger.crit(JSON.stringify(results.stages, null, 4));
-
         res.render('boards/show', {
             board: results.board,
             stages: results.stages
@@ -26,19 +42,8 @@ exports.show = function(req, res, next) {
 
 exports.list = function(req, res, next) {
     Board.find().exec(function(err, boards) {
-        res.render('boards', {
-            user: req.user,
-            boards: boards
-        });
-    });
-};
-
-exports.new = function(req, res, next) {    
-    glUtils.list('projects', req.user.id, function(err, projects) {
-        res.render('boards/new', {
-            board: new Board({}),
-            projects: projects
-        });
+        if(err) return res.status(500).json(err);
+        res.status(200).json(boards);
     });
 };
 
@@ -54,13 +59,39 @@ exports.create = function(req, res, next) {
     };
 
     _boards.create(args, function(err, results) {
-        if(err) return res.redirect('/boards/new');
-        res.redirect('/boards/' + results.board.id);
+        if(err) return res.status(500).json(err);
+        res.status(200).json(results.board);
+    });
+};
+
+exports.edit = function(req, res, next) {
+    res.render('boards/edit', {
+        board: req.board,
+        user: req.user
     });
 };
 
 exports.update = function(req, res, next) {
 
+};
+
+exports.updateLabels = function(req, res, next) {
+    logger.debug(req.body);
+
+    var args = {
+        board: req.board,
+        labels: req.body.labels,
+        user: req.user
+    };
+
+    _boards.updateLabels(args, function(err, results) {
+        req.board.labels = results.labels;
+
+        res.render('boards/edit', {
+            board: req.board,
+            user: req.user
+        });
+    })    
 };
 
 exports.delete = function(req, res, next) {

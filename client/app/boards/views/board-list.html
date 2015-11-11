@@ -1,0 +1,14 @@
+<div class="container">        
+    
+    <div class="list-group col-sm-8 col-sm-offset-2">
+        <a href="#/boards/{{b.id}}" class="list-group-item" ng-repeat="b in boards">{{b.name}}</a>
+    </div>
+
+    
+    <div class="row" ng-show="{{roles.indexOf('admin') >= 0}}">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <a href="#/boards/new" class="btn btn-lg btn-default">Add Board</a>
+        </div>
+    </div>    
+
+</div>

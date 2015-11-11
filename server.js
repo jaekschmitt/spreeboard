@@ -1,11 +1,12 @@
 var logger = require('./config/logger'),
+    config = require('./config/config'),
     express = require('express'),
     oauthshim = require('oauth-shim'),
     passport = require('passport'),
     path = require('path');
     
 var app = express(),
-    port = process.env.PORT || 8888;
+    port = process.env.PORT || 3000;
 
 // create globals
 
@@ -26,6 +27,17 @@ require('./config/express')(app, passport);
 
 // register application routes
 require('./config/routes')(app, passport);
+
+// register our oauth shim
+app.all('/oauthproxy', oauthshim)
+
+oauthshim.init([{
+    // id: secret
+    client_id: config.gitlab.key,
+    client_secret: config.gitlab.secret,
+
+    grant_url: 'http://localhost:8080/oauth/token'    
+}]);
 
 // start our server
 

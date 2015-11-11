@@ -3,44 +3,42 @@ var logger = require('./logger'),
 
 var boards = controllers.boards,
     projects = controllers.projects,
+    tasks = controllers.tasks,
+    gitlab = controllers.gitlab,
     users = controllers.users;
 
+var membership = require(__base + 'controllers/membership');
+
 var authorization = require('./middlewares/authorization'),
-    authed = authorization.requiresLogin,
+    auth = authorization.requiresLogin,
     roles = authorization.requiresRoles;
 
 module.exports = function(app, passport) {
 
     // return base index page to load spa
-    app.get('/', authed, function(req, res) { 
-        res.render('index'); 
+    app.get('/', function(req, res) { 
+        res.render('index');
     });
 
     // Users
-    app.get('/login', users.login);
-    app.get('/logout', users.logout);
-    app.get('/register', users.register);
-    app.post('/users', users.create);
-    app.post('/users/session', passport.authenticate('local',{
-        failureRedirect: '/login',
-        failureFlash: true
-    }), users.session);
-    app.get('/auth/gitlab', passport.authenticate('gitlab', {
-        failureRedirect: '/login'
-    }), users.signin);
-    app.get('/auth/gitlab/callback', passport.authenticate('gitlab', {
-        failureRedirect: '/login'
-    }), users.authCallback);
-
+    app.post('/users', membership.register);
+    app.post('/users/session', membership.signIn);
+    app.post('/users/session/gitlab', membership.gitlab);
+    
     // Boards
-    app.get('/boards/new', authed, roles('admin'), boards.new);
-    app.get('/boards/:id', boards.show);
-    app.get('/boards', authed, boards.list);
-    app.post('/boards', authed, boards.create);
-    app.put('/boards/:id', boards.update);
-    app.delete('/boards/:id', boards.delete);
+    app.param('board_id', boards.load);    
+    // app.get('/boards/:id', boards.show);
+    app.get('/boards', auth, boards.list);
+    app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
+    // app.post('/boards', authed, boards.create);
+    // app.post('/boards/:id', boards.update);
+    // app.post('/boards/:board_id/labels', authed, boards.updateLabels);
+    // app.delete('/boards/:id', boards.delete);
 
     // Projects
-    app.get('/projects/new', projects.new);
+    // app.get('/projects/new', projects.new);
+
+    // Tasks    
+    // app.get('/boards/:board_id/tasks/new', auth, tasks.new);
 
 };
