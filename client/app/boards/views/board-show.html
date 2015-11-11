@@ -1,0 +1,50 @@
+<div id="Board" class="board">
+            
+    <div class="collapse board-filters">
+        <div class="bg-inverse p-a">
+            <h4>Filters</h4>
+            <span class="text-muted">Here is were you will be able to filter your shit...eventually.</span>
+        </div>
+    </div>
+    <nav class="navbar navbar-nav board-actions">
+        <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".board-filters">&#9776; {{board.name}}</button>
+        <div class="pull-right">
+            <a href="#/{{board.id}}/edit" class="btn btn-secondary"><i class="fa fa-cog"></i></a>
+        </div>
+        <div class="dropdown pull-right">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="add-dropdown" data-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-plus text-success"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="add-dropdown">
+                <a class="dropdown-item" href="#">Project</a>
+                <a class="dropdown-item" href="#/{{board.id}}/tasks/new">Task</a>
+            </div>                
+        </div>            
+    </nav>
+
+
+    <div class="stages">
+        
+        <div class="stage" ng-repeat="s in stages">
+            <h4 class="stage-header">{{s.name}}</h4>
+            
+            <div class="stage-issues">
+                        
+                <div class="stage-issue card" ng-repeat="i in s.issues">
+                    <div class="card-block header-block">
+                        <h4 class="card-title">{{i.title}}</h4>
+                    </div>
+                    <div class="card-block content-block">
+                        <p class="card-text">{{i.description.length > 200 ? i.description.substring(0, 200) + '...' : i.description}}</p>
+                        <a class="card-link text-danger">delete</a>
+                        <a class="card-link">edit</a>
+                    </div>
+                </div>            
+            
+            </div>
+
+        </div>
+    
+    </div>
+
+</div>

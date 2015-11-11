@@ -18,9 +18,10 @@
         activate();
 
         function activate() {
-            boardServices.boards().success(function(boards) {
-
-            }).catch(toastr.error);
+            boardServices.boards(function(err, boards) {
+                if(err) return toastr.error(err);
+                $scope.boards = boards;
+            });
         }
     }
 

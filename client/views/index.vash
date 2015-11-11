@@ -44,6 +44,7 @@
     <script src="/app/membership/auth.intr.js" type="text/javascript"></script>
     <script src="/app/membership/auth.svc.js" type="text/javascript"></script>
     <script src="/app/boards/board.svc.js" type="text/javascript"></script>
+    <script src="/app/gitlab/gitlab.svc.js" type="text/javascript"></script>
 
     <!-- controllers -->
     <script src="/app/main.ctrl.js" type="text/javascript"></script>
@@ -51,6 +52,7 @@
     <script src="/app/membership/controllers/register.ctrl.js" type="text/javascript"></script>
     <script src="/app/boards/controllers/board-list.ctrl.js" type="text/javascript"></script>
     <script src="/app/boards/controllers/board-new.ctrl.js" type="text/javascript"></script>
+    <script src="/app/boards/controllers/board-show.ctrl.js" type="text/javascript"></script>
 
     @html.block('scripts')
 </body>

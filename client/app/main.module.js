@@ -48,6 +48,11 @@
             templateUrl: 'app/boards/views/board-new.html'
         });
 
+        $routeProvider.when('/boards/:id', {
+            controller: 'showBoardController',
+            templateUrl: 'app/boards/views/board-show.html'
+        });
+
     }
 
     function bootstrap($window, authSvc) {

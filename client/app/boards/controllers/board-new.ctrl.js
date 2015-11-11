@@ -4,13 +4,14 @@
         .module('main')
         .controller('newBoardController', newBoardController);
 
-    newBoardController.$inject = ['$scope', 'toastr', 'boardServices'];
+    newBoardController.$inject = ['$scope', '$location', 'toastr', 'boardServices', 'gitlabServices'];
 
-    function newBoardController($scope, toastr, boardServices) {
+    function newBoardController($scope, $location, toastr, boardServices, gitlabServices) {
 
         // properties
 
         $scope.board = {};
+        $scope.projects = [];
         $scope.stages = [];
 
         // function
@@ -22,7 +23,11 @@
         activate();
 
         function activate() {
+            gitlabServices.projects(function(err, projects) {
+                $scope.projects = projects;
+            });
 
+            $('[data-toggle="tooltip"]').tooltip()
         }
 
         function addStage(stage) {
@@ -44,6 +49,9 @@
             pkg.stages = $scope.stages;
 
             console.log(pkg);
+            boardServices.createBoard(pkg, function(err, board) {
+                $location.path('/boards/' + board.id);
+            });
         }
 
     }

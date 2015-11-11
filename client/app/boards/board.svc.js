@@ -13,15 +13,29 @@
     function boardServices($http) {
         return {
             boards: boards,
-            createBoard: createBoard
+            createBoard: createBoard,
+            fetchBoard: fetchBoard
         };
 
-        function boards() {
-            return $http.get(env.api + 'boards');
+        function boards(next) {
+            return $http.get(env.api + 'boards')
+            .success(function(boards) {
+                next(null, boards);
+            }).catch(next);
         }
 
-        function createBoard(pkg) {
-            return $http.post(env.api + 'boards', pkg);
+        function createBoard(pkg, next) {
+            return $http.post(env.api + 'boards', pkg)
+            .success(function(board) {
+                next(null, board);
+            }).catch(next);
+        }
+
+        function fetchBoard(id, next) {
+            $http.get(env.api + 'boards/' + id)
+            .success(function(results) {
+                next(null, results);
+            }).catch(next);
         }
     }
 

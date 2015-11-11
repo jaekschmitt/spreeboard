@@ -31,9 +31,9 @@ exports.show = function(req, res, next) {
     };
 
     _boards.fetch(args, function(err, results) {
-        if(err) return res.redirect('/boards');
+        if(err) return res.status(500).json(err);
 
-        res.render('boards/show', {
+        res.status(200).json({
             board: results.board,
             stages: results.stages
         });

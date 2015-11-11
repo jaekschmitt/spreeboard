@@ -13,7 +13,8 @@
                 <div class="form-group">
                     <label for="project" class="control-label">Project</label>
                     <select name="project" class="form-control c-select" ng-model="board.project">
-                        <option value="0" selected disabled>Please select a project...</option>                        
+                        <option value="0" selected disabled>Please select a project...</option>
+                        <option ng-repeat="p in projects" value="{{p.id}}">{{p.name}}</option>
                     </select>
                 </div>
                 

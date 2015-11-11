@@ -27,10 +27,11 @@ module.exports = function(app, passport) {
     
     // Boards
     app.param('board_id', boards.load);    
-    // app.get('/boards/:id', boards.show);
     app.get('/boards', auth, boards.list);
-    app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
-    // app.post('/boards', authed, boards.create);
+    app.post('/boards', auth, boards.create);
+    app.get('/boards/:id', auth, boards.show);
+    
+        
     // app.post('/boards/:id', boards.update);
     // app.post('/boards/:board_id/labels', authed, boards.updateLabels);
     // app.delete('/boards/:id', boards.delete);
@@ -41,4 +42,7 @@ module.exports = function(app, passport) {
     // Tasks    
     // app.get('/boards/:board_id/tasks/new', auth, tasks.new);
 
+    // Gitlab
+    app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
+    app.post('/gitlab/issues', gitlab.issuesSync);
 };
