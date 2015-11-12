@@ -53,6 +53,13 @@
             templateUrl: 'app/boards/views/board-show.html'
         });
 
+        // tasks
+
+        $routeProvider.when('/:board_name/:board_id/tasks/new', {
+            controller: 'newTaskController',
+            templateUrl: 'app/tasks/views/task-new.html'
+        });        
+
     }
 
     function bootstrap($window, authSvc) {

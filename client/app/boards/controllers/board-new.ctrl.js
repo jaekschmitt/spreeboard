@@ -50,7 +50,7 @@
 
             console.log(pkg);
             boardServices.createBoard(pkg, function(err, board) {
-                $location.path('/boards/' + board.id);
+                $location.path('/boards/' + board._id);
             });
         }
 

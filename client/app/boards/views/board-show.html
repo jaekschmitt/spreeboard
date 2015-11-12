@@ -17,7 +17,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="add-dropdown">
                 <a class="dropdown-item" href="#">Project</a>
-                <a class="dropdown-item" href="#/{{board.id}}/tasks/new">Task</a>
+                <a class="dropdown-item" href="#/{{board.name.toLowerCase().replace(' ', '-')}}/{{board._id}}/tasks/new">Task</a>
             </div>                
         </div>            
     </nav>
@@ -25,17 +25,17 @@
 
     <div class="stages">
         
-        <div class="stage" ng-repeat="s in stages">
+        <div class="stage" ng-repeat="s in board.stages">
             <h4 class="stage-header">{{s.name}}</h4>
             
-            <div class="stage-issues">
+            <div class="stage-tasks">
                         
-                <div class="stage-issue card" ng-repeat="i in s.issues">
+                <div class="stage-task card" ng-repeat="t in s.tasks">
                     <div class="card-block header-block">
-                        <h4 class="card-title">{{i.title}}</h4>
+                        <h4 class="card-title">{{t.title}}</h4>
                     </div>
                     <div class="card-block content-block">
-                        <p class="card-text">{{i.description.length > 200 ? i.description.substring(0, 200) + '...' : i.description}}</p>
+                        <p class="card-text">{{t.description.length > 200 ? t.description.substring(0, 200) + '...' : t.description}}</p>
                         <a class="card-link text-danger">delete</a>
                         <a class="card-link">edit</a>
                     </div>

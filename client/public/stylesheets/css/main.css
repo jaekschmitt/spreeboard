@@ -34,11 +34,14 @@ i.fa {
         text-align: center;
         text-transform: capitalize;
         background-color: #f7f7f9; }
-      .board .stages .stage .stage-issues {
+      .board .stages .stage .stage-tasks {
         padding: 15px; }
-        .board .stages .stage .stage-issues .stage-issue .header-block {
+        .board .stages .stage .stage-tasks .stage-task .header-block {
           padding-bottom: 0; }
-        .board .stages .stage .stage-issues .stage-issue .content-block {
+        .board .stages .stage .stage-tasks .stage-task .content-block {
           padding-top: 0; }
+
+#NewTask h2 {
+  margin-bottom: 2rem; }
 
 /*# sourceMappingURL=main.css.map */

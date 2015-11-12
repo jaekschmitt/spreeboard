@@ -1,6 +1,5 @@
 var logger = require(__base + 'config/logger'),
-    config = require(__base + 'config/config'),
-    glUtils = require(__base + 'lib/gitlab'),    
+    config = require(__base + 'config/config'),    
     async = require('async'),
     _ = require('lodash'),
     mongoose = require('mongoose'),

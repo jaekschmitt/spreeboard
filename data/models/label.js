@@ -1,12 +1,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var labelSchema = new Schema({
+var LabelSchema = new Schema({
 
-    name: {
-        type: String,
-        required: true
-    },
+    name: { type: String, default: '' },
+    serverName: { type: String },
 
     board: {
         type: Schema.ObjectId,
@@ -26,16 +24,66 @@ var labelSchema = new Schema({
         default: new Date()
     },
 
-    updated_at: {
-        type: Date
-    }
+    updated_at: { type: Date }
 
 });
 
-labelSchema
-    .virtual('serverName')
-    .get(function() {
-        return '(s) ' + this.name.toLowerCase().replace(' ', '-');
-    });
+/**
+* Validations
+*/
 
-mongoose.model('Label', labelSchema);
+LabelSchema.path('name').validate(function(name) {
+    return name.length;
+}, 'Name cannot be blank');
+
+LabelSchema.pre('save', function(next) {    
+    switch(this.type) {
+        case 'board':
+            this.serverName = '(b) ' + this.name.toLowerCase().replace(' ', '-');
+            break;
+        case 'stage':
+            this.serverName = '(s) ' + this.name.toLowerCase().replace(' ', '-');
+            break;
+        default:
+            this.serverName = this.name.toLowerCase();            
+    }
+
+    next();
+});
+
+/**
+* Methods
+*/
+
+LabelSchema.methods = {
+
+    generateServerName: function() {
+        switch(this.type) {
+            case 'board':
+                this.serverName = '(b) ' + this.name.toLowerCase().replace(' ', '-');
+                break;
+            case 'stage':
+                this.serverName = '(s) ' + this.name.toLowerCase().replace(' ', '-');
+                break;
+            default:
+                this.serverName = this.name.toLowerCase();            
+        }
+
+        return this.serverName;
+    }
+
+};
+
+LabelSchema.statics = {
+
+    load: function(options, cb) {
+        options.select = options.select || 'name serverName';
+
+        this.findOne(options.criteria)
+            .select(options.select)
+            .exec(cb);
+    }
+
+};
+
+mongoose.model('Label', LabelSchema);
