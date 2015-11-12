@@ -19,12 +19,23 @@
 
         // functions
 
+        $scope.createTask = createTask;
+
         activate();
 
-        function activate() {
+        function activate() {}
 
+        function createTask() {
+            var pkg = {
+                name: $scope.task.name,
+                description: $scope.task.description,
+                boardId: $scope.board.id
+            };            
+
+            taskServices.createTask(pkg, function(err, task) {
+                if(err) return toastr.error(err);
+            });
         }
-
     }
 
 })();

@@ -8,15 +8,14 @@
     </div>
     <nav class="navbar navbar-nav board-actions">
         <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".board-filters">&#9776; {{board.name}}</button>
-        <div class="pull-right">
+        <div class="pull-right action">
             <a href="#/{{board.id}}/edit" class="btn btn-secondary"><i class="fa fa-cog"></i></a>
         </div>
-        <div class="dropdown pull-right">
+        <div class="dropdown pull-right action">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="add-dropdown" data-toggle="dropdown" aria-expanded="false">
                 <i class="fa fa-plus text-success"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="add-dropdown">
-                <a class="dropdown-item" href="#">Project</a>
                 <a class="dropdown-item" href="#/{{board.name.toLowerCase().replace(' ', '-')}}/{{board._id}}/tasks/new">Task</a>
             </div>                
         </div>            

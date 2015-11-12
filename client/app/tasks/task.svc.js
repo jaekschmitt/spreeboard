@@ -16,7 +16,7 @@
         };
 
         function createTask(pkg, next) {
-            $http.post(env.api + 'tasks', pkg)
+            $http.post(env.api + 'boards/' + pkg.boardId + '/tasks', pkg)
             .success(function(task) {
                 next(null, task);
             }).catch(next);

@@ -40,7 +40,7 @@ module.exports = function(app, passport) {
     // app.get('/projects/new', projects.new);
 
     // Tasks    
-    // app.get('/boards/:board_id/tasks/new', auth, tasks.new);
+    app.post('/boards/:board_id/tasks', auth, tasks.create);
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
