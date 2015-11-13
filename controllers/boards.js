@@ -8,19 +8,22 @@ var logger = require(__base + 'config/logger'),
     _boards = require(__base + 'lib/boards');
 
 exports.load = function(req, res, next, id) {
-    async.parallel({
-        boardFetch: function(cb) { Board.findOne({ _id: id }).exec(cb) },
-        labelFetch: function(cb) { Label.find({ board: id }).exec(cb) }
-    }, function(err, results) {
-        if(err) return next(err);        
+    var options = {
+        criteria: { _id : id },
+        select: 'id name serverName created_by created_at stages'
+    };
 
-        req.board = results.boardFetch;
+    Board.load(options, function(err, board) {
+        if(err) return next(err);
+        if(!board) return next();
 
-        var groupedLabels = _.groupBy(results.labelFetch, 'type');        
-        req.board.labels = groupedLabels['label'] || [];
-
+        req.board = board;
         next();
     });
+};
+
+exports.info = function(req, res, next) {
+    res.status(200).json(req.board);
 };
 
 exports.show = function(req, res, next) {

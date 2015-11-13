@@ -17,17 +17,27 @@ exports.issuesSync = function(req, res, next) {
     var issueInfo = req.body,
         direction = req.body.object_attributes.action;
 
-    // testing web hook body
-    // logger.debug(JSON.stringify(issueInfo, null, 4));
-    // next();
-
     if(['open', 'reopen'].indexOf(direction) > -1) {
-        
-        GLab.issues.import(issueInfo, function(err, results) {
-            logger.debug(JSON.stringify(results, null, 4));
-            res.status(200);
-            next();
-        });
+        // hate this but the web hook for new issues is too fast 
+        // and is importing before we update issue in existing task and
+        // can query against it.  would ideally search by issue.id == issueInfo.id
+
+        var options = {
+            criteria: { 'title' : issueInfo.object_attributes.title, },
+            select: 'id'
+        };
+
+        Task.load(options, function(err, task) {            
+            if(err || task) return next();            
+
+            logger.crit(options);
+            logger.crit(task);
+
+            GLab.issues.import(issueInfo, function(err, results) {                
+                res.status(200);
+                next();
+            });
+        });        
 
     } else if(direction == 'close') {
         var options = {
@@ -42,7 +52,7 @@ exports.issuesSync = function(req, res, next) {
 
             res.status(200);
             next();
-        });        
+        });
     } else if(direction === 'update') {
 
     }

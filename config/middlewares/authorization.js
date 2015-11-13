@@ -47,7 +47,7 @@ function authenticateToken(token, next) {
 
         var options = {
             criteria: { _id: decoded.iss },
-            select: 'name email roles'
+            select: 'id name email roles'
         };
 
         User.load(options, function(err, user) {

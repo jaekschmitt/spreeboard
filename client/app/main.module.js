@@ -55,10 +55,15 @@
 
         // tasks
 
-        $routeProvider.when('/:board_name/:board_id/tasks/new', {
+        $routeProvider.when('/boards/:board_id/tasks/new', {
             controller: 'newTaskController',
             templateUrl: 'app/tasks/views/task-new.html'
-        });        
+        });
+
+        $routeProvider.when('/boards/:board_id/tasks/:task_id', {
+            controller: 'editTaskController',
+            templateUrl: 'app/tasks/views/task-edit.html'
+        });
 
     }
 

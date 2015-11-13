@@ -14,7 +14,8 @@
         return {
             boards: boards,
             createBoard: createBoard,
-            fetchBoard: fetchBoard
+            fetchBoard: fetchBoard,
+            fetchBoardInfo: fetchBoardInfo
         };
 
         function boards(next) {
@@ -35,6 +36,13 @@
             $http.get(env.api + 'boards/' + id)
             .success(function(results) {
                 next(null, results);
+            }).catch(next);
+        }
+
+        function fetchBoardInfo(id, next) {
+            $http.get(env.api + 'boards/' + id + '/info')
+            .success(function(info) {
+                next(null, info);
             }).catch(next);
         }
     }

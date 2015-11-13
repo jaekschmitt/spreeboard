@@ -30,17 +30,11 @@ module.exports = function(app, passport) {
     app.get('/boards', auth, boards.list);
     app.post('/boards', auth, boards.create);
     app.get('/boards/:id', auth, boards.show);
-    
-        
-    // app.post('/boards/:id', boards.update);
-    // app.post('/boards/:board_id/labels', authed, boards.updateLabels);
-    // app.delete('/boards/:id', boards.delete);
-
-    // Projects
-    // app.get('/projects/new', projects.new);
+    app.get('/boards/:board_id/info', auth, boards.info);
 
     // Tasks    
-    app.post('/boards/:board_id/tasks', auth, tasks.create);
+    app.get('/tasks/:id', auth, tasks.show);
+    app.post('/boards/:board_id/tasks', auth, tasks.create);    
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);

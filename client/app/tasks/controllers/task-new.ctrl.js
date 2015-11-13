@@ -4,18 +4,16 @@
         .module('main')
         .controller('newTaskController', newTaskController);
 
-    newTaskController.$inject = ['$scope', '$routeParams', 'toastr', 'taskServices', 'boardServices'];
+    newTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices'];
 
-    function newTaskController($scope, $routeParams, toastr, taskServices, boardServices) {
+    function newTaskController($scope, $routeParams, $location, toastr, taskServices, boardServices) {
 
         // properties
 
-        $scope.board = {
-            id: $routeParams.board_id,
-            name: $routeParams.board_name            
-        };
-
+        $scope.board = {};
         $scope.task = {};
+
+        $scope.working = false;
 
         // functions
 
@@ -23,17 +21,32 @@
 
         activate();
 
-        function activate() {}
+        function activate() {
+            boardServices.fetchBoardInfo($routeParams.board_id, function(err, board) {
+                if(err) return toastr.error(err);
+                $scope.board = board;
+            });
+        }
 
         function createTask() {
+            if($scope.working) return;
+
             var pkg = {
-                name: $scope.task.name,
+                title: $scope.task.title,
                 description: $scope.task.description,
-                boardId: $scope.board.id
+                stage: $scope.task.stage,
+                boardId: $scope.board._id
             };            
 
-            taskServices.createTask(pkg, function(err, task) {
-                if(err) return toastr.error(err);
+            $scope.working = true;
+            taskServices.createTask(pkg, function(err, task) {                
+                $scope.working = false;
+
+                if(err) {
+                    toastr.error(err);
+                } else {
+                    $location.path('/boards/' + pkg.boardId);                    
+                }                
             });
         }
     }
