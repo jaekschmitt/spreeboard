@@ -4,19 +4,19 @@
         .module('main')
         .controller('editTaskController', editTaskController);
 
-    editTaskController.$inject = ['$scope', '$routeParams', '$q', 'toastr', 'taskServices', 'boardServices'];
+    editTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices'];
 
-    function editTaskController($scope, $routeParams, $q, toastr, taskServices, boardServices) {
+    function editTaskController($scope, $routeParams, $location, toastr, _tasks, _boards) {
 
         // properties
 
         $scope.board = {};
-        $scope.task = {};        
+        $scope.task = {};
 
         // functions
 
         $scope.update = updateTask;
-        $scope.delete = deleteTask;
+        $scope.delete = deleteTask;        
 
         activate();
 
@@ -25,8 +25,8 @@
                 task_id = $routeParams.task_id;
 
             async.parallel({
-                board: function(cb) { return boardServices.fetchBoardInfo(board_id, cb); },
-                task: function(cb) { return taskServices.fetchTask(task_id, cb); }
+                board: function(cb) { return _boards.fetchBoardInfo(board_id, cb); },
+                task: function(cb) { return _tasks.fetchTask(task_id, cb); }
             }, function(err, results) {
                 if(err) return toastr.error(err);
 
@@ -39,8 +39,16 @@
 
         }
 
-        function deleteTask() {
+        function deleteTask() {            
+            if($scope.working) return;
+            $scope.working = true;
 
+            _tasks.deleteTask($scope.task._id, function(err) {
+                $scope.working = false;
+
+                if(err) toastr.error(err);
+                $location.path('/boards/' + $scope.board._id);
+            });
         }
     }
 

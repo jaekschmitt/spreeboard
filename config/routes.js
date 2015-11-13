@@ -32,9 +32,11 @@ module.exports = function(app, passport) {
     app.get('/boards/:id', auth, boards.show);
     app.get('/boards/:board_id/info', auth, boards.info);
 
-    // Tasks    
-    app.get('/tasks/:id', auth, tasks.show);
+    // Tasks
+    app.param('task_id', tasks.load);
+    app.get('/tasks/:task_id', auth, tasks.show);
     app.post('/boards/:board_id/tasks', auth, tasks.create);    
+    app.delete('/tasks/:task_id', auth, tasks.delete);
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
