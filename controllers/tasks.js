@@ -7,10 +7,10 @@ var logger = require(__base + 'config/logger'),
     mongoose = require('mongoose'),
     Task = mongoose.model('Task');
 
-exports.load = function(req, res, next) {
+exports.load = function(req, res, next, id) {
     var options = {
         criteria: { _id : id },
-        select: 'id title description stage project issue.id created_at'
+        select: 'id title description stage project board issue.id created_at'
     };
 
     Task.load(options, function(err, task) {
@@ -65,7 +65,7 @@ exports.delete = function(req, res, next) {
     var hasPermission = isOwner || isDev || isAdmin;
     if(!hasPermission) return res.status(401).json("You are not authorized to delete this task");
 
-    Task.delete(options, function(err) {
+    req.task.remove(function(err) {
         if(err) return res.status(500).json(err);
 
         if(req.task.issue) {    
