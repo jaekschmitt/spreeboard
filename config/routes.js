@@ -21,6 +21,7 @@ module.exports = function(app, passport) {
     });
 
     // Users
+    app.get('/users', auth, users.list);
     app.post('/users', membership.register);
     app.post('/users/session', membership.signIn);
     app.post('/users/session/gitlab', membership.gitlab);
@@ -35,8 +36,9 @@ module.exports = function(app, passport) {
     // Tasks
     app.param('task_id', tasks.load);
     app.get('/tasks/:task_id', auth, tasks.show);
-    app.post('/boards/:board_id/tasks', auth, tasks.create);    
-    app.delete('/tasks/:task_id', auth, tasks.delete);
+    app.post('/boards/:board_id/tasks', auth, roles('developer'), tasks.create);
+    app.put('/tasks/:task_id', auth, roles('developer'), tasks.update);
+    app.delete('/tasks/:task_id', auth, roles('developer'), tasks.delete);
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);

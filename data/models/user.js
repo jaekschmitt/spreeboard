@@ -12,6 +12,7 @@ var oAuthTypes = [
 
 var UserSchema = new Schema({
     name: { type: String, default: '' },
+    username: { type: String },
     email: { type: String, default: '' },
     roles: { type: Array, default: ['user'] },
     provider: { type: String, default: '' },
@@ -123,9 +124,19 @@ UserSchema.statics = {
 
     load: function (options, cb) {
         options.select = options.select || 'name';
+        
         this.findOne(options.criteria)
-        .select(options.select)
-        .exec(cb);
+            .select(options.select)
+            .exec(cb);
+    },
+
+    list: function(options, cb) {
+        options.criteria = options.criteria || {};
+        options.select = options.select || 'name';
+
+        this.find(options.criteria)
+            .select(options.select)
+            .exec(cb);
     }
 }
 

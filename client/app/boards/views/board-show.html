@@ -34,9 +34,8 @@
                         <h4 class="card-title">{{t.title}}</h4>
                     </div>
                     <div class="card-block content-block">
-                        <p class="card-text">{{t.description.length > 200 ? t.description.substring(0, 200) + '...' : t.description}}</p>
-                        <a class="card-link text-danger">delete</a>
-                        <a class="card-link" href="#/boards/{{board._id}}/tasks/{{t._id}}">edit</a>
+                        <p class="card-text">{{t.description.length > 200 ? t.description.substring(0, 200) + '...' : t.description}}</p>                        
+                        <a class="card-link" href="#/boards/{{board._id}}/tasks/{{t._id}}/edit">edit</a>
                     </div>
                 </div>            
             

@@ -1,21 +1,17 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    _ = require('lodash');
 
 var TaskSchema = new Schema({
 
-    title: {
-        type: String,
-        required: true
-    },
-
-    description: String,    
-
+    title: { type: String, required: true },
+    description: String,
+    stage: {},
+    
     board: {
         type: Schema.ObjectId,
         ref: 'Board'
-    },
-    
-    stage: {},
+    },    
 
     project: {
         type: Schema.ObjectId,
@@ -27,6 +23,7 @@ var TaskSchema = new Schema({
     created_by: { type: Schema.ObjectId, ref: 'User' },
 
     issue: {},
+    sync_lock: { type: Boolean, default: true },
 
     created_at: {
         type: Date,
@@ -43,25 +40,43 @@ var TaskSchema = new Schema({
 TaskSchema.statics = {
 
     load: function(options, cb) {
-        options.select = options.select || 'id title description';
-        
+        options.select = options.select || 'id title description';        
+
         var query = this.findOne(options.criteria)
             .select(options.select);    
+
+        if(options.populate) {
+            var populate = options.populate;
+            
+            for(var key in populate) {
+                if(populate.hasOwnProperty(key)) {                    
+                    query.populate(key, populate[key]);
+                }
+            }
+        }
 
         query.exec(cb);
     },
 
     list: function(options, cb) {
         options.criteria = options.criteria || {};
-        options.select = options.select || 'id title stage';
+        options.select = options.select || 'id title stage';        
 
         var query = this.find(options.criteria)
             .select(options.select);
         
+        if(options.populate) {
+            var populate = options.populate;
+            
+            for(var key in populate) {
+                if(populate.hasOwnProperty(key)) {                    
+                    query.populate(key, populate[key]);
+                }
+            }
+        }
+
         // these additions were deleting tasks? 
         // taking a look at it later
-
-        // .populate('created_by', 'id name');
 
         // if(options.sort) query.sort(options.sort);
         // if(options.limit) query.limit(options.perPage);

@@ -14,23 +14,23 @@
         return {            
             createTask: createTask,
             fetchTask: fetchTask,
+            updateTask: updateTask,
             deleteTask: deleteTask
         };
 
         function createTask(pkg, next) {
             $http.post(env.api + 'boards/' + pkg.boardId + '/tasks', pkg)
-            .then(function(response) {
-                next(null, response.data);
-            }, function(response) {
-                next(response.data);
-            });
+            .then(success(next), error(next));
         }
 
         function fetchTask(id, next) {
             $http.get(env.api + 'tasks/' + id)
-            .then(success(next), function(response) {
-                next(response.data);
-            });
+            .then(success(next), error(next));
+        }
+
+        function updateTask(pkg, next) {
+            $http.put(env.api + 'tasks/' + pkg._id, pkg)
+            .then(success(next), error(next));
         }
 
         function deleteTask(id, next) {

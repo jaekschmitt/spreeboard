@@ -60,7 +60,7 @@
             templateUrl: 'app/tasks/views/task-new.html'
         });
 
-        $routeProvider.when('/boards/:board_id/tasks/:task_id', {
+        $routeProvider.when('/boards/:board_id/tasks/:task_id/edit', {
             controller: 'editTaskController',
             templateUrl: 'app/tasks/views/task-edit.html'
         });

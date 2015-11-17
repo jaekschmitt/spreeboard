@@ -43,7 +43,7 @@ exports.gitlab = function(req, res, next) {
         if(err) return res.status(500).json(err);
         if(!user) {
             user = new User({
-                name: profile.displayName,
+                name: profile.name,
                 email: profile.email,
                 username: profile.username,
                 provider: 'gitlab',

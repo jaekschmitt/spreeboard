@@ -27,7 +27,7 @@
 
         function registerGitlabAuth() {
             hello.init({
-                'gitlab': '9c43d7bf9c5cc6952e69ccb04940bae35dd15b5360138381fd758ccbf6308ead'
+                'gitlab': 'b679362c4983c505b28a20e84fd21888dfa7f71037fa97aa1dafc670bb0a1778'
             }, {
                 oauth_proxy: 'http://localhost:3000/oauthproxy'        
             });

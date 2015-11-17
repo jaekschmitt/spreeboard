@@ -4,13 +4,14 @@
         .module('main')
         .controller('newTaskController', newTaskController);
 
-    newTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices'];
+    newTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices'];
 
-    function newTaskController($scope, $routeParams, $location, toastr, taskServices, boardServices) {
+    function newTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users) {
 
         // properties
 
         $scope.board = {};
+        $scope.users = {};
         $scope.task = {};
 
         $scope.working = false;
@@ -22,24 +23,34 @@
         activate();
 
         function activate() {
-            boardServices.fetchBoardInfo($routeParams.board_id, function(err, board) {
+            var board_id = $routeParams.board_id;
+
+            async.parallel({
+                board: function(cb) { return _boards.fetchBoardInfo(board_id, cb); },
+                users: function(cb) { return _users.list(cb); }
+            }, function(err, results){ 
                 if(err) return toastr.error(err);
-                $scope.board = board;
+
+                $scope.board = results.board;
+                $scope.users = results.users;
             });
         }
 
         function createTask() {
             if($scope.working) return;
-
+            
+            var task = $scope.task;
             var pkg = {
-                title: $scope.task.title,
-                description: $scope.task.description,
-                stage: $scope.task.stage,
+                title: task.title,
+                description: task.description,
+                stage: task.stage,
+                developer: task.developer ? task.developer._id : null,
+                owner: task.owner ? task.owner._id : null,
                 boardId: $scope.board._id
             };            
 
             $scope.working = true;
-            taskServices.createTask(pkg, function(err, task) {                
+            _tasks.createTask(pkg, function(err, task) {                
                 $scope.working = false;
 
                 if(err) {

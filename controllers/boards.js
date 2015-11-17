@@ -1,11 +1,12 @@
 var logger = require(__base + 'config/logger'),
-    config = require(__base + 'config/config'),    
+    config = require(__base + 'config/config'),
     async = require('async'),
     _ = require('lodash'),
     mongoose = require('mongoose'),
     Board = mongoose.model('Board'),
     Label = mongoose.model('Label'),
-    _boards = require(__base + 'lib/boards');
+    User = mongoose.model('User'),
+    _boards = require(__base + 'lib/boards');    
 
 exports.load = function(req, res, next, id) {
     var options = {
@@ -23,7 +24,20 @@ exports.load = function(req, res, next, id) {
 };
 
 exports.info = function(req, res, next) {
-    res.status(200).json(req.board);
+    var options = {
+            criteria: { roles: 'developer' },
+            select: 'id name email'
+        };
+
+    User.list(options, function(err, users) {
+        if(err) return res.status(500).json(err);
+
+        // release mongoose's hold on the object so we can attach other properties to it.
+        var board = req.board.toJSON();
+        board.developers = users;
+
+        res.status(200).json(board);
+    });    
 };
 
 exports.show = function(req, res, next) {

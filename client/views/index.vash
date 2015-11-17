@@ -44,6 +44,7 @@
     <!-- services -->
     <script src="/app/membership/auth.intr.js" type="text/javascript"></script>
     <script src="/app/membership/auth.svc.js" type="text/javascript"></script>
+    <script src="/app/membership/user.svc.js" type="text/javascript"></script>
     <script src="/app/boards/board.svc.js" type="text/javascript"></script>
     <script src="/app/tasks/task.svc.js" type="text/javascript"></script>
     <script src="/app/gitlab/gitlab.svc.js" type="text/javascript"></script>

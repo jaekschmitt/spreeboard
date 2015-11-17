@@ -10,7 +10,11 @@ var logger = require(__base + 'config/logger'),
 exports.load = function(req, res, next, id) {
     var options = {
         criteria: { _id : id },
-        select: 'id title description stage project board issue.id created_at'
+        select: 'id title description stage project board issue.id created_at developer owner',
+        populate: { 
+            'developer': 'id name email',
+            'owner': 'id name email'
+        }
     };
 
     Task.load(options, function(err, task) {
@@ -27,6 +31,8 @@ exports.create = function(req, res, next) {
         title: req.body.title,
         description: req.body.description,
         stage: req.body.stage,
+        developer: req.body.developer,
+        owner: req.body.owner,
         board: req.board,
         user: req.user
     };
@@ -39,7 +45,7 @@ exports.create = function(req, res, next) {
             return res.status(200).json(results.task);  
         } else {
             args = {
-                task: results.task,
+                taskId: results.task._id,
                 user: req.user
             };
 
@@ -52,7 +58,32 @@ exports.create = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
+    if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));
+    
+    var task = req.task;
+    
+    task.title = req.body.title;
+    task.description = req.body.description;
+    task.stage = req.body.stage;
+    task.developer = req.body.developer;    
+    task.owner = req.body.owner;
 
+    task.sync_lock = true;
+
+    task.save(function(err) {
+        if(err) return res.status(500).json(err);
+        if(!req.task.issue) return res.status(200).json({});
+
+        var args = {
+            taskId: task._id,
+            user: req.user
+        };
+
+        _gitlab.issues.update(args, function(err, results) {
+            if(err) return res.status(500).json(err);
+            return res.status(200).json({});
+        });
+    });
 };
 
 exports.delete = function(req, res, next) {
