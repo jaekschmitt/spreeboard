@@ -5,14 +5,14 @@
         .factory('authSvc', authService);
 
 
-    authService.$inject = ['$http', '$q', 'localStorageService'];
+    authService.$inject = ['$http', '$q', 'localStorageService', 'env'];
 
     var authentication = {
             isAuth: false,
             user: {}
         };
 
-    function authService($http, $q, localStorageSvc) {
+    function authService($http, $q, localStorageSvc, env) {
 
         registerGitlabAuth();
 
@@ -27,14 +27,14 @@
 
         function registerGitlabAuth() {
             hello.init({
-                'gitlab': 'b679362c4983c505b28a20e84fd21888dfa7f71037fa97aa1dafc670bb0a1778'
+                'gitlab': env.gitlab.key
             }, {
-                oauth_proxy: 'http://localhost:3000/oauthproxy'        
+                oauth_proxy: env.gitlab.proxy
             });
         }
 
         function saveRegistration(registration, next) {            
-            $http.post('http://localhost:3000/users', registration)
+            $http.post(env.api + 'users', registration)
             .then(function(response) {
                 var authData = saveAuthResponse(response);
                 return next(null, authData);
@@ -52,7 +52,7 @@
                 
                 gitlab.api('me').then(function(profile) {
                     
-                    $http.post('http://localhost:3000/users/session/gitlab', profile)
+                    $http.post(env.api + 'users/session/gitlab', profile)
                     .then(function(response) {
                         var authData = saveAuthResponse(response);
                         return next(null, authData);

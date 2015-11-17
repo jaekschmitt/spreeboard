@@ -30,15 +30,25 @@ module.exports = (grunt) ->
                         'client/public/vendor/bitters/app/assets/stylesheets'
                     ]
 
+        ngconstant:
+            options:                
+                name: 'config'
+            env:
+                options:
+                    dest: 'client/app/config/env.settings.js'
+                constants: grunt.file.readJSON 'client/app/config/env.config.json'
+
         watch:
             sass:
                 files: 'client/public/stylesheets/sass/**/*.scss'
-                tasks: ['sass']                
-
+                tasks: ['sass']
+            client_settings:
+                files: 'client/app/config/**/*.json'
+                tasks: ['ngconstant:env']
 
     # load external tasks
     # load all plugins that match 'grunt-*'
     require('matchdep').filterAll('grunt-*').forEach(grunt.loadNpmTasks)
 
     # create workflows
-    grunt.registerTask 'default', ['sass', 'watch']
+    grunt.registerTask 'default', ['sass', 'ngconstant:env', 'watch']

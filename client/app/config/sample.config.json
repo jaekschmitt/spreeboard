@@ -1,0 +1,11 @@
+{
+    "env": {
+        "api": "NAME_YOUR_ENVIRONMENT",
+        "api": "http://BASE_URL_FOR_API/",
+
+        "gitlab": {
+            "key": "GITLAB_APPLICATION_ID",
+            "proxy": "http://BASE_URL/oauthproxy"
+        }
+    }
+}

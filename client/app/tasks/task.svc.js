@@ -1,16 +1,12 @@
 (function() {
 
-    var env = {
-        api: 'http://localhost:3000/'
-    };
-
     angular
         .module('main')
         .factory('taskServices', taskServices);
 
-    taskServices.$inject = ['$http'];
+    taskServices.$inject = ['$http', 'env'];
 
-    function taskServices($http) {
+    function taskServices($http, env) {
         return {            
             createTask: createTask,
             fetchTask: fetchTask,

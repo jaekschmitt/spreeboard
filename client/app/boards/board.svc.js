@@ -1,16 +1,12 @@
 (function() {
 
-    var env = {
-        api: 'http://localhost:3000/'
-    };
-
     angular
         .module('main')
         .factory('boardServices', boardServices);
 
-    boardServices.$inject = ['$http'];    
+    boardServices.$inject = ['$http', 'env'];
 
-    function boardServices($http) {
+    function boardServices($http, env) {
         return {
             boards: boards,
             createBoard: createBoard,

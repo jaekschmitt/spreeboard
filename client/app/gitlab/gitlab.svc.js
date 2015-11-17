@@ -1,16 +1,12 @@
 (function() {
 
-    var env = {
-        api: 'http://localhost:3000/'
-    };
-
     angular
         .module('main')
         .factory('gitlabServices', gitlabServices);
 
-    gitlabServices.$inject = ['$http'];
+    gitlabServices.$inject = ['$http', 'env'];
 
-    function gitlabServices($http) {
+    function gitlabServices($http, env) {
         return {
             projects: projects
         };

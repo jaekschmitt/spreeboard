@@ -1,6 +1,10 @@
 node_modules
 client/public/vendor
-logs/*.txt
+
 .DS_Store
 .sass-cache/*
+
 config/config.settings.json
+
+client/app/config/env.config.json
+client/app/config/env.settings.js

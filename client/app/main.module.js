@@ -1,7 +1,7 @@
 (function() {
 
     angular
-        .module('main', ['ngRoute', 'toastr', 'LocalStorageModule'])
+        .module('main', ['config', 'ngRoute', 'toastr', 'LocalStorageModule'])
         .config(httpConfig)
         .config(routeConfig)
         .run(bootstrap);

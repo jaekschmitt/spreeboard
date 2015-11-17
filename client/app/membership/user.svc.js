@@ -1,16 +1,12 @@
 (function() {
 
-    var env = {
-        api: 'http://localhost:3000/'
-    };
-
     angular
         .module('main')
         .factory('userServices', userServices);
 
-    userServices.$inject = ['$http'];
+    userServices.$inject = ['$http', 'env'];
 
-    function userServices($http) {
+    function userServices($http, env) {
         return {
             list: list
         };
