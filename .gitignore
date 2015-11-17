@@ -3,3 +3,4 @@ client/public/vendor
 logs/*.txt
 .DS_Store
 .sass-cache/*
+config/config.settings.json

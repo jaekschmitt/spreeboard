@@ -1,0 +1,12 @@
+{
+    "mongo": "mongodb://MONGO_CONNECTION_STRING",
+
+    "gitlab": {
+        "key": "GITLAB_APPLICATION_ID",
+        "secret": "GITLAB_APPLICATION_SECRET",    
+
+        "url": "http://GITLAB_BASE_URL/",
+        "api": "http://GITLAB_BASE_URL/api/v3/",
+        "grant_url": "http://GITLAB_BASE_URL/oauth/token"
+    }
+}

@@ -36,7 +36,7 @@ oauthshim.init([{
     client_id: config.gitlab.key,
     client_secret: config.gitlab.secret,
 
-    grant_url: 'http://localhost:8080/oauth/token'    
+    grant_url: config.gitlab.grant_url    
 }]);
 
 // start our server
