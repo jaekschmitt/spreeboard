@@ -24,6 +24,7 @@ module.exports = function(app, passport) {
     app.get('/users', auth, users.list);
     app.post('/users', membership.register);
     app.post('/users/session', membership.signIn);
+    app.post('/users/session/ldap', membership.ldap);
     app.post('/users/session/gitlab', membership.gitlab);
     
     // Boards

@@ -19,6 +19,7 @@
         return {
             saveRegistration: saveRegistration,
             login: login,
+            ldapLogin: ldapLogin,
             devLogin: devLogin,
             logout: logout,
             fillAuthData: fillAuthData,
@@ -34,7 +35,7 @@
         }
 
         function saveRegistration(registration, next) {            
-            $http.post(env.api + 'users', registration)
+            $http.post(env.api + 'users/session', registration)
             .then(function(response) {
                 var authData = saveAuthResponse(response);
                 return next(null, authData);
@@ -43,6 +44,15 @@
 
         function login(loginData) {
             
+        }
+
+        function ldapLogin(pkg, next) {
+            $http.post(env.api + 'users/session/ldap', pkg)
+            .then(function(response) {
+                next(null, response);
+            }, function(response) {
+                next(response);
+            });
         }
 
         function devLogin(next) {

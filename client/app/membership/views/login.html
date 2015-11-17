@@ -8,18 +8,18 @@
                     
                     <div class="form-group">
                         <label class="control-label">Email</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" ng-model="loginData.email">
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">Password</label>
-                        <input type="password" class="form-control" name="password">
+                        <input type="password" class="form-control" ng-model="loginData.password">
                     </div>
 
                     <p>Not registered? Sign up <a href="#/register">here</a>.</p>
 
                     <div class="form-group text-center">
-                        <button class="btn btn-lg btn-primary">Log In</button>
+                        <button class="btn btn-lg btn-primary" ng-click="ldapLogin()">Log In</button>
                     </div>
 
                 </div>
