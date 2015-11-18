@@ -1,11 +1,30 @@
-require(__base + 'config/mongoose-db')
-
 var logger = require(__base + 'config/logger'),
-    mongoose = require('mongoose'),
-    Board = mongoose.model('Board');
+    db = require(__base + 'config/mongoose-db');
     
 describe('Board', function () {
-    it('should do what...', function (done) {
-        done()
+    
+    beforeEach(function() { 
+
+    });
+
+    afterEach(function() {
+
+    });
+
+    describe('#save', function () {
+        it('should validate properties');
+        it('should generate server name');        
+    });
+
+    describe('#load', function () {        
+        it('should query on criteria');
+        it('should query on select');
+        it('should default select to name');
+    });
+
+    describe('#list', function () {
+        it('should query on criteria');
+        it('should query on select');
+        it('should default select to name'); 
     });
 });
