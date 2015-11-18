@@ -114,3 +114,8 @@ LabelSchema.statics = {
 };
 
 mongoose.model('Label', LabelSchema);
+
+module.exports = {
+    name: 'Label',
+    schema: LabelSchema
+};

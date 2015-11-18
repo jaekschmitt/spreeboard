@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     logger = require('../logger'),
     GitlabStrategy = require('passport-gitlab').Strategy,
-    config = require('../config'),
+    config = require('../index'),
     User = mongoose.model('User');
 
 module.exports = new GitlabStrategy({

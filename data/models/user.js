@@ -1,10 +1,10 @@
-var mongoose = require('mongoose');
-var crypto = require('crypto');
+var mongoose = require('mongoose')
+    crypto = require('crypto');
 
-var Schema = mongoose.Schema;
-var oAuthTypes = [
-'gitlab'
-];
+var Schema = mongoose.Schema,
+    oAuthTypes = [
+        'gitlab'
+    ];
 
 /**
 * User Schema
@@ -140,4 +140,7 @@ UserSchema.statics = {
     }
 }
 
-mongoose.model('User', UserSchema);
+module.exports = {
+    name: 'User',
+    schema: mongoose.model('User', UserSchema)
+};

@@ -29,7 +29,7 @@ Once your Gitlab is installed you can log in with the temporary credentials (you
 
 After you have these prerequisits you will need to fill out the server and client settings.  To fill these out you will need the connection string for your running Mongo instance, as well as the App ID and App Secret from registering your application (Spreeboard) in Gitlab.
 
-Once your Spreeboard application is registerd in Gitlab (you can use the base url for the callback url) you will need to add your Application ID in two places and your Application Secret in one. Copy the file *config/sample.config.settings.json* and rename it *config/config.settings.json*.  
+Once your Spreeboard application is registerd in Gitlab (you can use the base url for the callback url) you will need to add your Application ID in two places and your Application Secret in one. Copy the file *config/env/sample.settings.json* and rename it *config/env/[NODE_ENV].json*. (If not NODE_ENV process variable is set it will fall back to *development*)
 Here you will place your Gitlab information.  You will also need to copy the file *client/app/config/sample.config.json* and rename it *client/app/config/env.config.json* replacing the information with your Gitlab information.
 
 Be sure to also add your Mongo Instance connection string to the *config/config.settings.json* file as well.

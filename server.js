@@ -1,5 +1,5 @@
 var logger = require('./config/logger'),
-    config = require('./config/config'),
+    config = require('./config'),
     express = require('express'),
     oauthshim = require('oauth-shim'),
     passport = require('passport'),

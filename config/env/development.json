@@ -1,0 +1,17 @@
+{
+    "mongo": "mongodb://localhost/spreeboard_dev",
+
+    "gitlab": {
+        "key": "b679362c4983c505b28a20e84fd21888dfa7f71037fa97aa1dafc670bb0a1778",
+        "secret": "97ecb4035e32b4ab1ec8c2f97e88a581d68f0742ae7e609aca4eb625e81cf4a4",    
+
+        "url": "http://localhost:8080/",
+        "api": "http://localhost:8080/api/v3/",
+        "grant_url": "http://localhost:8080/oauth/token"
+    },
+
+    "active_directory": {
+        "url": "ldap://scruffy.lapkosoft.local:3268/",
+        "baseDN": "CN=Users,DC=LapkoSoft,DC=local"
+    }
+}

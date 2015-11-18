@@ -1,3 +1,5 @@
+logger = require './config/logger'
+
 module.exports = (grunt) ->
 
     # task configuration
@@ -30,8 +32,19 @@ module.exports = (grunt) ->
                         'client/public/vendor/bitters/app/assets/stylesheets'
                     ]
 
+        mochaTest: 
+            test:
+                options:
+                    reporter: 'spec'
+                    clearRequireCache: true
+                    require: [
+                        () -> process.env.NODE_ENV = 'test' # swap our settings to run with test configurations
+                        () -> global.__base = __dirname + '/'                        
+                    ]
+                src: ['test/**/*.js']
+
         ngconstant:
-            options:                
+            options:
                 name: 'config'
             env:
                 options:
@@ -45,10 +58,25 @@ module.exports = (grunt) ->
             client_settings:
                 files: 'client/app/config/**/*.json'
                 tasks: ['ngconstant:env']
+            tests:
+                options:
+                    spawn: false
+                files: 'test/**/*.js',
+                tasks: 'mochaTest'
+
 
     # load external tasks
     # load all plugins that match 'grunt-*'
     require('matchdep').filterAll('grunt-*').forEach(grunt.loadNpmTasks)
 
+    # hooks for watch when running tests
+    testSrc = grunt.config 'mochaTest.test.src'
+    grunt.event.on 'watch', (action, filepath) ->
+        filepath = filepath.replace /\\/g,"/"
+        
+        grunt.config 'mochaTest.test.src', testSrc
+        grunt.config 'mochaTest.test.src', filepath if filepath.match 'test/'        
+
     # create workflows
     grunt.registerTask 'default', ['sass', 'ngconstant:env', 'watch']
+    grunt.registerTask 'test', ['mochaTest', 'watch:tests']

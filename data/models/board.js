@@ -54,3 +54,8 @@ BoardSchema.statics = {
 };
 
 mongoose.model('Board', BoardSchema);
+
+module.exports = {
+  name: 'Board',
+  schema: BoardSchema
+};

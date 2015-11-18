@@ -3,7 +3,8 @@ var logger = require('./logger'),
     extend = require('util')._extend;
 
 var defaults = { root: path.normalize(__dirname + '/..') },
-    settings = require('config.settings.json');
+    env = process.env.NODE_ENV || 'development',
+    settings = require('./env/' + env + '.json');
 
 logger.info('Settings loaded.');
 module.exports = extend(settings, defaults);

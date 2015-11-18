@@ -93,3 +93,8 @@ TaskSchema.statics = {
 };
 
 mongoose.model('Task', TaskSchema);
+
+module.exports = {
+    name: 'Task',
+    schema: TaskSchema
+};
