@@ -2,7 +2,6 @@ var logger = require('./config/logger'),
     config = require('./config'),
     express = require('express'),
     oauthshim = require('oauth-shim'),
-    passport = require('passport'),
     path = require('path');
     
 var app = express(),
@@ -19,14 +18,11 @@ global.appRoot = path.dirname(require.main.filename);
 // connect to our mongo database
 require('./config/mongoose-db');
 
-// bootstrap passport config
-require('./config/passport')(passport);
-
 // bootstrap application settings
-require('./config/express')(app, passport);
+require('./config/express')(app);
 
 // register application routes
-require('./config/routes')(app, passport);
+require('./config/routes')(app);
 
 // register our oauth shim
 app.all('/oauthproxy', oauthshim)

@@ -9,7 +9,7 @@ var express = require('express'),
     flash = require('connect-flash'),
     path = require('path');    
 
-module.exports = function(app, passport) {
+module.exports = function(app) {
 
     // register our parsers
 
@@ -42,10 +42,6 @@ module.exports = function(app, passport) {
     app.use(express.static(clientRoot));
     app.use(express.static(path.join(clientRoot, 'app')));
     app.use(express.static(path.join(clientRoot, 'public')));
-
-    // passport middleware setup    
-    app.use(passport.initialize());
-    app.use(passport.session());    
 
     // set up cors middleware
 
