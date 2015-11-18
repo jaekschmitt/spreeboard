@@ -1,0 +1,78 @@
+<div id="BoardSettings" class="container">
+    <h2>Settings <small class="text-muted">{{board.name}}</small></h2>
+
+    <div class="row">
+        <div class="col-sm-4">            
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title text-center text-warning">Stages</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" ng-repeat="s in board.stages">
+                        <span>{{s.name}}</span>
+                        <a class="pull-right text-danger" href="" ng-click="removeItem('stages', s)"><i class="fa fa-remove"></i></a>
+                    </li>
+                </ul>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" placeholder="Stage of development" ng-model="stage">
+                        </div>                    
+                        <div class="col-sm-4 text-center">
+                            <button class="btn btn-primary" ng-click="addItem('stages', stage); stage = ''">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">            
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title text-center text-warning">Priorities</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" ng-repeat="p in board.priorities">
+                        <span>{{p.name}}</span>
+                        <a class="pull-right text-danger" href="" ng-click="removePriority(p)"><i class="fa fa-remove"></i></a>
+                    </li>
+                </ul>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" placeholder="Priority" ng-model="priority"></input>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <button class="btn btn-primary" ng-click="addPriority(priority)">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">            
+            <div class="card">
+                <div class="card-block">
+                    <h4 class="card-title text-center text-warning">Sizes</h4>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" ng-repeat="s in board.sizes">
+                        <span>{{s.name}}</span>
+                        <a class="pull-right text-danger" href="" ng-click="removeSize(s)"><i class="fa fa-remove"></i></a>
+                    </li>
+                </ul>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <input class="form-control" type="text" placeholder="Work Sizing" ng-model="size"></input>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <button class="btn btn-primary" ng-click="addSize(size)">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

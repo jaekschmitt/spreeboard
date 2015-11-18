@@ -53,6 +53,11 @@
             templateUrl: 'app/boards/views/board-show.html'
         });
 
+        $routeProvider.when('/boards/:board_id/settings', {
+            controller: 'boardSettingsController',
+            templateUrl: 'app/boards/views/board-settings.html'
+        });
+
         // tasks
 
         $routeProvider.when('/boards/:board_id/tasks/new', {

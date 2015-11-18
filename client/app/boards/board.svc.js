@@ -11,7 +11,10 @@
             boards: boards,
             createBoard: createBoard,
             fetchBoard: fetchBoard,
-            fetchBoardInfo: fetchBoardInfo
+            fetchBoardInfo: fetchBoardInfo,
+            fetchBoardSettings: fetchBoardSettings,
+            addBoardAttribute: addBoardAttribute,
+            removeBoardAttribute: removeBoardAttribute
         };
 
         function boards(next) {
@@ -40,6 +43,31 @@
             .success(function(info) {
                 next(null, info);
             }).catch(next);
+        }
+
+        function fetchBoardSettings(id, next) {
+            $http.get(env.api + 'boards/' + id + '/settings')
+            .then(success(next), error(next));
+        }
+
+        function addBoardAttribute(args, next) {
+            $http.post(env.api + 'boards/' + args.board_id + '/' + args.type, { name: args.name })            
+            .then(success(next), error(next));
+        }
+
+        function removeBoardAttribute(args, next) {
+            $http.delete(env.api + 'boards/' + args.board_id + '/' + args.type + '/' + args.attrId)
+            .then(success(next), error(next));   
+        }
+
+        // private functions
+
+        function success(next) {
+            return function(response) { next(null, response ? response.data : null); };
+        }
+
+        function error(next) {
+            return function(response) { next(response.data); };
         }
     }
 

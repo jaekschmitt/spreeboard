@@ -31,7 +31,7 @@
         }
 
         function addStage(stage) {
-            if(!stage) return
+            if(!stage) return;
             if($scope.stages.indexOf(stage) >= 0) 
                 return;
 

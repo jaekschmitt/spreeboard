@@ -11,12 +11,12 @@ var logger = require(__base + 'config/logger'),
 exports.load = function(req, res, next, id) {
     var options = {
         criteria: { _id : id },
-        select: 'id name serverName created_by created_at stages'
-    };
+        select: 'id name serverName created_by created_at stages priorities sizes project.id'
+    };    
 
     Board.load(options, function(err, board) {
         if(err) return next(err);
-        if(!board) return next();
+        if(!board) return next();        
 
         req.board = board;
         next();
@@ -38,6 +38,25 @@ exports.info = function(req, res, next) {
 
         res.status(200).json(board);
     });    
+};
+
+exports.settings = function(req, res, next) {
+    var options = {
+        criteria: { board : req.board._id },
+        select: 'id name serverName type'        
+    };
+
+    Label.list(options, function(err, labels) {
+        if(err) return res.status(500).json(err);
+
+        var grouped = _.groupBy(labels, 'type');
+
+        req.board.stages = grouped.stage || [];
+        req.board.priorities = grouped.priority || [];
+        req.board.sizes = grouped.size || [];
+
+        res.status(200).json(req.board);
+    });
 };
 
 exports.show = function(req, res, next) {
@@ -80,36 +99,42 @@ exports.create = function(req, res, next) {
     });
 };
 
-exports.edit = function(req, res, next) {
-    res.render('boards/edit', {
+exports.update = function(req, res, next) {};
+exports.delete = function(req, res, next) {};
+
+/**
+* Board Attributes
+*/
+
+exports.addBoardAttr = function(req, res, next) {
+    var args = {        
+        type: req.params.type,
+        name: req.body.name,
         board: req.board,
-        user: req.user
-    });
-};
-
-exports.update = function(req, res, next) {
-
-};
-
-exports.updateLabels = function(req, res, next) {
-    logger.debug(req.body);
-
-    var args = {
-        board: req.board,
-        labels: req.body.labels,
         user: req.user
     };
 
-    _boards.updateLabels(args, function(err, results) {
-        req.board.labels = results.labels;
+    // logger.crit(JSON.stringify(args, null, 4));
+    _boards.addAttribute(args, function(err, results){ 
+        if(err) return res.status(500).json(err);
 
-        res.render('boards/edit', {
-            board: req.board,
-            user: req.user
-        });
-    })    
+        logger.crit(JSON.stringify(results, null, 4));
+        res.status(200).json(results.label);
+    });    
 };
 
-exports.delete = function(req, res, next) {
+exports.deleteBoardAttr = function(req, res, next) {
+    var args = {
+        type: req.params.type,
+        attrId: req.params.id,
+        board: req.board,
+        user: req.user
+    };
 
+    _boards.removeAttribute(args, function(err, results) {
+        if(err) return res.status(500).json(err);
+
+        logger.crit(JSON.stringify(results, null, 4));
+        res.status(200).json(results);
+    });
 };

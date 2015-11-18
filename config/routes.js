@@ -33,13 +33,18 @@ module.exports = function(app, passport) {
     app.post('/boards', auth, boards.create);
     app.get('/boards/:id', auth, boards.show);
     app.get('/boards/:board_id/info', auth, boards.info);
-
+    app.get('/boards/:board_id/settings', auth, boards.settings);
+    
     // Tasks
     app.param('task_id', tasks.load);
     app.get('/tasks/:task_id', auth, tasks.show);
     app.post('/boards/:board_id/tasks', auth, roles('developer'), tasks.create);
     app.put('/tasks/:task_id', auth, roles('developer'), tasks.update);
     app.delete('/tasks/:task_id', auth, roles('developer'), tasks.delete);
+
+    // Board Attributes
+    app.post('/boards/:board_id/:type', auth, boards.addBoardAttr);    
+    app.delete('/boards/:board_id/:type/:id', auth, boards.deleteBoardAttr);
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);

@@ -29,7 +29,8 @@
     <!-- vendor scripts -->
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script src="/vendor/tether/dist/js/tether.min.js" type="text/javascript"></script>
-    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>    
+    <script src="/vendor/underscore/underscore-min.js" type="text/javascript"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>        
     <script src="/vendor/hello/dist/hello.min.js" type="text/javascript"></script>
     <script src="/scripts/auth/gitlab-auth.js" type="text/javascript"></script>
     <script src="/vendor/async/dist/async.min.js" type="text/javascript"></script>
@@ -57,6 +58,7 @@
     <script src="/app/boards/controllers/board-list.ctrl.js" type="text/javascript"></script>
     <script src="/app/boards/controllers/board-new.ctrl.js" type="text/javascript"></script>
     <script src="/app/boards/controllers/board-show.ctrl.js" type="text/javascript"></script>
+    <script src="/app/boards/controllers/board-settings.ctrl.js" type="text/javascript"></script>
     <script src="/app/tasks/controllers/task-new.ctrl.js" type="text/javascript"></script>
     <script src="/app/tasks/controllers/task-edit.ctrl.js" type="text/javascript"></script>
 
