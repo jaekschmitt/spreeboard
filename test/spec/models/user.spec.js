@@ -1,4 +1,4 @@
-var logger = require(__base + 'config/logger'),
+var logger = require(__base + 'config/logger'),    
     factory = require(__base + 'test/factories'),
     db = require(__base + 'config/mongoose-db')
     expect = require('chai').expect;

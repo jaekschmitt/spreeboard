@@ -8,5 +8,7 @@
         "url": "http://GITLAB_BASE_URL/",
         "api": "http://GITLAB_BASE_URL/api/v3/",
         "grant_url": "http://GITLAB_BASE_URL/oauth/token"
-    }
+    },
+
+    "log_level": "trace"
 }

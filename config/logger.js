@@ -1,4 +1,5 @@
-var winston = require('winston');
+var config = require('./index'),
+    winston = require('winston');    
 
 var customColors = {
     trace: 'white',
@@ -21,7 +22,7 @@ var logger = new (winston.Logger)({
     },
     transports: [
       new (winston.transports.Console)({
-        level: 'trace',
+        level: config.log_level,
         colorize: true,
         timestamp: false
       })

@@ -13,5 +13,7 @@
     "active_directory": {
         "url": "ldap://scruffy.lapkosoft.local:3268/",
         "baseDN": "CN=Users,DC=LapkoSoft,DC=local"
-    }
+    },
+
+    "log_level": "trace"
 }

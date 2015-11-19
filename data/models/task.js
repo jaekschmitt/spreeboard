@@ -92,9 +92,7 @@ TaskSchema.statics = {
 
 };
 
-mongoose.model('Task', TaskSchema);
-
 module.exports = {
     name: 'Task',
-    schema: TaskSchema
+    schema: mongoose.model('Task', TaskSchema)
 };
