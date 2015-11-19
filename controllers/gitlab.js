@@ -1,10 +1,9 @@
 var logger = require(__base + 'config/logger'),
     config = require(__base + 'config'),
+    db = require(__base + 'config/mongoose-db'),
     _gitlab = require(__base + 'lib/gitlab'),    
     async = require('async'),
-    _ = require('lodash'),
-    mongoose = require('mongoose'),
-    Task = mongoose.model('Task');
+    _ = require('lodash');
 
 exports.projects = function(req, res, next) { 
     _gitlab.list('projects', req.user.id, function(err, projects) {
@@ -34,10 +33,11 @@ exports.issuesSync = function(req, res, next) {
             select: 'id sync_lock issue.id'
         };
 
-        Task.load(options, function(err, task) {            
-            if(err || !task || task.issue) return next(err);
+        db.Task.load(options, function(err, task) {            
+            if(err) return next(err);
+            if(task && task.issue) return next();
 
-            if(task.sync_lock) {
+            if(task && task.sync_lock) {
                 logger.crit('locked');
 
                 task.sync_lock = false;
@@ -61,7 +61,7 @@ exports.issuesSync = function(req, res, next) {
             criteria: { 'issue.id': issueInfo.object_attributes.id }
         };
 
-        Task.delete(options, function(err, task) {
+        db.Task.delete(options, function(err, task) {
             if(err) logger.crit(err);
             if(!task) return next();
 
@@ -76,7 +76,7 @@ exports.issuesSync = function(req, res, next) {
             select: 'id sync_lock'
         };
 
-        Task.load(options, function(err, task) {
+        db.Task.load(options, function(err, task) {
             if(err || !task) {
                 logger.crit(err);
                 return next();

@@ -49,7 +49,7 @@ module.exports = (grunt) ->
             env:
                 options:
                     dest: 'client/app/config/env.settings.js'
-                constants: grunt.file.readJSON 'client/app/config/env.config.json'
+                constants: grunt.file.readJSON 'client/app/config/env.settings.json'
 
         watch:
             sass:

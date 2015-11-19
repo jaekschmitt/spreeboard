@@ -4,7 +4,9 @@ client/public/vendor
 .DS_Store
 .sass-cache/*
 
-config/config.settings.json
+config/development.json
+config/test.json
+config/production.json
 
 client/app/config/env.config.json
 client/app/config/env.settings.js

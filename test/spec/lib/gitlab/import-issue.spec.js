@@ -1,36 +1,41 @@
 var rewire = require('rewire')    
     logger = require(__base + 'config/logger'),    
     factory = require(__base + 'test/factories'),    
-    db = require(__base + 'config/mongoose-db')    
+    db = require(__base + 'config/mongoose-db'),
+    stubs = require('./stubs'),
     expect = require('chai').expect,
     sinon = require('sinon'),
     _ = require('lodash');
 
-var ImportIssue = rewire(__base + 'lib/gitlab/issues/processes/import-issue'),        
+var ImportIssue = rewire(__base + 'lib/gitlab/issues/processes/import-issue'),
     args = {
         object_attributes: {
             id: 1,
             project_id: 1,
             author_id: 1
-        }        
+        }
     };
 
-var gitlabStub = {
-    issues: {
-        load: function(args, cb) {
-            cb(null, factory.buildSync('gitlab-issue', { id : 1 }));
-        }
-    }
-};
-
-ImportIssue.__set__('_gitlab', gitlabStub);
-
 describe('Gitlab#Import-Issue', function () {        
-    
+    var board;
+
+    before(function(done) {
+        console.log('1');
+        factory.create('board', function(err, b) {
+            board = b;
+            done();
+        });
+    });
+
+    after(function(done) { 
+        db.Board.remove({}, done);
+    });
+
     describe('#no author', function () {
         var application, callback = {};
         
         before(function(done) {
+            console.log('2');
             application = new ImportIssue(args);
 
             application.import(function(err, results) {
@@ -61,10 +66,13 @@ describe('Gitlab#Import-Issue', function () {
         var application, callback = {};
         
         before(function(done) {
+            console.log('3');
             factory.create('gitlab-user', function(err, user) {
-                args.object_attributes.author_id = user.gitlab.id;
                 
-                var application = new ImportIssue(args);
+                args.object_attributes.author_id = user.gitlab.id;
+                ImportIssue.__set__('_gitlab', stubs.loadStub({ id: 1 }));
+
+                application = new ImportIssue(args);
                 application.import(function(err, results) {
                     callback.err = err;
                     callback.results = results;
@@ -75,7 +83,11 @@ describe('Gitlab#Import-Issue', function () {
         });
 
         after(function(done) {
-            db.User.remove({}, done);
+            application = callback = {};
+            db.User.remove({}, function() {
+                console.log('3 - end');
+                done();
+            });
         });
 
         it('should not create a task', function(done) {
@@ -92,21 +104,27 @@ describe('Gitlab#Import-Issue', function () {
     });
 
     describe('#no stage label', function () {
+        var application, callback = {};
+
         before(function(done) {
+            console.log('4');
             factory.create('gitlab-user', function(err, user) {
-                args.object_attributes.author_id = user.gitlab.id;
                 
-                var application = new ImportIssue(args);
-        //         application.import(function(err, results) {
-        //             callback.err = err;
-        //             callback.results = results;
+                args.object_attributes.author_id = user.gitlab.id;
+                ImportIssue.__set__('_gitlab', stubs.loadStub({ labels: [board.serverName] }));    
+
+                // application = new ImportIssue(args);
+                // application.import(function(err, results) {
+    //                 callback.err = err;
+    //                 callback.results = results;
 
                     done();
-        //         });
+                // });
             });                           
         });
 
         after(function(done) {
+            application = callack = {};
             db.User.remove({}, done);
         });
 

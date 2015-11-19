@@ -3,7 +3,7 @@ var factory = require('factory-girl'),
 
 module.exports = function(factory, db) {
 
-    factory.define('gitlab-issue', db.User, {
+    factory.define('gitlab-issue', {}, {
         id: 42,
         iid: 3,
         project_id: 8,
