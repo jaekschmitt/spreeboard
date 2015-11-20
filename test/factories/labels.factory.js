@@ -8,6 +8,6 @@ module.exports = function(factory, db) {
         serverName: '(s) todo',
         color: '#ffffff',
         type: 'stage',
-        created_at: new Date()
+        created_at: (new Date())
     });
 };

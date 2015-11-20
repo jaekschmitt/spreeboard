@@ -16,13 +16,16 @@ describe('Fetch Board', function () {
     var board;
 
     before(function (done) {
-        async.waterfall([
+        async.series([
 
             function(cb) { factory.create('board', { stages: stages }, cb); },
-            function(cb) { factory.create('stage-label', stages[0], cb); },
-            function(cb) { factory.create('stage-label', stages[1], cb); }
+            function(cb) { factory.create('stage-label', { stage: stages[0] }, cb); },
+            function(cb) { factory.create('stage-label', { stage: stages[1] }, cb); }
 
-        ], done);
+        ], function(err, results) {
+            board = results[0];
+            done();
+        });
     });
 
     it('should return a board');

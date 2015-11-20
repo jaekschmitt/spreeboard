@@ -8,7 +8,7 @@ factory.setAdapter(mongooseAdapter);
 
 fs.readdirSync(path.join(__base, 'test/factories')).forEach(function(file) {
     
-    if(~file.indexOf('factory.js')) 
+    if(~file.indexOf('factory.js'))
         require(path.join(__base, 'test/factories', file))(factory, db);
 
 });

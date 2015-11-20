@@ -30,5 +30,6 @@ fs.readdirSync(path.join(__base, 'data/models')).forEach(function (file) {
 if(!testing) logger.info('Bootstrapped ' + _.keys(models).length + ' models');
 
 module.exports = _.extend({
-        connection: mongoose.connection
+        connection: mongoose.connection,
+        types: mongoose.Types
     },models);

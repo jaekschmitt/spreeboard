@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 var TaskSchema = new Schema({
 
-    title: { type: String, required: true },
+    title: { type: String, required: 'Title cannot be blank' },
     description: String,
     stage: {},
     
@@ -68,13 +68,6 @@ TaskSchema.statics = {
                 }
             }
         }
-
-        // these additions were deleting tasks? 
-        // taking a look at it later
-
-        // if(options.sort) query.sort(options.sort);
-        // if(options.limit) query.limit(options.perPage);
-        // if(options.limit && options.page) query.skip(options.perPage * options.page);
 
         query.exec(cb);
     },

@@ -1,0 +1,11 @@
+{
+    "env": {
+        "api": "development",
+        "api": "http://localhost:3000/",
+
+        "gitlab": {
+            "key": "b679362c4983c505b28a20e84fd21888dfa7f71037fa97aa1dafc670bb0a1778",
+            "proxy": "http://localhost:3000/oauthproxy"
+        }
+    }
+}
