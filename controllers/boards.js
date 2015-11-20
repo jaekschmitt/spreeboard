@@ -67,10 +67,10 @@ exports.show = function(req, res, next) {
 
     _boards.fetch(args, function(err, results) {
         if(err) return res.status(500).json(err);
-
+console.log(results);
         res.status(200).json({
             board: results.board,
-            stages: results.stages
+            backlog: results.backlog            
         });
     });
 };
@@ -83,8 +83,7 @@ exports.list = function(req, res, next) {
 };
 
 exports.create = function(req, res, next) {
-    req.body.stages = req.body.stages || [];
-    req.body.stages.unshift('Backlog');
+    req.body.stages = req.body.stages || [];    
 
     var args = {
         name: req.body.name,

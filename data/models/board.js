@@ -7,7 +7,7 @@ var BoardSchema = new mongoose.Schema({
 
     stages: { type: Array },
     priorities: { type: Array },
-    sizes: { type: Array },
+    sizes: { type: Array },    
     
     project: {},    
     created_by: {},

@@ -6,8 +6,11 @@
             <span class="text-muted">Here is were you will be able to filter your shit...eventually.</span>
         </div>
     </div>
-    <nav class="navbar navbar-nav board-actions">
-        <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".board-filters">&#9776; {{board.name}}</button>
+    <nav class="navbar navbar-nav board-actions">        
+        <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".board-filters">&#9776; {{board.name}}</button>        
+        <div class="action pull-right">
+            <a href="#/boards/{{board._id}}/backlog" class="btn btn-secondary">({{backlog}}) Backlog</i></a>
+        </div>
         <div class="pull-right action">
             <a href="#/boards/{{board._id}}/settings" class="btn btn-secondary"><i class="fa fa-cog"></i></a>
         </div>
@@ -17,7 +20,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="add-dropdown">
                 <a class="dropdown-item" href="#/boards/{{board._id}}/tasks/new">Task</a>
-            </div>                
+            </div>
         </div>            
     </nav>
 

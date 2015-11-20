@@ -21,11 +21,6 @@
                 <div class="form-group">
                     <label class="control-label">Stages</label>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <span>Backlog</span>
-                            <i class="pull-right fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Backlog is a required stage. It will contain all unstarted tasks."></i>                            
-                        </li>
-                                            
                         <li class="list-group-item" ng-repeat="s in stages">
                             <span>{{s}}</span>
                             <a class="pull-right text-danger" href="" ng-click="removeStage(s)"><i class="fa fa-remove"></i></a>

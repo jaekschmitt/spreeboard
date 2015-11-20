@@ -6,7 +6,7 @@ module.exports = function(factory, db) {
     factory.define('board', db.Board, {
         name: 'board',
         serverName: '(b) board',
-        stages: [],
+        stages: [{ name: 'Backlog', serverName: '(s) backlog' }],
         priorities: [],
         sizes: [],
         project: {}

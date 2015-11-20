@@ -35,21 +35,30 @@
         }
 
         function saveRegistration(registration, next) {            
-            $http.post(env.api + 'users/session', registration)
+            $http.post(env.api + 'users', registration)
             .then(function(response) {
                 var authData = saveAuthResponse(response);
                 return next(null, authData);
             }).catch(next);
         }
 
-        function login(loginData) {
-            
+        function login(loginData, next) {
+            $http.post(env.api + 'users/session', loginData)
+            .then(function(response) {
+                var authData = saveAuthResponse(response);
+                return next(null, authData);
+            }, function(response) {
+                next(response);
+            });
         }
 
         function ldapLogin(pkg, next) {
             $http.post(env.api + 'users/session/ldap', pkg)
             .then(function(response) {
-                next(null, response);
+                if(!response) return next('Invalid username and password.');
+                
+                var authData = saveAuthResponse(response);
+                next(null, authData);
             }, function(response) {
                 next(response);
             });

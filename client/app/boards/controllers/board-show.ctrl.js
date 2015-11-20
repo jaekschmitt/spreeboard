@@ -11,7 +11,7 @@
         // properties
 
         $scope.boards = [];
-        $scope.stages = [];
+        $scope.backlog = null;
 
         // functions
 
@@ -24,7 +24,7 @@
                 if(err) return toastr.error(err);
 
                 $scope.board = results.board;
-                $scope.stages = results.stages;
+                $scope.backlog = results.backlog;                
             });
         }
     }

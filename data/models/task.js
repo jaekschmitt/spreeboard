@@ -8,19 +8,13 @@ var TaskSchema = new Schema({
     description: String,
     stage: {},
     
-    board: {
-        type: Schema.ObjectId,
-        ref: 'Board'
-    },    
-
-    project: {
-        type: Schema.ObjectId,
-        ref: 'Project'
-    },
+    board: { type: Schema.ObjectId, ref: 'Board' },
+    project: { type: Schema.ObjectId, ref: 'Project' },
 
     developer: { type: Schema.ObjectId, ref: 'User' },
-    owner: { type: Schema.ObjectId, ref: 'User' },    
+    owner: { type: Schema.ObjectId, ref: 'User' },
     created_by: { type: Schema.ObjectId, ref: 'User' },
+    approved: { type: Boolean, default: false },
 
     issue: {},
     sync_lock: { type: Boolean, default: true },

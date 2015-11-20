@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
 
 var Schema = mongoose.Schema,
     oAuthTypes = [
-        'gitlab'
+        'gitlab',
+        'ldap'
     ];
 
 /**
@@ -20,6 +21,7 @@ var UserSchema = new Schema({
     salt: { type: String, default: '' },
     authToken: { type: String, default: '' },
     gitlab: {},
+    ldap: {}
 });
 
 /**

@@ -17,25 +17,29 @@ var ImportIssue = rewire(__base + 'lib/gitlab/issues/processes/import-issue'),
     };
 
 describe('Gitlab#Import-Issue', function () {        
-    var board;
+    var board, label;
 
     before(function(done) {
-        console.log('1');
-        factory.create('board', function(err, b) {
-            board = b;
-            done();
+        factory.create('board', {}, function(err, b) {
+            factory.create('stage-label', {}, function(err, l) {            
+                board = b;
+                label = l;
+
+                done();
+            });
         });
     });
 
     after(function(done) { 
-        db.Board.remove({}, done);
+        db.Label.remove({}, function() {
+            db.Board.remove({}, done);
+        });
     });
 
     describe('#no author', function () {
         var application, callback = {};
         
         before(function(done) {
-            console.log('2');
             application = new ImportIssue(args);
 
             application.import(function(err, results) {
@@ -48,10 +52,9 @@ describe('Gitlab#Import-Issue', function () {
 
         after(function(done) { db.Task.remove({}, done); });
 
-        it('should not create a task', function(done) {
-            db.Task.count({}, function(err, count) {
-                expect(count).to.equal(0);
-
+        it('should not create a task', function(done) {            
+            db.Task.find({}, function(err, count) {
+                expect(count.length).to.equal(0);                
                 done();
             });
         });
@@ -66,7 +69,6 @@ describe('Gitlab#Import-Issue', function () {
         var application, callback = {};
         
         before(function(done) {
-            console.log('3');
             factory.create('gitlab-user', function(err, user) {
                 
                 args.object_attributes.author_id = user.gitlab.id;
@@ -85,7 +87,6 @@ describe('Gitlab#Import-Issue', function () {
         after(function(done) {
             application = callback = {};
             db.User.remove({}, function() {
-                console.log('3 - end');
                 done();
             });
         });
@@ -107,38 +108,128 @@ describe('Gitlab#Import-Issue', function () {
         var application, callback = {};
 
         before(function(done) {
-            console.log('4');
             factory.create('gitlab-user', function(err, user) {
                 
                 args.object_attributes.author_id = user.gitlab.id;
-                ImportIssue.__set__('_gitlab', stubs.loadStub({ labels: [board.serverName] }));    
+                ImportIssue.__set__('_gitlab', stubs.loadStub({ labels: [board.serverName] }));
 
-                // application = new ImportIssue(args);
-                // application.import(function(err, results) {
-    //                 callback.err = err;
-    //                 callback.results = results;
+                application = new ImportIssue(args);
+                application.import(function(err, results) {
+                    callback.err = err;
+                    callback.results = results;
 
                     done();
-                // });
+                });
             });                           
         });
 
         after(function(done) {
-            application = callack = {};
-            db.User.remove({}, done);
+            application = callback = {};
+            db.User.remove({}, function() {
+                db.Task.remove({}, done);
+            });
         });
 
-        it('should create a task');
-        it('should attach an author');
-        it('should attach a board');
-        it('should not create a label or attach a stage');
+        it('should return successfully', function() {
+            expect(callback.err).to.not.exist;
+        });
+
+        it('should create a task', function(done) {
+            db.Task.count({}, function(err, count) {
+                expect(count).to.equal(1);
+                done();
+            });
+        });
+
+        it('should be an approved task', function() {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.approved).to.equal(true);
+        });
+
+        it('should attach an author', function() {
+            var results = callback.results,
+                task = results.task;
+            
+            expect(task.created_by).to.exist;
+        });
+
+        it('should attach a board', function() { 
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.board).to.exist;
+            expect(task.board.toString()).to.equal(board._id.toString());
+        });
+
+        it('should not create a label or attach a stage', function(done) {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.stage).to.not.exist;
+
+            db.Label.count({}, function(err, count) {
+                expect(count).to.equal(0);
+                done();
+            });
+        });
     });
 
     describe('#stage label', function () {
-        it('should create a task');
-        it('should attach an author');
-        it('should attach a board');
+        var application, callback = {};
+
+        before(function(done) {
+            factory.create('gitlab-user', function(err, user) {
+                
+                args.object_attributes.author_id = user.gitlab.id;
+                ImportIssue.__set__('_gitlab', stubs.loadStub({ labels: [board.serverName, board.stages[0].serverName] }));
+
+                application = new ImportIssue(args);
+                application.import(function(err, results) {
+                    callback.err = err;
+                    callback.results = results;
+
+                    done();
+                });
+            });                           
+        });
+
+        after(function(done) {
+            application = callback = {};
+            db.User.remove({}, function() {
+                db.Task.remove({}, function() {
+                    db.Label.remove({}, done);
+                });
+            });
+        });
+
+        it('should return successfully', function() {
+            expect(callback.err).to.not.exist;
+        });
+
+        it('should create a task', function(done) {
+            db.Task.count({}, function(err, count) {
+                expect(count).to.equal(1);
+                done();
+            });
+        });
+
+        it('should attach an author', function() {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.created_by).to.exist;
+        });
+
+        it('should attach a board', function() {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.board).to.exist;
+            expect(task.board.toString()).to.equal(board._id.toString());
+        });
+
         it('should attach a stage');
     });
-
 });
