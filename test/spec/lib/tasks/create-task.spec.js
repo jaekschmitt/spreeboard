@@ -10,7 +10,7 @@ var rewire = require('rewire')
 var CreateTaskApplication = require(__base + 'lib/tasks/processes/create-task');
 
 describe('Tasks#Create-Task', function () {
-    var board, user;
+    var board, user, label;
 
     before(function (done) {
         async.series([
@@ -19,8 +19,10 @@ describe('Tasks#Create-Task', function () {
         ], function(err, results) {
             board = results[0];
             user = results[1];
+                        
             done();
-        });
+        });            
+        
     });
 
     after(function(done) {
@@ -67,10 +69,12 @@ describe('Tasks#Create-Task', function () {
     });
 
     describe('#valid', function () {
-        var callback = {};
+        var callback = {};            
 
         beforeEach(function (done) {            
-            runCreateTask({ boardId: board._id, user: user }, function(err, results){
+            var args = { boardId: board._id, user: user };
+
+            runCreateTask(args, function(err, results){
                 callback.err = err;
                 callback.results = results;
 
@@ -121,7 +125,9 @@ describe('Tasks#Create-Task', function () {
                     done();
                 });
         });
-    });
+
+        it('should set the stage');
+    });    
 
 });
 

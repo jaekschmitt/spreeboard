@@ -6,14 +6,14 @@ module.exports = function(factory, db) {
     factory.define('user', db.User, {
         name: 'Jake Schmitt',
         username: 'jake.schitt',
-        email: 'jake.schmitt@spreetail.com',
+        email: factory.seq(function(n) { return 'jake.schmitt.' + n + '@spreetail.com' }),
         password: 'testing'
     });
 
     factory.define('gitlab-user', db.User, {
        name: 'Jake Schmitt',
         username: 'jake.schitt',
-        email: 'jake.schmitt@spreetail.com',
+        email: factory.seq(function(n) { return 'jake.schmitt.' + n + '@spreetail.com' }),
         password: 'testing',
         gitlab: {
             id: 1
