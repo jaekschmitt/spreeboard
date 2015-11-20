@@ -1,7 +1,7 @@
 var logger = require('./logger'),
     controllers = require(__base + 'controllers');
 
-var boards = controllers.boards,
+var _boards = controllers.boards,
     projects = controllers.projects,
     tasks = controllers.tasks,
     gitlab = controllers.gitlab,
@@ -28,12 +28,13 @@ module.exports = function(app, passport) {
     app.post('/users/session/gitlab', membership.gitlab);
     
     // Boards
-    app.param('board_id', boards.load);    
-    app.get('/boards', auth, boards.list);
-    app.post('/boards', auth, boards.create);
-    app.get('/boards/:id', auth, boards.show);
-    app.get('/boards/:board_id/info', auth, boards.info);
-    app.get('/boards/:board_id/settings', auth, boards.settings);
+    app.param('board_id', _boards.load);    
+    app.get('/boards', auth, _boards.list);
+    app.post('/boards', auth, _boards.create);
+    app.get('/boards/:id', auth, _boards.show);
+    app.get('/boards/:board_id/info', auth, _boards.info);
+    app.get('/boards/:board_id/backlog', auth, _boards.backlog);
+    app.get('/boards/:board_id/settings', auth, _boards.settings);
     
     // Tasks
     app.param('task_id', tasks.load);
@@ -43,8 +44,8 @@ module.exports = function(app, passport) {
     app.delete('/tasks/:task_id', auth, roles('developer'), tasks.delete);
 
     // Board Attributes
-    app.post('/boards/:board_id/:type', auth, boards.addBoardAttr);    
-    app.delete('/boards/:board_id/:type/:id', auth, boards.deleteBoardAttr);
+    app.post('/boards/:board_id/:type', auth, _boards.addBoardAttr);    
+    app.delete('/boards/:board_id/:type/:id', auth, _boards.deleteBoardAttr);
 
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);

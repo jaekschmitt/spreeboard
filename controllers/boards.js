@@ -67,7 +67,7 @@ exports.show = function(req, res, next) {
 
     _boards.fetch(args, function(err, results) {
         if(err) return res.status(500).json(err);
-console.log(results);
+
         res.status(200).json({
             board: results.board,
             backlog: results.backlog            
@@ -79,6 +79,13 @@ exports.list = function(req, res, next) {
     Board.find().exec(function(err, boards) {
         if(err) return res.status(500).json(err);
         res.status(200).json(boards);
+    });
+};
+
+exports.backlog = function(req, res, next) {
+    res.status(200).json({
+        board: req.board,
+        tasks: []
     });
 };
 
