@@ -13,6 +13,7 @@
             fetchBoard: fetchBoard,
             fetchBoardInfo: fetchBoardInfo,
             fetchBoardSettings: fetchBoardSettings,
+            fetchBacklog: fetchBacklog,
             addBoardAttribute: addBoardAttribute,
             removeBoardAttribute: removeBoardAttribute
         };
@@ -47,6 +48,11 @@
 
         function fetchBoardSettings(id, next) {
             $http.get(env.api + 'boards/' + id + '/settings')
+            .then(success(next), error(next));
+        }
+
+        function fetchBacklog(id, next) {
+            $http.get(env.api + 'boards/' + id + '/backlog')
             .then(success(next), error(next));
         }
 

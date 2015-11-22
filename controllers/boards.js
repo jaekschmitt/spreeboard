@@ -1,12 +1,9 @@
 var logger = require(__base + 'config/logger'),
     config = require(__base + 'config'),
-    async = require('async'),
-    _ = require('lodash'),
-    mongoose = require('mongoose'),
-    Board = mongoose.model('Board'),
-    Label = mongoose.model('Label'),
-    User = mongoose.model('User'),
-    _boards = require(__base + 'lib/boards');    
+    db = require(__base + 'config/mongoose-db'),
+    _boards = require(__base + 'lib/boards'),
+    async = require('async'),    
+    _ = require('lodash');
 
 exports.load = function(req, res, next, id) {
     var options = {
@@ -14,7 +11,7 @@ exports.load = function(req, res, next, id) {
         select: 'id name serverName created_by created_at stages priorities sizes project.id'
     };    
 
-    Board.load(options, function(err, board) {
+    db.Board.load(options, function(err, board) {
         if(err) return next(err);
         if(!board) return next();        
 
@@ -29,7 +26,7 @@ exports.info = function(req, res, next) {
             select: 'id name email'
         };
 
-    User.list(options, function(err, users) {
+    db.User.list(options, function(err, users) {
         if(err) return res.status(500).json(err);
 
         // release mongoose's hold on the object so we can attach other properties to it.
@@ -46,7 +43,7 @@ exports.settings = function(req, res, next) {
         select: 'id name serverName type'        
     };
 
-    Label.list(options, function(err, labels) {
+    db.Label.list(options, function(err, labels) {
         if(err) return res.status(500).json(err);
 
         var grouped = _.groupBy(labels, 'type');
@@ -76,17 +73,31 @@ exports.show = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-    Board.find().exec(function(err, boards) {
+    db.Board.find().exec(function(err, boards) {
         if(err) return res.status(500).json(err);
         res.status(200).json(boards);
     });
 };
 
 exports.backlog = function(req, res, next) {
-    res.status(200).json({
-        board: req.board,
-        tasks: []
-    });
+    var board = req.board,
+        options = {
+            criteria: {
+                board: board._id,
+                stage: { $exists: false }
+            },
+            select: 'id title description developer owner created_by approved created_at',
+            populate: { 'created_by': 'name email', 'developer': 'name email' }
+        };
+
+    db.Task.list(options, function(err, tasks) {
+        if(err) return res.status(500).json(err);
+
+        res.status(200).json({
+            board: req.board,
+            tasks: tasks
+        });
+    });    
 };
 
 exports.create = function(req, res, next) {

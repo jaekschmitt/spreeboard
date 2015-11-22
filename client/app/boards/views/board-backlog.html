@@ -1,0 +1,35 @@
+<div id="BoardBacklog" class="container">
+    
+        <div class="row">
+            <h2>Approved <small class="text-muted">({{tasks.approved.length}} tasks)</small></h2>
+
+            <div class="alert alert-warning" role="alert">
+                <strong>Empty!</strong> Better approve some more tasks and fill up your backlog.
+            </div>
+        </div>
+
+        <div class="row" ng-show="tasks.notApproved.length">
+            <h2>Awaiting Approval <small class="text-muted">({{tasks.notApproved.length}} tasks)</small></h2>
+
+            <table class="table">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Created On</th>
+                        <th>Created By</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in tasks.notApproved">
+                        <td>{{task.title}}</td>
+                        <td>{{task.description}}</td>
+                        <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
+                        <td>{{task.created_by.name}}</td>
+                        <td><a href="" ng-click="approve(task)">Approve</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>

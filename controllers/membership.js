@@ -73,14 +73,12 @@ exports.ldap = function(req, res, next) {
 
                     delete ldapUser['groups'];
                     user.ldap = ldapUser;
-                    
-                    logger.crit('here');
+                                        
                     user.save(function(err) {
                         if(err) res.status(500).json(err);
                         return res.status(200).json(buildAuthPkg(user));
                     });
-                } else {
-                    logger.crit('there');
+                } else {                    
                     return res.status(200).json(buildAuthPkg(user));
                 }
             })            

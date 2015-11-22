@@ -51,11 +51,16 @@
         $routeProvider.when('/boards/:id', {
             controller: 'showBoardController',
             templateUrl: 'app/boards/views/board-show.html'
-        });
+        });        
 
         $routeProvider.when('/boards/:board_id/settings', {
             controller: 'boardSettingsController',
             templateUrl: 'app/boards/views/board-settings.html'
+        });
+
+        $routeProvider.when('/boards/:board_id/backlog', {
+            controller: 'boardBacklogController',
+            templateUrl: 'app/boards/views/board-backlog.html'
         });
 
         // tasks

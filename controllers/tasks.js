@@ -4,6 +4,7 @@ var logger = require(__base + 'config/logger'),
     async = require('async'),
     _tasks = require(__base + 'lib/tasks'),
     _gitlab = require(__base + 'lib/gitlab'),
+    _ = require('lodash'),
     mongoose = require('mongoose'),
     Task = mongoose.model('Task');
 
@@ -58,18 +59,10 @@ exports.create = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
-    if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));
-    
-    var task = req.task;
-    
-    task.title = req.body.title;
-    task.description = req.body.description;
-    task.stage = req.body.stage;
-    task.developer = req.body.developer;    
-    task.owner = req.body.owner;
+    if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));        
+    var task = _.extend(req.task, req.body);    
 
     task.sync_lock = true;
-
     task.save(function(err) {
         if(err) return res.status(500).json(err);
         if(!req.task.issue) return res.status(200).json({});

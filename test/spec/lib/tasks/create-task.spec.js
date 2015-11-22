@@ -14,20 +14,38 @@ describe('Tasks#Create-Task', function () {
 
     before(function (done) {
         async.series([
-            function(cb) { factory.create('board', cb); },
-            function(cb) { factory.create('user', cb); }
-        ], function(err, results) {
-            board = results[0];
-            user = results[1];
-                        
-            done();
-        });            
+            function(cb) { 
+                factory.create('board', function(err, b) {
+                    board = b;
+                    cb();
+                }); 
+            },
+            
+            function(cb) { 
+                factory.create('stage-label', {
+                    board: board._id,
+                    name: board.stages[0].name,
+                    serverName: board.stages[0].serverName                    
+                }, function(err, l) {
+                    label = l;
+                    cb();
+                });
+            },
+            
+            function(cb) { 
+                factory.create('user', function(err, u) {
+                    user = u;
+                    cb();
+                }); 
+            }
+        ], done);
         
     });
 
     after(function(done) {
         async.parallel([
             function(cb) { db.Board.remove({}, cb); },
+            function(cb) { db.Label.remove({}, cb); },
             function(cb) { db.User.remove({}, cb); }
         ], function(err) {
             board = user = null;
@@ -71,8 +89,15 @@ describe('Tasks#Create-Task', function () {
     describe('#valid', function () {
         var callback = {};            
 
-        beforeEach(function (done) {            
-            var args = { boardId: board._id, user: user };
+        beforeEach(function (done) {
+            var args = { 
+                boardId: board._id,
+                user: user,
+                stage: {
+                    name: board.stages[0].name,
+                    serverName: board.stages[0].serverName
+                }
+            };
 
             runCreateTask(args, function(err, results){
                 callback.err = err;
@@ -126,7 +151,16 @@ describe('Tasks#Create-Task', function () {
                 });
         });
 
-        it('should set the stage');
+        it('should set the stage', function() {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.stage).to.exist;
+
+            expect(task.stage.id).to.exist;
+            expect(task.stage.name).to.exist;
+            expect(task.stage.serverName).to.exist;            
+        });
     });    
 
 });

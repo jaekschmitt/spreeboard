@@ -7,7 +7,7 @@
                 <a class="nav-link" href="#/boards">Boards<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">Tasks</a>
+                <a href="#" class="nav-link">Stats</a>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
@@ -15,6 +15,6 @@
                 <a class="nav-link" href="" ng-click="logout()">Sign Out</a>
             </li>
         </ul>
-    </nav>  
+    </nav>
 
 })

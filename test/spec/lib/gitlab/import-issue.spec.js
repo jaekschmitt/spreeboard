@@ -17,24 +17,30 @@ var ImportIssue = rewire(__base + 'lib/gitlab/issues/processes/import-issue'),
         }
     };
 
-describe('Gitlab#Import-Issue', function () {        
+describe('Gitlab#Import-Issue', function () {
     var board, label;
 
     before(function(done) {
-        async.series([
-            function(cb) { factory.create('board', cb); },
-            function(cb) { factory.create('stage-label', cb); }
-        ], function(err, results) {            
-            board = results[0];
-            label = results[1];
-            done();
-        });
+        factory.create('board', function(err, b) {
+            board = b;
+
+            factory.create('stage-label', {
+                name: board.stages[0].name,
+                serverName: board.stages[1].serverName,
+                board: board._id
+            }, function(err, l) {
+                label = l;
+
+                done();
+            });
+        })
     });
 
     after(function(done) { 
-        db.Label.remove({}, function() {
-            db.Board.remove({}, done);
-        });
+        async.series([
+            function(cb) { db.Label.remove({}, cb); },
+            function(cb) { db.Board.remove({}, cb); }
+        ], done);
     });
 
     describe('#no author', function () {
@@ -163,16 +169,11 @@ describe('Gitlab#Import-Issue', function () {
             expect(task.board).to.exist;            
         });
 
-        it('should not create a label or attach a stage', function(done) {
+        it('should not create a label or attach a stage', function() {
             var results = callback.results,
                 task = results.task;
 
-            expect(task.stage).to.not.exist;
-
-            db.Label.count({}, function(err, count) {
-                expect(count).to.equal(0);
-                done();
-            });
+            expect(task.stage).to.not.exist;            
         });
     });
 
@@ -229,6 +230,15 @@ describe('Gitlab#Import-Issue', function () {
             expect(task.board).to.exist;            
         });
 
-        it('should attach a stage');
+        it('should attach a stage', function() {
+            var results = callback.results,
+                task = results.task;
+
+            expect(task.stage).to.exist;
+            
+            expect(task.stage.id).to.exist;
+            expect(task.stage.name).to.exist;
+            expect(task.stage.serverName).to.exist;
+        });
     });
 });

@@ -2,8 +2,8 @@
     "mongo": "mongodb://localhost/spreeboard_dev",
 
     "gitlab": {
-        "key": "b679362c4983c505b28a20e84fd21888dfa7f71037fa97aa1dafc670bb0a1778",
-        "secret": "97ecb4035e32b4ab1ec8c2f97e88a581d68f0742ae7e609aca4eb625e81cf4a4",    
+        "key": "b92628f20b152ec80516dbf1257952821b5b1bc3fac5a194786ad7130abfec5a",
+        "secret": "4cf5526d63aee1c0b255d9a092184073fecdd33311c54116364dbcd3cffb989b",    
 
         "url": "http://localhost:8080/",
         "api": "http://localhost:8080/api/v3/",
