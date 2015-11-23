@@ -62,6 +62,8 @@ exports.update = function(req, res, next) {
     if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));        
     var task = _.extend(req.task, req.body);    
 
+    logger.debug(JSON.stringify(req.body, null, 4));
+
     task.sync_lock = true;
     task.save(function(err) {
         if(err) return res.status(500).json(err);

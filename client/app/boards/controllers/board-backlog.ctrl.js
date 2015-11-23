@@ -10,7 +10,8 @@
 
         // properties 
 
-        $scope.info = {};        
+        $scope.info = {};
+        $scope.board = {};
         $scope.tasks = {};
 
         // functions
@@ -28,7 +29,7 @@
                 var tasks = backlog.tasks;
                 delete backlog.tasks;
 
-                $scope.info = backlog;
+                $scope.board = backlog.board;
                 $scope.tasks = {
                     approved: _.where(tasks, { approved: true }),
                     notApproved: _.where(tasks, { approved: false })
@@ -44,6 +45,10 @@
 
             _tasks.updateTask(pkg, function(err, response) {
                 if(err) return toastr.error(err);
+
+                var idx = $scope.tasks.notApproved.indexOf(task);
+                $scope.tasks.notApproved.splice(idx, 1);
+                $scope.tasks.approved.push(task);
             });
         }
     }

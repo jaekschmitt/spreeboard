@@ -8,5 +8,5 @@ config/env/development.json
 config/env/test.json
 config/env/production.json
 
-client/app/config/env.settings.json
+client/app/config/settings.json
 client/app/config/env.settings.js

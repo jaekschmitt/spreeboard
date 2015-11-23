@@ -3,17 +3,41 @@
         <div class="row">
             <h2>Approved <small class="text-muted">({{tasks.approved.length}} tasks)</small></h2>
 
-            <div class="alert alert-warning" role="alert">
+            <div class="alert alert-warning" role="alert" ng-hide="tasks.approved.length">
                 <strong>Empty!</strong> Better approve some more tasks and fill up your backlog.
             </div>
+
+            <table class="table table-sm" ng-show="tasks.approved.length">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th></th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Created On</th>
+                        <th>Created By</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in tasks.approved">
+                        <td><a href="#/boards/{{board._id}}/tasks/{{task._id}}/edit"><i class="fa fa-pencil"></i></a></td>
+                        <td>{{task.title}}</td>
+                        <td>{{task.description | cut:true:75:'...' }}</td>
+                        <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
+                        <td>{{task.created_by.name}}</td>
+                        <td><a href="" ng-click="approve(task)">Add</a></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="row" ng-show="tasks.notApproved.length">
             <h2>Awaiting Approval <small class="text-muted">({{tasks.notApproved.length}} tasks)</small></h2>
 
-            <table class="table">
+            <table class="table table-sm">
                 <thead class="thead-inverse">
                     <tr>
+                        <th></th>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Created On</th>
@@ -23,8 +47,9 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="task in tasks.notApproved">
+                        <td><a href="#/boards/{{board._id}}/tasks/{{task._id}}/edit"><i class="fa fa-pencil"></i></a></td>
                         <td>{{task.title}}</td>
-                        <td>{{task.description}}</td>
+                        <td>{{task.description | cut:true:75:'...' }}</td>
                         <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
                         <td>{{task.created_by.name}}</td>
                         <td><a href="" ng-click="approve(task)">Approve</a></td>

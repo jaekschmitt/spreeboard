@@ -10,6 +10,11 @@
 
         // properties
 
+        var roles = authSvc.authentication.user.roles;
+        
+        $scope.isAdmin = roles.indexOf('admin') > -1;
+        $scope.isOwner = roles.indexOf('owner') > -1;
+
         $scope.boards = [];
         $scope.backlog = null;
 

@@ -6,8 +6,11 @@ var TaskSchema = new Schema({
 
     title: { type: String, required: 'Title cannot be blank' },
     description: String,
-    stage: {},
     
+    stage: {},
+    priority: {},
+    size: {},
+
     board: { type: Schema.ObjectId, ref: 'Board' },
     project: { type: Schema.ObjectId, ref: 'Project' },
 
