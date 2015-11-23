@@ -14,8 +14,7 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Created On</th>
-                        <th>Created By</th>
-                        <th></th>
+                        <th>Created By</th>                        
                     </tr>
                 </thead>
                 <tbody>
@@ -24,8 +23,7 @@
                         <td>{{task.title}}</td>
                         <td>{{task.description | cut:true:75:'...' }}</td>
                         <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
-                        <td>{{task.created_by.name}}</td>
-                        <td><a href="" ng-click="approve(task)">Add</a></td>
+                        <td>{{task.created_by.name}}</td>                        
                     </tr>
                 </tbody>
             </table>
