@@ -4,22 +4,17 @@
     <div class="row">
         <div class="col-sm-8">
             
-            <form role="form">
+            <div class="main-info">
                 <div class="form-group">
                     <label class="control-label">Title</label>
-                    <input class="form-control" type="text" ng-model="task.title">
+                    <input class="form-control" type="text" readonly ng-model="task.title">
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Description</label>
-                    <textarea class="form-control" rows="6" ng-model="task.description"></textarea>
-                </div>
-
-                <div class="form-group text-center">
-                    <button class="btn btn-lg btn-danger" type="button" ng-click="delete()">Delete</button>
-                    <button class="btn btn-lg btn-success" type="button" ng-click="update()">Update</button>
-                </div>
-            </form>
+                    <textarea class="form-control" rows="6" readonly ng-model="task.description"></textarea>
+                </div>                
+            </div>
         </div>
         <div class="col-sm-4">
             
@@ -27,6 +22,7 @@
                 <div class="form-group">
                     <label class="control-label">Priority</label>
                     <span class="gitlab-label-info" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>
+                    <span class="gitlab-label-info empty" ng-hide="task.priority">None</span>
                 </div>
 
                 <div class="form-group">
@@ -37,17 +33,18 @@
 
                 <div class="form-group">
                     <label class="control-label">Stage</label>
-                    <span class="gitlab-label-info" ng-style="{ 'background-color': task.stage.color }">{{task.stage.name}}</span>
+                    <span class="gitlab-label-info" ng-show="task.stage" ng-style="{ 'background-color': task.stage.color }">{{task.stage.name}}</span>
+                    <span class="gitlab-label-info empty" ng-hide="task.stage">None</span>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Developer</label>
-                    <button class="btn btn-secondary">None</button>
+                    <span class="gitlab-label-info empty" ng-hide="task.developer">None</span>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Owner</label>
-                    
+                    <span class="gitlab-label-info empty" ng-hide="task.developer">None</span>
                 </div>
             </form>
 

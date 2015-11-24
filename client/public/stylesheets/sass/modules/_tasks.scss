@@ -1,5 +1,29 @@
-#NewTask {
+#NewTask, #ShowTask {
     h2 {
         margin-bottom: 2rem;
+    }
+}
+
+#ShowTask {
+
+    .gitlab-label-info {
+        display: block;
+        padding: .375rem .75rem;
+        
+        border-radius: .25rem;
+        line-height: 1.5;
+        text-align: center;
+
+        font-size: 1rem;
+        font-weight: 600;
+
+        color: #ffffff;
+
+        &.empty {
+            color: $text-base;
+            font-weight: 500;
+
+            border: $border-light;
+        }
     }
 }
