@@ -37,6 +37,10 @@ UserSchema
     })
     .get(function() { return this._password });
 
+UserSchema
+    .virtual('isDeveloper')
+    .get(function() { return !!this.gitlab; });
+
 /**
 * Validations
 */

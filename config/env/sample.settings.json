@@ -1,6 +1,11 @@
 {
     "mongo": "mongodb://MONGO_CONNECTION_STRING",
 
+    "agenda": {
+        "connection": "mongodb://MONGO_CONNECTION_STRING",
+        "jobs": ["LIST_OF_JOBS_TO_RUN"]
+    },
+
     "gitlab": {
         "key": "GITLAB_APPLICATION_ID",
         "secret": "GITLAB_APPLICATION_SECRET",    

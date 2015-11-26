@@ -1,9 +1,10 @@
 var logger = require(__base + 'config/logger'),
     config = require(__base + 'config'),
+    agenda = require(__base + 'config/agenda'),
     glUtils = require(__base + 'lib/gitlab'),    
     async = require('async'),
     _tasks = require(__base + 'lib/tasks'),
-    _gitlab = require(__base + 'lib/gitlab'),
+    _gitlab = require(__base + 'lib/gitlab'),    
     _ = require('lodash'),
     mongoose = require('mongoose'),
     Task = mongoose.model('Task');
@@ -11,7 +12,7 @@ var logger = require(__base + 'config/logger'),
 exports.load = function(req, res, next, id) {
     var options = {
         criteria: { _id : id },
-        select: 'id title description stage priority size project board issue.id created_at developer owner',
+        select: 'id title description stage priority size project board issue.id created_at developer owner approved',
         populate: { 
             'developer': 'id name email',
             'owner': 'id name email'
@@ -36,48 +37,37 @@ exports.create = function(req, res, next) {
         owner: req.body.owner,
         board: req.board,
         user: req.user
-    };
+    };    
 
     _tasks.create(args, function(err, results) {
-        if(err) return res.status(500).json(err);
-                
-        if(!results.task.stage){
-            // if there isn't yet a stage it's pending and we don't need to export
-            return res.status(200).json(results.task);  
-        } else {
-            args = {
-                taskId: results.task._id,
-                user: req.user
-            };
+        if(err) return res.status(500).json(err);                
+                    
+        if(results.task.approved && req.user.roles.indexOf('developer') > -1) {
+            var pkg = { taskId: results.task._id, user: req.user.toJSON() };
 
-            _gitlab.issues.export(args, function(err, results) {
-                if(err) return res.status(500).json(err);
-                return res.status(200).json(args.task);
-            });
-        }        
+            logger.debug('Launching push issue job for gitlab.')
+            agenda.now('push-issue', pkg);
+        }
+                    
+        return res.status(200).json(results.task);
     });
 };
 
 exports.update = function(req, res, next) {
     if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));        
-    var task = _.extend(req.task, req.body);    
 
-    logger.debug(JSON.stringify(req.body, null, 4));
-
-    task.sync_lock = true;
+    var task = _.extend(req.task, req.body);
     task.save(function(err) {
         if(err) return res.status(500).json(err);
-        if(!req.task.issue) return res.status(200).json({});
 
-        var args = {
-            taskId: task._id,
-            user: req.user
-        };
+        if(task.approved && req.user.roles.indexOf('developer') > -1) {
+            var pkg = { taskId: task._id, user: req.user.toJSON() };        
 
-        _gitlab.issues.update(args, function(err, results) {
-            if(err) return res.status(500).json(err);
-            return res.status(200).json({});
-        });
+            logger.debug('Launching push issue job for gitlab.');
+            agenda.now('push-issue', pkg);
+        }
+
+        return res.status(200).json({});
     });
 };
 
@@ -94,21 +84,14 @@ exports.delete = function(req, res, next) {
     req.task.remove(function(err) {
         if(err) return res.status(500).json(err);
 
-        if(req.task.issue) {    
-            var args = {
-                task: req.task,
-                user: req.user
-            };
+        if(req.task.issue && req.user.roles.indexOf('developer') > -1) {
+            var pkg = { task: req.task.toJSON(), user: req.user.toJSON() };
 
-            _gitlab.issues.close(args, function(err, results) {
-                if(err) return res.status(500).json(err);
-                return res.status(200).json(req.task);
-            });
-
-        } else {
-            res.status(200).json(req.task);
+            logger.debug('Launching close issue job for gitlab.');
+            agenda.now('close-issue', pkg);
         }
-
+        
+        res.status(200).json(req.task);
     });
 };
 

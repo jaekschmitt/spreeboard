@@ -1,5 +1,6 @@
 var logger = require(__base + 'config/logger'),
     config = require(__base + 'config'),
+    agenda = require(__base + 'config/agenda'),
     db = require(__base + 'config/mongoose-db'),
     _gitlab = require(__base + 'lib/gitlab'),    
     async = require('async'),
@@ -12,13 +13,13 @@ exports.projects = function(req, res, next) {
     });
 };
 
-exports.issuesSync = function(req, res, next) {
+exports.issuesSync = function(req, res, next) {    
     var issueInfo = req.body,
         direction = req.body.object_attributes.action;
 
-    logger.crit(JSON.stringify(issueInfo, null, 4));
+    logger.debug('Incoming gitlab issue: ' + issueInfo.object_attributes.id + ' (' + direction + ')');
 
-    if(['open', 'reopen'].indexOf(direction) > -1) {
+    if(['open', 'reopen', 'update'].indexOf(direction) > -1) {
         // hate this but the web hook for new issues is too fast 
         // and is importing before we update issue in existing task and
         // can query against it.  would ideally search by issue.id == issueInfo.id
@@ -30,73 +31,50 @@ exports.issuesSync = function(req, res, next) {
                     { 'issue.id' : issueInfo.object_attributes.id }
                 ]
             },
-            select: 'id sync_lock issue.id'
+            select: 'id sync_lock'
         };
 
         db.Task.load(options, function(err, task) {            
-            if(err) return next(err);
-            if(task && task.issue) return next();
+            if(err) return next(err);            
 
             if(task && task.sync_lock) {
-                logger.crit('locked');
+                
+                logger.debug('Corresponding task is locked');
 
-                task.sync_lock = false;
-                task.save();
-
-                res.status(200);
             }else {
-                logger.crit('no locked');
-                logger.crit(JSON.stringify(issueInfo, null, 4));                
 
-                _gitlab.issues.import(issueInfo, function(err, results) {                
-                    res.status(200);
-                    next();
-                });
+                logger.debug('Registering pull-issue job.');
+                agenda.now('pull-issue', issueInfo.object_attributes);
+
             }
                         
-        });        
+        });
 
     } else if(direction == 'close') {
+        logger.debug('Issue close reported.');
+
         var options = {
             criteria: { 'issue.id': issueInfo.object_attributes.id }
         };
 
         db.Task.delete(options, function(err, task) {
             if(err) logger.crit(err);
-            if(!task) return next();
-
-            logger.debug('Deleted task(' + task._id + ') per Gitlabs request');
-
-            res.status(200);
-            next();
-        });
-    } else if(direction === 'update') {
-        var options = {
-            criteria: { 'issue.id' : issueInfo.object_attributes.id },
-            select: 'id sync_lock'
-        };
-
-        db.Task.load(options, function(err, task) {
-            if(err || !task) {
-                logger.crit(err);
-                return next();
-            }
-
-            if(task.sync_lock) {
-                logger.crit('locked');
-
-                task.sync_lock = false;
-                task.save();
-
-                return next();
-            } else {
-
-                _gitlab.issues.sync(issueInfo, function(err, results) {
-                    res.status(200);
-                    next();
-                });
-            }
-                    
+            if(task) logger.debug('Deleted corresponding task: ' + task._id);            
         });
     }
+
+    reply(res);
+}
+
+// helper functions
+
+function reply(res) {
+    // properly acknowledge you have handled the webhook successfully
+
+    res.status(200);
+    res.format({
+        'text/plain': function() {
+            res.send('OK');
+        }
+    });
 }
