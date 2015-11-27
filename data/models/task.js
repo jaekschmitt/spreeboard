@@ -20,7 +20,7 @@ var TaskSchema = new Schema({
     approved: { type: Boolean, default: false },
 
     issue: {},
-    sync_lock: { type: Boolean, default: true },
+    sync_lock: Boolean,
 
     created_at: {
         type: Date,

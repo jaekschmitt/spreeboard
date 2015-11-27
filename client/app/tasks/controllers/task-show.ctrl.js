@@ -4,13 +4,14 @@
         .module('main')
         .controller('showTaskController', showTaskController);
 
-    showTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices'];
+    showTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authSvc'];
 
-    function showTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users) {
+    function showTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users, _auth) {
 
         // properties
 
         $scope.task = {};
+        $scope.isDeveloper = _auth.authentication.user.roles.indexOf('developer') > -1;
 
         // functions
 

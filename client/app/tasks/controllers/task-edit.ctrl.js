@@ -28,7 +28,7 @@
             async.parallel({
                 board: function(cb) { return _boards.fetchBoardInfo(board_id, cb); },
                 task: function(cb) { return _tasks.fetchTask(task_id, cb); },
-                users: function(cb) {return _users.list(cb); }
+                users: function(cb) {return _users.list('role=owner', cb); }
             }, function(err, results) {
                 if(err) return toastr.error(err);
 

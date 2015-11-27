@@ -1,19 +1,13 @@
 <div id="ShowTask" class="container">
-    <h2 class="">Task <small class="text-muted">{{board.name}}</small></h2>
-
     <div class="row">
         <div class="col-sm-8">
-            
-            <div class="main-info">
-                <div class="form-group">
-                    <label class="control-label">Title</label>
-                    <input class="form-control" type="text" readonly ng-model="task.title">
-                </div>
+            <h2 class="">{{task.title}} 
+                <small class="text-muted" ng-show="task.issue">Task #{{task.issue.id}}</small>
+                <small class="text-muted" ng-hide="task.issue">Backlog Item</small>
+            </h2>
 
-                <div class="form-group">
-                    <label class="control-label">Description</label>
-                    <textarea class="form-control" rows="6" readonly ng-model="task.description"></textarea>
-                </div>                
+            <div class="main-info">                
+                <div marked="task.description"></div>
             </div>
         </div>
         <div class="col-sm-4">
@@ -39,12 +33,19 @@
 
                 <div class="form-group">
                     <label class="control-label">Developer</label>
-                    <span class="gitlab-label-info empty" ng-hide="task.developer">None</span>
+                    <span class="gitlab-label-user" ng-show="task.developer">{{task.developer.name}}</span>
+                    <span class="gitlab-label-user empty" ng-hide="task.developer">None</span>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Owner</label>
-                    <span class="gitlab-label-info empty" ng-hide="task.developer">None</span>
+                    <span class="gitlab-label-user" ng-show="task.owner">{{task.owner.name}}</span>
+                    <span class="gitlab-label-user empty" ng-hide="task.owner">None</span>                    
+                </div>
+
+                <div class="form-group actions" ng-show="isDeveloper">
+                    <label>Actions</label>
+                    <a href="#/boards/{{task.board}}/tasks/{{task._id}}/edit" class="btn btn-secondary-outline gitlab-label-action">Edit</a>
                 </div>
             </form>
 

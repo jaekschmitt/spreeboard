@@ -1,0 +1,27 @@
+.stage-task {
+
+    .content-block {
+        padding: 0;
+        
+        p {
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+    }
+    
+    .card-title {
+        margin-bottom: 0.5rem;
+    }
+    
+    .card-link {
+        display: block;
+
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+
+        text-align: center;
+        border-top: $border-lighter;
+        background-color: $bg-light;
+        color: $warning-color;
+    }    
+}

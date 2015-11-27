@@ -1,11 +1,56 @@
 i.fa {
   line-height: 1.5; }
 
+.checkbox-list {
+  padding-top: 0 !important;
+  -webkit-margin-before: 0;
+  -webkit-margin-start: 0;
+  -webkit-padding-before: 20px;
+  -webkit-padding-start: 20px; }
+  .checkbox-list .checkbox-list-item {
+    list-style: none; }
+    .checkbox-list .checkbox-list-item input[type="checkbox"]:disabled {
+      cursor: auto; }
+
 #Login, #Register {
   margin-top: 3rem; }
 
 #TopMenu {
   margin-bottom: 20px; }
+
+#NewTask h2, #ShowTask h2 {
+  margin-bottom: 2rem; }
+
+#ShowTask h2 {
+  margin-bottom: 1rem; }
+#ShowTask .main-info {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-top: 0.0625rem solid #e5e5e5;
+  border-bottom: 0.0625rem solid #e5e5e5; }
+#ShowTask .gitlab-label-user,
+#ShowTask .gitlab-label-info {
+  display: block;
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff; }
+  #ShowTask .gitlab-label-user.empty,
+  #ShowTask .gitlab-label-info.empty {
+    color: #55595c;
+    font-weight: 500;
+    border: 0.0625rem solid #ccc; }
+#ShowTask .gitlab-label-user {
+  font-weight: 500;
+  color: #55595c;
+  border: 0.0625rem solid #ccc; }
+#ShowTask .actions {
+  margin-top: 3rem; }
+  #ShowTask .actions .gitlab-label-action {
+    display: block; }
 
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }
@@ -44,24 +89,21 @@ i.fa {
         padding: 15px; }
         .board .stages .stage .stage-tasks .stage-task .header-block {
           padding-bottom: 0; }
-        .board .stages .stage .stage-tasks .stage-task .content-block {
-          padding-top: 0; }
 
-#NewTask h2, #ShowTask h2 {
-  margin-bottom: 2rem; }
-
-#ShowTask .gitlab-label-info {
+.stage-task .content-block {
+  padding: 0; }
+  .stage-task .content-block p {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem; }
+.stage-task .card-title {
+  margin-bottom: 0.5rem; }
+.stage-task .card-link {
   display: block;
-  padding: .375rem .75rem;
-  border-radius: .25rem;
-  line-height: 1.5;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
   text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff; }
-  #ShowTask .gitlab-label-info.empty {
-    color: #55595c;
-    font-weight: 500;
-    border: 0.0625rem solid #ccc; }
+  border-top: 0.0625rem solid #e5e5e5;
+  background-color: #f7f7f9;
+  color: #f0ad4e; }
 
 /*# sourceMappingURL=main.css.map */

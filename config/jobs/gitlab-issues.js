@@ -29,8 +29,8 @@ module.exports = function(agenda) {
 
     // pull information from gitlab issue into system
     agenda.define('pull-issue', function(job, done) {        
-        var data = job.attrs.data;
-        
+        var data = job.attrs.data;        
+
         logger.debug('Pulling gitlab issue for task: ' + data.id);
         _gitlab.issues.pull(data, function(err, results) {
             if(err) logger.crit(err);

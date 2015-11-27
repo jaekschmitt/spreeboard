@@ -1,13 +1,11 @@
 var logger = require(__base + 'config/logger'),
-    config = require(__base + 'config'),
-    agenda = require(__base + 'config/agenda'),
-    glUtils = require(__base + 'lib/gitlab'),    
-    async = require('async'),
+    config = require(__base + 'config'),    
+    agenda = require(__base + 'config/agenda'),    
+    db = require(__base + 'config/mongoose-db'),    
     _tasks = require(__base + 'lib/tasks'),
-    _gitlab = require(__base + 'lib/gitlab'),    
-    _ = require('lodash'),
-    mongoose = require('mongoose'),
-    Task = mongoose.model('Task');
+    _gitlab = require(__base + 'lib/gitlab'),
+    async = require('async'),
+    _ = require('lodash');
 
 exports.load = function(req, res, next, id) {
     var options = {
@@ -19,9 +17,8 @@ exports.load = function(req, res, next, id) {
         }
     };
 
-    Task.load(options, function(err, task) {
+    db.Task.load(options, function(err, task) {        
         if(err) return next(err);
-        if(!task) return next();
 
         req.task = task;
         next();
@@ -96,6 +93,9 @@ exports.delete = function(req, res, next) {
 };
 
 exports.show = function(req, res, next) {
-    if(!req.task) return res.status(500).json(new Error('Unable to find task with that id'));
-    res.status(200).json(req.task);
+    var task = req.task;
+
+    if(!task) return res.status(500).json(new Error('Unable to find task with that id'));    
+
+    res.status(200).json(task);
 };

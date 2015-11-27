@@ -1,13 +1,15 @@
 (function() {
 
     angular
-        .module('main', ['config', 'ngRoute', 'toastr', 'LocalStorageModule'])
+        .module('main', ['config', 'ngRoute', 'ngSanitize', 'hc.marked', 'toastr', 'LocalStorageModule'])
         .config(httpConfig)
         .config(routeConfig)
+        .config(markdownConfig)
         .run(bootstrap);
 
     httpConfig.$inject = ['$httpProvider'];
     routeConfig.$inject = ['$routeProvider']; 
+    markdownConfig.$inject = ['markedProvider'];
     bootstrap.$inject = ['$window', 'authSvc'];
 
     function httpConfig($httpProvider) {
@@ -80,6 +82,37 @@
             templateUrl: 'app/tasks/views/task-edit.html'
         });
 
+    }
+
+    function markdownConfig(markedProvider) {
+        markedProvider.setRenderer({
+            listitem: function(text) {
+                var openedAt = text.indexOf('['),
+                    closedAt = text.indexOf(']'),
+                    checkedAt = text.indexOf('x');
+
+                if(!(openedAt === 0 && closedAt === (openedAt + 2)))
+                    return '<li>' + text + '</li>';                
+
+                var checked = checkedAt > openedAt && closedAt > checkedAt;
+                var listItem = '<li class="checkbox-list-item">'
+                    + (checked ? '<input type="checkbox" checked disabled />' : '<input type="checkbox" disabled />')
+                    + text.slice(closedAt + 1)
+                    + '</li>';
+
+                return listItem;                            
+            },
+
+            list: function(text, ordered) {
+                var $text = $(text),
+                    $checkbox = $text.find('input[type="checkbox"]'),
+                    taskList = !!$checkbox.length;                
+
+                return (taskList ? '<ul class="checkbox-list">' : '<ul>')
+                    + text
+                    + '</ul>';
+            }
+        });
     }
 
     function bootstrap($window, authSvc) {

@@ -36,9 +36,11 @@
                     <div class="card-block header-block">
                         <h4 class="card-title">{{t.title}}</h4>
                     </div>
-                    <div class="card-block content-block">
-                        <p class="card-text">{{ t.description | cut:true:100:'...' }}</p>                        
-                        <a class="card-link" href="#/boards/{{board._id}}/tasks/{{t._id}}/edit">edit</a>
+                    <div class="content-block">
+                        <p class="card-text">{{ t.description | stripMarkdown | cut:true:50:'...' }}</p>
+                    </div>
+                    <div class="content-block card-actions">
+                        <a class="card-link" href="#/boards/{{board._id}}/tasks/{{t._id}}">More</a>
                     </div>
                 </div>            
             

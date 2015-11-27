@@ -1,7 +1,10 @@
 @import "components/variables";
 @import "components/icons";
+@import "components/lists";
 
 @import "modules/membership";
 @import "modules/navigation";
-@import "modules/boards";
 @import "modules/tasks";
+
+@import "modules/boards/layout";
+@import "modules/boards/task-card";

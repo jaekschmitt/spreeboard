@@ -16,8 +16,8 @@
                 </div>
 
                 <div class="form-group text-center">
-                    <button class="btn btn-lg btn-danger" type="button" ng-click="delete()">Delete</button>
-                    <button class="btn btn-lg btn-success" type="button" ng-click="update()">Update</button>
+                    <button class="btn btn-lg btn-danger-outline" type="button" ng-click="delete()">Delete</button>
+                    <button class="btn btn-lg btn-success-outline" type="button" ng-click="update()">Update</button>
                 </div>
             </form>
         </div>
@@ -26,21 +26,21 @@
             <form role="form">
                 <div class="form-group">
                     <label class="control-label">Priority</label>
-                    <select class="form-control c-select" ng-options="priority as priority.name for priority in board.priorities track by priority.id" ng-model="task.priority">
+                    <select class="form-control c-select" ng-options="priority as priority.name for priority in board.priorities track by priority._id" ng-model="task.priority" ng-style="{ 'border-color': task.priority.color }">
                         <option value>None</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Size</label>
-                    <select class="form-control c-select" ng-options="size as size.name for size in board.sizes track by size.id" ng-model="task.size">
+                    <select class="form-control c-select" ng-options="size as size.name for size in board.sizes track by size._id" ng-model="task.size" ng-style="{ 'border-color': task.size.color }">
                         <option value>None</option>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label">Stage</label>
-                    <select class="form-control c-select" ng-options="stage as stage.name for stage in board.stages track by stage.serverName" ng-model="task.stage">
+                    <select class="form-control c-select" ng-options="stage as stage.name for stage in board.stages track by stage._id" ng-model="task.stage" ng-style="{ 'border-color': task.stage.color }">
                         <option value>Pending</option>
                     </select>
                 </div>

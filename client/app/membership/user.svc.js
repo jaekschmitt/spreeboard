@@ -11,9 +11,13 @@
             list: list
         };
 
-        function list(next) {
-            $http.get(env.api + 'users')
-            .then(success(next), error(next));
+        function list(search, next) {
+            var url = env.api + 'users',
+                isSearch = typeof search !== 'function',
+                cb =  isSearch ? next : search;
+
+            if(isSearch) url += '?' + search;
+            $http.get(url).then(success(cb), error(cb));
         }
     }
 

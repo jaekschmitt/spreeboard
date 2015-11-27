@@ -15,5 +15,11 @@
         "grant_url": "http://GITLAB_BASE_URL/oauth/token"
     },
 
+    "active_directory": {
+        "url": "ldap://LDAP_SERVER_URL:LDAP_PORT/",
+        "baseDN": "BASE_DN",
+        "domain": "LDAP_DOMAIN"
+    },
+
     "log_level": "trace"
 }
