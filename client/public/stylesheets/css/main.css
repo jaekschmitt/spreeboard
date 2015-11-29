@@ -95,6 +95,20 @@ i.fa {
   .stage-task .content-block p {
     padding-left: 1.25rem;
     padding-right: 1.25rem; }
+  .stage-task .content-block.task-attrs {
+    text-align: center; }
+    .stage-task .content-block.task-attrs span.attribute {
+      display: inline-block;
+      padding: 0.25rem 0.4rem;
+      font-size: 75%;
+      line-height: 1;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25rem;
+      color: white; }
+    .stage-task .content-block.task-attrs span.attribute.developer {
+      color: #55595c;
+      border: 0.0625rem solid #ccc; }
 .stage-task .card-title {
   margin-bottom: 0.5rem; }
 .stage-task .card-link {

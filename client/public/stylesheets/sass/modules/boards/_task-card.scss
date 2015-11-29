@@ -7,7 +7,28 @@
             padding-left: 1.25rem;
             padding-right: 1.25rem;
         }
-    }
+
+        &.task-attrs {
+                text-align: center;
+
+            span.attribute {
+                display: inline-block;
+                padding: 0.25rem 0.4rem;
+
+                font-size: 75%;
+                line-height: 1;
+                white-space: nowrap;
+                vertical-align: baseline;                
+                border-radius: 0.25rem;
+                color: white;
+            }
+
+            span.attribute.developer {
+                color: $text-base;
+                border: $border-light;
+            }
+        }
+    }    
     
     .card-title {
         margin-bottom: 0.5rem;

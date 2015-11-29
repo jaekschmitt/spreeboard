@@ -39,6 +39,11 @@
                     <div class="content-block">
                         <p class="card-text">{{ t.description | stripMarkdown | cut:true:50:'...' }}</p>
                     </div>
+                    <div class="content-block task-attrs">
+                        <span class="attribute" ng-show="t.priority" ng-style="{ 'background-color': t.priority.color }">{{t.priority.name}}</span>
+                        <span class="attribute" ng-show="t.size" ng-style="{ 'background-color': t.size.color }">{{t.size.name}}</span>
+                        <span class="attribute developer" ng-show="t.developer">{{t.developer.name}}</span>
+                    </div>
                     <div class="content-block card-actions">
                         <a class="card-link" href="#/boards/{{board._id}}/tasks/{{t._id}}">More</a>
                     </div>
