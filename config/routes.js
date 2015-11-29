@@ -39,9 +39,9 @@ module.exports = function(app, passport) {
     // Tasks
     app.param('task_id', tasks.load);
     app.get('/tasks/:task_id', auth, tasks.show);
-    app.post('/boards/:board_id/tasks', auth, roles('developer'), tasks.create);
-    app.put('/tasks/:task_id', auth, roles('developer'), tasks.update);
-    app.delete('/tasks/:task_id', auth, roles('developer'), tasks.delete);
+    app.post('/boards/:board_id/tasks', auth, roles('developer', 'owner'), tasks.create);
+    app.put('/tasks/:task_id', auth, roles('developer', 'owner'), tasks.update);
+    app.delete('/tasks/:task_id', auth, roles('developer', 'owner'), tasks.delete);
 
     // Board Attributes
     app.post('/boards/:board_id/:type', auth, _boards.addBoardAttr);    

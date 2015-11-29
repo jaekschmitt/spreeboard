@@ -10,7 +10,7 @@
     httpConfig.$inject = ['$httpProvider'];
     routeConfig.$inject = ['$routeProvider']; 
     markdownConfig.$inject = ['markedProvider'];
-    bootstrap.$inject = ['$window', 'authSvc'];
+    bootstrap.$inject = ['$window', 'authServices'];
 
     function httpConfig($httpProvider) {
 
@@ -115,10 +115,10 @@
         });
     }
 
-    function bootstrap($window, authSvc) {
-        authSvc.fillAuthData();
+    function bootstrap($window, authServices) {
+        authServices.fillAuthData();
 
-        if(!authSvc.authentication.isAuth)
+        if(!authServices.authentication.isAuth)
             $window.location.href = '/#/login';
     }
 

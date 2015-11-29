@@ -4,7 +4,7 @@
         .module('main')
         .controller('showTaskController', showTaskController);
 
-    showTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authSvc'];
+    showTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authServices'];
 
     function showTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users, _auth) {
 

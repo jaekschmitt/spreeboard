@@ -39,7 +39,7 @@ exports.create = function(req, res, next) {
     _tasks.create(args, function(err, results) {
         if(err) return res.status(500).json(err);                
                     
-        if(results.task.approved && req.user.roles.indexOf('developer') > -1) {
+        if(results.task.stage && results.task.approved) {
             var pkg = { taskId: results.task._id, user: req.user.toJSON() };
 
             logger.debug('Launching push issue job for gitlab.')

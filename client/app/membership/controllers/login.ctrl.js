@@ -4,9 +4,9 @@
         .module('main')
         .controller('loginController', loginController);
 
-    loginController.$inject = ['$scope', '$location', 'toastr', 'authSvc'];
+    loginController.$inject = ['$scope', '$location', 'toastr', 'authServices'];
 
-    function loginController($scope, $location, toastr, authSvc) {
+    function loginController($scope, $location, toastr, authServices) {
 
         $scope.loginData = {
             email: '',
@@ -22,7 +22,7 @@
         $scope.devLogin = devLogin;
 
         function login() {
-            authSvc.login($scope.loginData, function(response) {
+            authServices.login($scope.loginData, function(response) {
                 $location.path('/');
             }, function(err) {
                 $scope.message = err;
@@ -31,14 +31,14 @@
         };        
 
         function ldapLogin() {
-            authSvc.ldapLogin($scope.loginData, function(err, response) {
+            authServices.ldapLogin($scope.loginData, function(err, response) {
                 if(err) return toastr.error(err);
                 $location.path('/');
             });
         }
 
         function devLogin() {
-            authSvc.devLogin(function(err, response) {
+            authServices.devLogin(function(err, response) {
                 if(err) return toastr.error(error);
                 $location.path('/');
             });

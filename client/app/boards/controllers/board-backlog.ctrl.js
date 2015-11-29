@@ -4,15 +4,18 @@
         .module('main')
         .controller('boardBacklogController', boardBacklogController);
 
-    boardBacklogController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'boardServices', 'taskServices'];
+    boardBacklogController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'boardServices', 'taskServices', 'authServices'];
 
-    function boardBacklogController($scope, $routeParams, $location, toastr, _boards, _tasks) {
+    function boardBacklogController($scope, $routeParams, $location, toastr, _boards, _tasks, _auth) {
 
         // properties 
 
         $scope.info = {};
         $scope.board = {};
         $scope.tasks = {};
+
+        $scope.isDeveloper = _auth.hasRole('developer');
+        $scope.isOwner = _auth.hasRole('owner');
 
         // functions
 

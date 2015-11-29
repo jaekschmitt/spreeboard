@@ -14,9 +14,9 @@
             
             <form role="form">
                 <div class="form-group">
-                    <label class="control-label">Priority</label>
-                    <span class="gitlab-label-info" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>
-                    <span class="gitlab-label-info empty" ng-hide="task.priority">None</span>
+                    <label class="control-label">Stage</label>
+                    <span class="gitlab-label-info" ng-show="task.stage" ng-style="{ 'background-color': task.stage.color }">{{task.stage.name}}</span>
+                    <span class="gitlab-label-info empty" ng-hide="task.stage">None</span>
                 </div>
 
                 <div class="form-group">
@@ -26,10 +26,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Stage</label>
-                    <span class="gitlab-label-info" ng-show="task.stage" ng-style="{ 'background-color': task.stage.color }">{{task.stage.name}}</span>
-                    <span class="gitlab-label-info empty" ng-hide="task.stage">None</span>
-                </div>
+                    <label class="control-label">Priority</label>
+                    <span class="gitlab-label-info" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>
+                    <span class="gitlab-label-info empty" ng-hide="task.priority">None</span>
+                </div>                
 
                 <div class="form-group">
                     <label class="control-label">Developer</label>

@@ -4,20 +4,20 @@
         .module('main')
         .controller('mainController', mainController);
 
-    mainController.$inject = ['$scope', '$location', 'authSvc'];
+    mainController.$inject = ['$scope', '$location', 'authServices'];
 
-    function mainController($scope, $location, authSvc) {
+    function mainController($scope, $location, authServices) {
 
         // properties
 
-        $scope.auth = authSvc.authentication
+        $scope.auth = authServices.authentication
 
         // functions
 
         $scope.logout = logout;
 
         function logout() {
-            authSvc.logout(function(err) {
+            authServices.logout(function(err) {
                 $location.path('/login');
             });
         }

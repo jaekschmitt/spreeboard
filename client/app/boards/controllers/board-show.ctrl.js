@@ -4,13 +4,13 @@
         .module('main')
         .controller('showBoardController', showBoardController);
 
-    showBoardController.$inject = ['$scope', '$routeParams', 'toastr', 'authSvc', 'boardServices'];
+    showBoardController.$inject = ['$scope', '$routeParams', 'toastr', 'authServices', 'boardServices'];
 
-    function showBoardController($scope, $routeParams, toastr, authSvc, boardServices) {
+    function showBoardController($scope, $routeParams, toastr, authServices, boardServices) {
 
         // properties
 
-        var roles = authSvc.authentication.user.roles;
+        var roles = authServices.authentication.user.roles;
         
         $scope.isAdmin = roles.indexOf('admin') > -1;
         $scope.isOwner = roles.indexOf('owner') > -1;

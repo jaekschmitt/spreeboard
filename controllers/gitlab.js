@@ -54,7 +54,10 @@ exports.issuesSync = function(req, res, next) {
         logger.debug('Issue close reported.');
 
         var options = {
-            criteria: { 'issue.id': issueInfo.object_attributes.id }
+            criteria: { 
+                'issue.id': issueInfo.object_attributes.id,
+                sync_lock: false
+            }
         };
 
         db.Task.delete(options, function(err, task) {

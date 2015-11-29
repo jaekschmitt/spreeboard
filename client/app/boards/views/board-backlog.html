@@ -19,7 +19,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="task in tasks.approved">
-                        <td><a href="#/boards/{{board._id}}/tasks/{{task._id}}/edit"><i class="fa fa-bars"></i></a></td>
+                        <td><a href="#/boards/{{board._id}}/tasks/{{task._id}}"><i class="fa fa-info-circle"></i></a></td>
                         <td>{{task.title}}</td>
                         <td>{{task.description | stripMarkdown | cut:true:75:'...' }}</td>
                         <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
@@ -40,7 +40,7 @@
                         <th>Description</th>
                         <th>Created On</th>
                         <th>Created By</th>
-                        <th></th>
+                        <th ng-show="isDeveloper || isOwner"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@
                         <td>{{task.description | cut:true:75:'...' }}</td>
                         <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
                         <td>{{task.created_by.name}}</td>
-                        <td><a href="" ng-click="approve(task)">Approve</a></td>
+                        <td ng-show="isDeveloper || isOwner"><a href="" ng-click="approve(task)">Approve</a></td>
                     </tr>
                 </tbody>
             </table>

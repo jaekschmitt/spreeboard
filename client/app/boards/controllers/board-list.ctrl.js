@@ -4,14 +4,14 @@
         .module('main')
         .controller('boardListController', boardListController);
 
-    boardListController.$inject = ['$scope', 'toastr', 'authSvc', 'boardServices'];
+    boardListController.$inject = ['$scope', 'toastr', 'authServices', 'boardServices'];
 
-    function boardListController($scope, toastr, authSvc, boardServices) {
+    function boardListController($scope, toastr, authServices, boardServices) {
 
         // properties
 
         $scope.boards = [];
-        $scope.roles = authSvc.authentication.user.roles;
+        $scope.roles = authServices.authentication.user.roles;
 
         // functions
 

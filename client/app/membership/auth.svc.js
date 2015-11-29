@@ -2,7 +2,7 @@
 
     angular
         .module('main')
-        .factory('authSvc', authService);
+        .factory('authServices', authService);
 
 
     authService.$inject = ['$http', '$q', 'localStorageService', 'env'];
@@ -22,7 +22,8 @@
             ldapLogin: ldapLogin,
             devLogin: devLogin,
             logout: logout,
-            fillAuthData: fillAuthData,
+            fillAuthData: fillAuthData,            
+            hasRole: hasRole,
             authentication: authentication
         };      
 
@@ -103,6 +104,13 @@
                 authentication.isAuth = true;
                 authentication.user = authData.user;                
             }
+        }
+
+        function hasRole(role) {
+            if(!authentication || !authentication.user) return false;
+
+            var roles = authentication.user.roles;
+            return roles.indexOf(role) > -1;
         }
 
         // private functions

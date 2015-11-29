@@ -21,11 +21,14 @@ exports.requiresLogin = function (req, res, next) {
 };
 
 exports.requiresRoles = function(roles) {
-    return function(roles, req, res, next) {
-        
+    return function(roles, req, res, next) {        
+
         var required = _.flatten([roles]),
             possessed = req.roles,
-            passed = _.intersection(required, possessed).length === required.length;
+            passed = _.intersection(required, possessed).length;
+
+        logger.crit(required);
+        logger.crit(possessed);
 
         if(passed) {
             next();

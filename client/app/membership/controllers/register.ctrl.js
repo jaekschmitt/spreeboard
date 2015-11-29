@@ -4,9 +4,9 @@
         .module('main')
         .controller('registerController', registerController);
 
-    registerController.$inject = ['$scope', '$location', 'toastr', 'authSvc'];
+    registerController.$inject = ['$scope', '$location', 'toastr', 'authServices'];
 
-    function registerController($scope, $location, toastr, authSvc) {
+    function registerController($scope, $location, toastr, authServices) {
 
         // properties
 
@@ -23,7 +23,7 @@
         function register() {
             var pkg = $scope.regData;
 
-            authSvc.saveRegistration(pkg, function(err, response) {
+            authServices.saveRegistration(pkg, function(err, response) {
                 if(err) return toastr.error(err);
                 $location.path('/');
             });

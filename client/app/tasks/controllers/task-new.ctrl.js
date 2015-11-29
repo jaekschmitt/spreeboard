@@ -4,15 +4,18 @@
         .module('main')
         .controller('newTaskController', newTaskController);
 
-    newTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices'];
+    newTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authServices'];
 
-    function newTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users) {
+    function newTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users, _auth) {
 
         // properties
 
         $scope.board = {};
         $scope.users = {};
         $scope.task = {};
+
+        $scope.isDeveloper = _auth.hasRole('developer');
+        $scope.isOwner = _auth.hasRole('owner');
 
         $scope.working = false;
 
