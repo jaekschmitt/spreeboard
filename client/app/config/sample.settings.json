@@ -5,6 +5,7 @@
 
         "gitlab": {
             "key": "GITLAB_APPLICATION_ID",
+            "url": "http://BASE_GITLAB_URL",
             "proxy": "http://BASE_URL/oauthproxy"
         }
     }
