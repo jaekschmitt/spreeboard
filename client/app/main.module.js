@@ -5,11 +5,13 @@
         .config(httpConfig)
         .config(routeConfig)
         .config(markdownConfig)
+        .config(gitlabConfig)
         .run(bootstrap);
 
     httpConfig.$inject = ['$httpProvider'];
     routeConfig.$inject = ['$routeProvider']; 
     markdownConfig.$inject = ['markedProvider'];
+    gitlabConfig.$inject = ['env'];
     bootstrap.$inject = ['$window', 'authServices'];
 
     function httpConfig($httpProvider) {
@@ -113,6 +115,30 @@
                     + '</ul>';
             }
         });
+    }
+
+    function gitlabConfig(env) {
+        hello.init({
+            gitlab : {
+                name : 'gitlab',                        
+                oauth : {
+                    version : 2,
+                    auth: env.gitlab.url + 'oauth/authorize',
+                    grant : env.gitlab.url + 'oauth/token',                
+                    response_type: 'code'
+                },
+                
+                scope: {
+                    basic: ''
+                },
+
+                base: env.gitlab.url + 'api/v3/',
+
+                get: {
+                    me: 'user'
+                }
+            }
+        });   
     }
 
     function bootstrap($window, authServices) {
