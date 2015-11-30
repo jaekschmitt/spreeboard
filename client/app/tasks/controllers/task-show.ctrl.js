@@ -11,6 +11,8 @@
         // properties
 
         $scope.task = {};
+
+        $scope.taskLink = '#';
         $scope.isDeveloper = _auth.authentication.user.roles.indexOf('developer') > -1;
 
         // functions
@@ -24,6 +26,7 @@
                 if(err) return toastr.error(err);
 
                 $scope.task = task;
+                // $scope.taskLink = "/#/boards/" + task.board + '/task'
             });
         }
     }

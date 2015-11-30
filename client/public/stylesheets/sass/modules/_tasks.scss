@@ -8,6 +8,16 @@
     
     h2 {
         margin-bottom: 1rem;
+
+        small > a {
+            color: $text-gray;
+
+            &:hover,
+            &:focus {
+                text-decoration: none;
+                color: lighten($text-gray, 10%);
+            }
+        }
     }
 
     .main-info {

@@ -23,6 +23,11 @@ i.fa {
 
 #ShowTask h2 {
   margin-bottom: 1rem; }
+  #ShowTask h2 small > a {
+    color: #818a91; }
+    #ShowTask h2 small > a:hover, #ShowTask h2 small > a:focus {
+      text-decoration: none;
+      color: #9ca3a9; }
 #ShowTask .main-info {
   padding-top: 1rem;
   padding-bottom: 1rem;

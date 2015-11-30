@@ -10,7 +10,7 @@ var logger = require(__base + 'config/logger'),
 exports.load = function(req, res, next, id) {
     var options = {
         criteria: { _id : id },
-        select: 'id title description stage priority size project board issue.id created_at developer owner approved',
+        select: 'id title description stage priority size project board issue.iid created_at developer owner approved',
         populate: { 
             'developer': 'id name email',
             'owner': 'id name email'
