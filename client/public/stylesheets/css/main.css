@@ -83,7 +83,6 @@ i.fa {
     .board .stages .stage {
       flex: 1;
       display: inline-block;
-      overflow: scroll;
       border-right: 1px solid #eceeef; }
       .board .stages .stage:last-child {
         border-right: none; }

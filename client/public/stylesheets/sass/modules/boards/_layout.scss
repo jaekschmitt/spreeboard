@@ -43,7 +43,7 @@
         .stage {
             flex: 1;
             display: inline-block;                
-            overflow: scroll;
+            // overflow: scroll;
             border-right: 1px solid $bg-muted;
             
             &:last-child {

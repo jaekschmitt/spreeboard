@@ -47,6 +47,8 @@
                 title: task.title,
                 description: task.description,
                 stage: task.stage,
+                priority: task.priority,
+                size: task.size,
                 developer: task.developer ? task.developer._id : null,
                 owner: task.owner ? task.owner._id : null,
                 boardId: $scope.board._id

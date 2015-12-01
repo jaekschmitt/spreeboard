@@ -30,6 +30,8 @@ exports.create = function(req, res, next) {
         title: req.body.title,
         description: req.body.description,
         stage: req.body.stage,
+        priority: req.body.priority,
+        size: req.body.size,
         developer: req.body.developer,
         owner: req.body.owner,
         board: req.board,

@@ -27,9 +27,6 @@ exports.requiresRoles = function(roles) {
             possessed = req.roles,
             passed = _.intersection(required, possessed).length;
 
-        logger.crit(required);
-        logger.crit(possessed);
-
         if(passed) {
             next();
         } else {
