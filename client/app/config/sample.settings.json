@@ -1,6 +1,6 @@
 {
     "env": {
-        "api": "NAME_YOUR_ENVIRONMENT",
+        "name": "NAME_YOUR_ENVIRONMENT",
         "api": "http://BASE_URL_FOR_API/",
 
         "gitlab": {

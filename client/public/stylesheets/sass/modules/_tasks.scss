@@ -55,6 +55,10 @@
 
         color: $text-base;
         border: $border-light;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     .actions {

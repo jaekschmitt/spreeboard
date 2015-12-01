@@ -52,6 +52,8 @@ i.fa {
   font-weight: 500;
   color: #55595c;
   border: 0.0625rem solid #ccc; }
+  #ShowTask .gitlab-label-user:hover {
+    cursor: pointer; }
 #ShowTask .actions {
   margin-top: 3rem; }
   #ShowTask .actions .gitlab-label-action {
@@ -81,6 +83,7 @@ i.fa {
     .board .stages .stage {
       flex: 1;
       display: inline-block;
+      overflow: scroll;
       border-right: 1px solid #eceeef; }
       .board .stages .stage:last-child {
         border-right: none; }
