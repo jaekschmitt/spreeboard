@@ -50,4 +50,5 @@ module.exports = function(app, passport) {
     // Gitlab
     app.get('/gitlab/projects', auth, roles('developer'), gitlab.projects);
     app.post('/gitlab/issues', gitlab.issuesSync);
+    app.post('/gitlab/merges', gitlab.mergeSync);
 };

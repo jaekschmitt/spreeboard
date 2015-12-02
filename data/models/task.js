@@ -20,7 +20,10 @@ var TaskSchema = new Schema({
     approved: { type: Boolean, default: false },
 
     issue: {},
-    sync_lock: Boolean,
+    sync_lock: {
+        type: Boolean,
+        default: false
+    },
 
     created_at: {
         type: Date,
@@ -30,6 +33,18 @@ var TaskSchema = new Schema({
 
     updated_at: {
         type: Date
+    },
+
+    status: {
+        type: String,
+        required: true,
+        enum: ['active', 'closed', 'completed'],
+        default: 'active'
+    },
+
+    last_status_update: {
+        type: Date,
+        default: new Date()
     }
 
 });

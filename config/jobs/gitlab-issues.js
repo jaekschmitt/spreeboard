@@ -42,7 +42,7 @@ module.exports = function(agenda) {
     agenda.define('close-issue', function(job, done) {
         var data = job.attrs.data;
 
-        logger.crit('Closing gitlab issue for task: ' + data.task ? data.task._id : data.taskId);
+        logger.crit('Closing gitlab issue for task: ' + (data.task ? data.task._id : data.taskId));
         _gitlab.issues.close(data, function(err, results) {
             if(err) logger.crit(err);
             done();

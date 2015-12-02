@@ -73,24 +73,28 @@ exports.update = function(req, res, next) {
 exports.delete = function(req, res, next) {
     if(!req.task) return res.status(200);
 
-    var isOwner = req.user._id == req.task.created_by,
+    var task = req.task,
+        isOwner = req.user._id == task.created_by,
         isDev = req.user.roles.indexOf('developer') != -1,
         isAdmin = req.user.roles.indexOf('admin') != -1;            
 
     var hasPermission = isOwner || isDev || isAdmin;
     if(!hasPermission) return res.status(401).json("You are not authorized to delete this task");
 
-    req.task.remove(function(err) {
-        if(err) return res.status(500).json(err);
+    task.status = 'closed';    
+    task.last_status_update = new Date();    
 
-        if(req.task.issue && req.user.roles.indexOf('developer') > -1) {
-            var pkg = { task: req.task.toJSON(), user: req.user.toJSON() };
+    task.save(function(err) {
+        if(err) return res.status(500).json(err);        
 
+        if(task.issue && req.user.roles.indexOf('developer') > -1) {
+            var pkg = { taskId: task._id, user: req.user.toJSON() };
+                        
             logger.debug('Launching close issue job for gitlab.');
             agenda.now('close-issue', pkg);
         }
         
-        res.status(200).json(req.task);
+        res.status(200).json(task);
     });
 };
 

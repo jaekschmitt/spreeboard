@@ -60,14 +60,28 @@ exports.issuesSync = function(req, res, next) {
             }
         };
 
-        db.Task.delete(options, function(err, task) {
+        db.Task.load(options, function(err, task) {
             if(err) logger.crit(err);
-            if(task) logger.debug('Deleted corresponding task: ' + task._id);            
+            
+            if(task) {
+                logger.debug('Deleted corresponding task: ' + task._id);
+
+                task.status = 'closed';
+                task.last_status_update = new Date();
+
+                task.save();
+            }
         });
     }
 
     reply(res);
-}
+};
+
+exports.mergeSync = function(req, res) {
+    logger.crit(JSON.stringify(req.body, null, 4));
+
+    reply(res);
+};
 
 // helper functions
 

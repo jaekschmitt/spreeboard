@@ -84,7 +84,8 @@ exports.backlog = function(req, res, next) {
         options = {
             criteria: {
                 board: board._id,
-                stage: null
+                stage: null,
+                status: 'active'
             },
             select: 'id title description developer owner created_by approved created_at',
             populate: { 'created_by': 'name email', 'developer': 'name email' }
