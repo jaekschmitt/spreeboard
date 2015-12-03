@@ -98,6 +98,31 @@ exports.delete = function(req, res, next) {
     });
 };
 
+exports.complete = function(req, res, next) {
+    if(!req.task) return res.status(200);
+
+    var task = req.task,        
+        isDev = req.user.roles.indexOf('developer') != -1;        
+
+    if(!isDev) return res.status(401).json("You are not authorized to complete this task");
+
+    task.status = 'completed';
+    task.last_status_update = new Date();
+
+    task.save(function(err) {
+        if(err) return res.status(500).json(err);
+
+        if(task.issue && isDev) {
+            var pkg = { taskId: task._id, user: req.user.toJSON() };
+
+            logger.debug('Launching close issue job for gitlab');
+            agenda.now('close-issue', pkg);
+        }
+
+        res.status(200).json(task);
+    });
+};
+
 exports.show = function(req, res, next) {
     var task = req.task;
 

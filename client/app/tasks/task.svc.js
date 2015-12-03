@@ -11,6 +11,7 @@
             createTask: createTask,
             fetchTask: fetchTask,
             updateTask: updateTask,
+            completeTask: completeTask,
             deleteTask: deleteTask
         };
 
@@ -26,6 +27,11 @@
 
         function updateTask(pkg, next) {
             $http.put(env.api + 'tasks/' + pkg._id, pkg)
+            .then(success(next), error(next));
+        }
+
+        function completeTask(id, next) {
+            $http.put(env.api + 'tasks/' + id + '/complete')
             .then(success(next), error(next));
         }
 

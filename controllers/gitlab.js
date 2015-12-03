@@ -56,7 +56,8 @@ exports.issuesSync = function(req, res, next) {
         var options = {
             criteria: { 
                 'issue.id': issueInfo.object_attributes.id,
-                sync_lock: false
+                'status': { $ne : 'completed' },
+                'sync_lock': false
             }
         };
 
@@ -78,7 +79,45 @@ exports.issuesSync = function(req, res, next) {
 };
 
 exports.mergeSync = function(req, res) {
+    var mergeInfo = req.body.object_attributes,
+        direction = mergeInfo.action;
+
     logger.crit(JSON.stringify(req.body, null, 4));
+
+    if(direction === 'merge') {
+        logger.debug('Merge reported.');
+
+        var body = mergeInfo.description,
+            title = mergeInfo.title,
+            regEx = /[resolves #](\d+)/;
+
+        var match = body.match(regEx) || title.match(regEx);
+        if(match && match.length > 1) {
+            logger.debug('Merge has correlating issue: ' + match[1]);
+
+            var issueID = parseInt(match[1]);
+            if(typeof issueID === NaN) return reply(res);
+
+            var options = {
+                criteria: { 
+                    'issue.id': issueID,
+                    'sync_lock': false
+                }
+            };
+            
+            db.Task.load(options, function(err, task) {
+                if(err) logger.crit(err);
+                if(task) {
+                    logger.debug('Completing corresponding task: ' + task._id);
+
+                    task.status = 'completed';
+                    task.last_status_update = new Date();
+
+                    task.save();
+                }
+            });
+        }
+    }
 
     reply(res);
 };

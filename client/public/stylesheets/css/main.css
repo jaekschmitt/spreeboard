@@ -57,6 +57,7 @@ i.fa {
 #ShowTask .actions {
   margin-top: 3rem; }
   #ShowTask .actions .gitlab-label-action {
+    margin-bottom: 1rem;
     display: block; }
 
 #NewBoard .dev-stages {

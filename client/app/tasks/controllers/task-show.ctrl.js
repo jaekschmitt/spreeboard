@@ -17,6 +17,8 @@
 
         // functions
 
+        $scope.complete = complete;
+
         activate();
 
         function activate() {
@@ -24,9 +26,16 @@
 
             _tasks.fetchTask(task_id, function(err, task) {
                 if(err) return toastr.error(err);
-
                 $scope.task = task;
-                // $scope.taskLink = "/#/boards/" + task.board + '/task'
+            });
+        }
+
+        function complete() {
+            var task_id = $scope.task._id;
+
+            _tasks.completeTask(task_id, function(err, task) {
+                if(err) return toastr.error(err);
+                $location.path('/boards/' + $scope.task.board);
             });
         }
     }

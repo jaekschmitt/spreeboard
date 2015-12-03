@@ -41,6 +41,7 @@ module.exports = function(app, passport) {
     app.get('/tasks/:task_id', auth, tasks.show);
     app.post('/boards/:board_id/tasks', auth, roles('developer', 'owner'), tasks.create);
     app.put('/tasks/:task_id', auth, roles('developer', 'owner'), tasks.update);
+    app.put('/tasks/:task_id/complete', auth, roles('developer'), tasks.complete);
     app.delete('/tasks/:task_id', auth, roles('developer', 'owner'), tasks.delete);
 
     // Board Attributes
