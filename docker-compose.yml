@@ -1,0 +1,12 @@
+web:
+    image: spreeboard/app
+    container_name: sb-web-1
+    volumes:
+        - ".:/src"
+    ports:
+        - "3000:3000"
+    links:
+        - "db:mongo_host"
+db:
+    image: spreeboard/mongodb
+    container_name: sb-db-1

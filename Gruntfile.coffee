@@ -51,6 +51,15 @@ module.exports = (grunt) ->
                     dest: 'client/app/config/env.settings.js'
                 constants: grunt.file.readJSON 'client/app/config/settings.json'
 
+        concurrent:
+            task: ['nodemon', 'watch']
+            options:
+                logConcurrentOutput: true
+
+        nodemon:
+            dev:
+                scripts: 'server.js'                
+
         watch:
             sass:
                 files: 'client/public/stylesheets/sass/**/*.scss'
@@ -78,6 +87,6 @@ module.exports = (grunt) ->
         grunt.config 'mochaTest.test.src', filepath if filepath.match 'test/'        
 
     # create workflows
-    grunt.registerTask 'default', ['sass', 'ngconstant:env', 'watch']
+    grunt.registerTask 'default', ['sass', 'ngconstant:env', 'concurrent']
     grunt.registerTask 'test', ['mochaTest', 'watch:tests']
     grunt.registerTask 'build:production', ['sass', 'ngconstant:env']

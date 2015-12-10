@@ -15,7 +15,7 @@ if(!testing) logger.info('Connected to database.');
 if(!testing) logger.info('Bootstrapping models.');
 
 var models = {},
-    model = null;
+    model = null; 
 
 fs.readdirSync(path.join(__base, 'data/models')).forEach(function (file) {
     if (~file.indexOf('.js')) {
