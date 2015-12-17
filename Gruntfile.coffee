@@ -89,4 +89,4 @@ module.exports = (grunt) ->
     # create workflows
     grunt.registerTask 'default', ['sass', 'ngconstant:env', 'concurrent']
     grunt.registerTask 'test', ['mochaTest', 'watch:tests']
-    grunt.registerTask 'build:production', ['sass', 'ngconstant:env']
+    grunt.registerTask 'build', ['sass', 'ngconstant:env']

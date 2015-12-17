@@ -5,9 +5,11 @@ var logger = require('./logger'),
 var agenda = new Agenda({ db: { address: config.agenda.connection } }),
     jobs = config.agenda.jobs;
 
-logger.info('Registering jobs.');
-jobs.forEach(function(type) {
-    require('./jobs/' + type)(agenda);
+agenda.on('ready', function() {
+    logger.info('Registering jobs.');
+    jobs.forEach(function(type) {
+        require('./jobs/' + type)(agenda);
+    });
 });
 
 agenda.on('fail', function(err, job) {

@@ -31,6 +31,8 @@ exports.info = function(req, res, next) {
 
         // release mongoose's hold on the object so we can attach other properties to it.
         var board = req.board.toJSON();
+
+        logger.debug(JSON.stringify(board, null, 4));
         board.developers = users;
 
         res.status(200).json(board);

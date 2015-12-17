@@ -12,17 +12,17 @@ RUN apt-get update -qq && \
 # install gems
 RUN gem install sass --no-ri --no-rdoc
 
-# install packages
-RUN npm install grunt grunt-cli nodemon bower -g
-
 # create source directory
 RUN mkdir /src
 
 WORKDIR /src
-ADD ./package.json /src/package.json
+ADD . /src
 
-RUN npm install
+# install packages
+RUN npm install grunt grunt-cli nodemon bower -g && \
+	npm install && \
+	bower install --allow-root
+
+RUN grunt build
 
 EXPOSE 3000
-
-CMD ["grunt"]
