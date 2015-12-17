@@ -9,7 +9,7 @@
     function authInterceptor($window, localStorageSvc) {
         return {
             request: request,
-            responseError, responseError
+            responseError: responseError
         };
 
         function request(config) {

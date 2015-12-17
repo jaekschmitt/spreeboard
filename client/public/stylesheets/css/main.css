@@ -60,6 +60,9 @@ i.fa {
     margin-bottom: 1rem;
     display: block; }
 
+#TaskList .filters {
+  margin: 0 3rem; }
+
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }
 

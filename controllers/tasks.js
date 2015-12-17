@@ -130,3 +130,24 @@ exports.show = function(req, res, next) {
 
     res.status(200).json(task);
 };
+
+exports.search = function(req, res, next) {
+    var params = req.query,
+        options = {
+            criteria: {},
+            select: 'id title description stage priority size project board issue.iid created_at developer owner approved'
+        };
+
+    logger.crit(params);
+
+    if(params.board) options.criteria.board = params.board;
+    if(params.status) options.criteria.status = params.status;
+    if(params.stage) options.criteria['stage.name'] = params.stage;
+    if(params.size) options.criteria['size.name'] = params.size;
+    if(params.priority) options.criteria['priority.name'] = params.priority;
+
+    db.Task.list(options, function(err, tasks) {
+        if(err) return res.status(500).json(err);
+        res.status(200).json(tasks);
+    });
+}

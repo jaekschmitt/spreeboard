@@ -10,6 +10,7 @@
         return {            
             createTask: createTask,
             fetchTask: fetchTask,
+            searchTasks: searchTasks,
             updateTask: updateTask,
             completeTask: completeTask,
             deleteTask: deleteTask
@@ -22,6 +23,11 @@
 
         function fetchTask(id, next) {
             $http.get(env.api + 'tasks/' + id)
+            .then(success(next), error(next));
+        }
+
+        function searchTasks(params, next) {
+            $http.get(env.api + 'tasks/search', { params: params })
             .then(success(next), error(next));
         }
 

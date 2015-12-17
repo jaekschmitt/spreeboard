@@ -69,6 +69,11 @@
 
         // tasks
 
+        $routeProvider.when('/tasks', {
+            controller: 'taskListController',
+            templateUrl: 'app/tasks/views/task-list.html'
+        });
+
         $routeProvider.when('/boards/:board_id/tasks/new', {
             controller: 'newTaskController',
             templateUrl: 'app/tasks/views/task-new.html'

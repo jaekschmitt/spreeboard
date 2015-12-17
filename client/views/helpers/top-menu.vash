@@ -7,7 +7,7 @@
                 <a class="nav-link" href="#/boards">Boards<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">Stats</a>
+                <a href="#/tasks" class="nav-link">Tasks</a>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">

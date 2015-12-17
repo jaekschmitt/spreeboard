@@ -38,6 +38,7 @@ module.exports = function(app, passport) {
     
     // Tasks
     app.param('task_id', tasks.load);
+    app.get('/tasks/search', auth, tasks.search);
     app.get('/tasks/:task_id', auth, tasks.show);
     app.post('/boards/:board_id/tasks', auth, roles('developer', 'owner'), tasks.create);
     app.put('/tasks/:task_id', auth, roles('developer', 'owner'), tasks.update);

@@ -1,0 +1,62 @@
+<div id="TaskList">
+    <div class="filters">
+        <div class="row">
+            <form class="form-inline">
+                <div class="form-group">
+                    <select class="form-control c-select" ng-options="board as board.name for board in filters.boards track by board._id" ng-model="filters.board" ng-style="{ 'border-color': task.priority.color }">
+                        <option value>All Boards</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control c-select" ng-model="filters.status" ng-style="{ 'border-color': task.priority.color }">
+                        <option value>All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control c-select" ng-options="stage for stage in filters.stages track by stage" ng-model="filters.stage" ng-style="{ 'border-color': task.priority.color }">
+                        <option value>All Stages</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control c-select" ng-options="priority for priority in filters.priorities track by priority" ng-model="filters.priority" ng-style="{ 'border-color': task.priority.color }">
+                        <option value>All Priorities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select class="form-control c-select" ng-options="size for size in filters.sizes track by size" ng-model="filters.size" ng-style="{ 'border-color': filters.priority.color }">
+                        <option value>All Sizes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" ng-click="applyFilters()">Apply Filters</button>
+                </div>
+            </form>
+        </div>        
+    </div>
+
+    <div class="results container">
+        <table class="table table-sm">
+            <thead class="thead-inverse">
+                <tr>
+                    <th></th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Created On</th>
+                    <th>Created By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="task in tasks">
+                    <td><a href="#/boards/{{task.board}}/tasks/{{task._id}}/edit"><i class="fa fa-pencil"></i></a></td>
+                    <td>{{task.title}}</td>
+                    <td>{{task.description | cut:true:75:'...' }}</td>
+                    <td>{{task.created_at | date: 'MM.dd.yy'}}</td>
+                    <td>{{task.created_by.name}}</td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

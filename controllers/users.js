@@ -6,7 +6,7 @@ exports.list = function(req, res, next) {
     var params = req.query,
         options = {
             criteria: {},
-            select: 'id name email'
+            select: 'id name email roles'
         };
         
     if(params.role) 
