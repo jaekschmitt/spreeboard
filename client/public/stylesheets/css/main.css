@@ -103,6 +103,23 @@ i.fa {
       border: 0.0625rem solid #ccc; }
   #TaskList .task-items .card-block {
     padding: 1rem; }
+  #TaskList .attr-counts .count-group {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    text-align: center;
+    border: 0.0625rem solid #ccc;
+    border-radius: .25rem; }
+    #TaskList .attr-counts .count-group label {
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-transform: capitalize; }
+    #TaskList .attr-counts .count-group .count {
+      margin-right: 1.25rem; }
+      #TaskList .attr-counts .count-group .count:last-child {
+        margin-right: 0; }
+      #TaskList .attr-counts .count-group .count strong {
+        margin-right: .5rem;
+        font-size: 1.15rem; }
 
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }

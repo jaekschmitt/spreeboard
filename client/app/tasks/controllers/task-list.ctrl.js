@@ -4,9 +4,11 @@
         .module('main')
         .controller('taskListController', taskListController);
 
-    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'authServices', 'taskServices', 'boardServices', 'userServices'];
+    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'localStorageService', 'authServices', 'taskServices', 'boardServices', 'userServices'];
 
-    function taskListController($scope, $routeParams, $location, toastr, _auth, _tasks, _boards, _users) {
+    var STORAGE_KEY = 'task-list.filters';
+
+    function taskListController($scope, $routeParams, $location, toastr, _storage, _auth, _tasks, _boards, _users) {
 
         // properties
 
@@ -27,9 +29,15 @@
             owners: []
         };
 
+        $scope.counts = {            
+
+        };
+
         // functions
 
         $scope.applyFilters = applyFilters;
+        $scope.clearFilters = clearFilters;
+        $scope.getAttrColor = getAttrColor;
 
         activate();
 
@@ -63,16 +71,21 @@
                                 .flatten()
                                 .pluck('name')
                                 .uniq()
-                                .value();                
+                                .value();
                 
                 filters.developers = users.filter(function(u) { return u.roles.indexOf('developer') > -1; });
                 filters.owners = users.filter(function(u) { return u.roles.indexOf('owner') > -1; });
-                
+
+                var prevFilters = _storage.get(STORAGE_KEY);
+                filters = _.extend(filters, prevFilters);                
+
+                setupFilters(filters);
+
                 $scope.filters = filters;
-                applyFilters();                
+                applyFilters();
             });
         }
-
+        
         function applyFilters() {
             var filters = $scope.filters,
                 params = {
@@ -81,16 +94,83 @@
                     size: filters.size,
                     priority: filters.priority,
                     stage: filters.stage
-                };
+                };            
 
-            console.log(params);
-
+            _storage.set(STORAGE_KEY, params);
+            
             _tasks.searchTasks(params, function(err, results) {
-                console.log(results);
-                $scope.tasks = results;
+                gatherCounts(results, filters);
+                $scope.tasks = results;                
             });
+        }        
+
+        function clearFilters() {
+            console.log('clearing filters');
+
+            $('.task-filters').collapse('hide');
+
+            delete $scope.filters.board;
+            delete $scope.filters.status;
+            delete $scope.filters.size;
+            delete $scope.filters.priority;
+            delete $scope.filters.stage;
+
+            applyFilters();
         }
 
+
+        // TODO: rework this so it pulls from the server please
+        function getAttrColor(attr) {
+            switch(attr) {
+                case 'sizes':
+                    return 'rgb(2, 90, 165)';
+                case 'priorities':
+                    return 'rgb(240, 173, 78)';
+                case 'stages':
+                    return 'rgb(92, 184, 92)';
+                default: 
+                    return '#ccc';
+            }   
+        }
+
+        // private functions
+
+        function setupFilters(filters) {
+            var isFiltered = filters.board
+                                || filters.status
+                                || filters.size
+                                || filters.priority
+                                || filters.stage;
+
+            if(isFiltered) {
+                console.log('found filters');
+                $('.task-filters').addClass('in');
+            }
+        }
+
+        function gatherCounts(tasks, filters) {
+            console.log('gathering counts');
+
+            var counts = {
+                sizes: countAttribute('size', filters.sizes, tasks),
+                priorities: countAttribute('priority', filters.priorities, tasks),
+                stages: countAttribute('stage', filters.stages, tasks)
+            };
+            
+            console.log(counts);
+
+            return $scope.counts = counts;
+        }
+
+        function countAttribute(attrName, attrList, tasks) {
+            var count = {};
+                        
+            attrList.forEach(function(attr) {
+                count[attr] = tasks.filter(function(t) { return !!t[attrName] && t[attrName].name === attr; }).length;
+            });
+
+            return count;
+        };
 
     }
 

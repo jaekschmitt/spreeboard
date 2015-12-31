@@ -152,4 +152,32 @@
             padding: 1rem;
         }    
     }
+
+    .attr-counts {
+        
+        .count-group {
+            margin-bottom: 1rem;
+            padding: 1rem;
+
+            text-align: center;
+            border: $border-light;
+            border-radius: .25rem;
+
+            label {
+                font-size: 1.25rem;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+
+            .count {
+                margin-right: 1.25rem;
+                &:last-child { margin-right: 0; }
+
+                strong {
+                    margin-right: .5rem;
+                    font-size: 1.15rem;
+                }
+            }
+        }
+    }
 }

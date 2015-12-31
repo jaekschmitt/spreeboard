@@ -33,17 +33,32 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary" ng-click="applyFilters()">Apply Filters</button>
+                        <button class="btn btn-warning" ng-click="clearFilters()">Clear Filters</button>
                     </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-click="applyFilters()">Apply Filters</button>
+                    </div>                    
                 </form>
             </div>
         </div>
         <nav class="navbar navbar-nav board-actions">
-            <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".task-filters">&#9776; {{tasks.length}} Tasks</button>
+            <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target=".task-filters">&#9776; {{tasks.length}} Tasks</button>            
         </nav>
     </div>
 
-    <div class="results container">
-        <task-list tasks="tasks" editable="isAdmin"/>
+    <div class="results container-fluid">
+        <div class="col-sm-4">
+            <div class="attr-counts">                
+                <div ng-repeat="(attr, filters) in counts" class="count-group" ng-style="{ 'border-color': getAttrColor(attr) }">
+                    <label>{{attr}}</label>
+                    <p>
+                        <span ng-repeat="(label, count) in filters" class="count"><strong>{{count}}</strong>{{label}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <task-list tasks="tasks" editable="isAdmin"/>
+        </div>
     </div>
 </div>

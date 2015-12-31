@@ -3,8 +3,8 @@
         <div class="card-header" data-toggle="collapse" data-target="#task-{{task._id}}">
             <i class="fa fa-edit" ng-show="!!editable"></i>
             <h4 class="card-title">{{task.title}}</h4>
-            <span class="attribute" ng-show="task.priority" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>
             <span class="attribute" ng-show="task.size" ng-style="{ 'background-color': task.size.color }">{{task.size.name}}</span>            
+            <span class="attribute" ng-show="task.priority" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>            
             <span class="text-muted pull-right">{{task.created_at | date: 'mediumDate'}}</span>
         </div>        
         <div class="card-block collapse" ng-attr-id="{{ 'task-' + task._id }}">
