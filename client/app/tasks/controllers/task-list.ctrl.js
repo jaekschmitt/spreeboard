@@ -79,15 +79,15 @@
                 filters.owners = users.filter(function(u) { return u.roles.indexOf('owner') > -1; });
 
                 var prevFilters = _storage.get(STORAGE_KEY);
-                filters = _.extend(filters, prevFilters);                
+                filters = _.extend(filters, prevFilters);
 
-                setupFilters(filters);
+                filterStartup(filters);
 
                 $scope.filters = filters;
                 applyFilters();
             });
-        }
-        
+        }        
+
         function applyFilters() {
             var filters = $scope.filters,
                 params = {
@@ -98,9 +98,14 @@
                     stage: filters.stage
                 };            
 
-
-            console.log(params);
-            _storage.set(STORAGE_KEY, params);
+            
+            _storage.set(STORAGE_KEY, {
+                board: filters.board,
+                status: filters.status,
+                size: filters.size,
+                priority: filters.priority,
+                stage: filters.stage
+            });
             
             _tasks.searchTasks(params, function(err, results) {
                 gatherCounts(results, filters);
@@ -139,7 +144,11 @@
 
         // private functions
 
-        function setupFilters(filters) {
+        function configureFilters() {
+                        
+        }
+
+        function filterStartup(filters) {
             var isFiltered = filters.board
                                 || filters.status
                                 || filters.size

@@ -48,7 +48,10 @@
 
     <div class="results container-fluid">
         <div class="col-sm-4">
-            <div class="attr-counts">                
+            <p class="well">
+                Please select a board to get specific counts.
+            </p>
+            <div class="attr-counts" ng-show="filters.board">                
                 <div ng-repeat="(attr, filters) in counts" class="count-group" ng-style="{ 'border-color': getAttrColor(attr) }">
                     <label>{{attr}}</label>
                     <p>

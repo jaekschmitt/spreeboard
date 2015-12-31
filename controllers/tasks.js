@@ -78,15 +78,18 @@ exports.delete = function(req, res, next) {
         isDev = req.user.roles.indexOf('developer') != -1,
         isAdmin = req.user.roles.indexOf('admin') != -1;            
 
+        console.log('closing');
+
     var hasPermission = isOwner || isDev || isAdmin;
     if(!hasPermission) return res.status(401).json("You are not authorized to delete this task");
 
-    task.status = 'closed';    
+    task.status = 'closed';
     task.last_status_update = new Date();    
 
     task.save(function(err) {
         if(err) return res.status(500).json(err);        
 
+        console.log('closed');
         if(task.issue && req.user.roles.indexOf('developer') > -1) {
             var pkg = { taskId: task._id, user: req.user.toJSON() };
                         
