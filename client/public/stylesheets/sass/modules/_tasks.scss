@@ -123,6 +123,11 @@
         .card-header {
             cursor: pointer;
 
+            a, a:hover{
+                text-decoration: none;
+                color: $text-gray;
+            }
+
             .fa-edit {
 
                 &:hover {

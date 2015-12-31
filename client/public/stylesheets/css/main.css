@@ -87,6 +87,9 @@ i.fa {
       margin-top: 0; }
   #TaskList .task-items .card-header {
     cursor: pointer; }
+    #TaskList .task-items .card-header a, #TaskList .task-items .card-header a:hover {
+      text-decoration: none;
+      color: #818a91; }
     #TaskList .task-items .card-header .fa-edit:hover {
       color: #f0ad4e; }
     #TaskList .task-items .card-header span.attribute {

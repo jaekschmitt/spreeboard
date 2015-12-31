@@ -1,7 +1,7 @@
 <div class="task-items">
     <div class="task-item card" ng-repeat="task in tasks">
         <div class="card-header" data-toggle="collapse" data-target="#task-{{task._id}}">
-            <i class="fa fa-edit" ng-show="!!editable"></i>
+            <a href="#/boards/{{task.board}}/tasks/{{task._id}}/edit"><i class="fa fa-edit" ng-show="!!editable"></i></a>
             <h4 class="card-title">{{task.title}}</h4>
             <span class="attribute" ng-show="task.size" ng-style="{ 'background-color': task.size.color }">{{task.size.name}}</span>            
             <span class="attribute" ng-show="task.priority" ng-style="{ 'background-color': task.priority.color }">{{task.priority.name}}</span>            
