@@ -1,6 +1,6 @@
 angular.module('config', [])
 
-.constant('env', {name:'development',api:'http://localhost:3000/',gitlab:{key:'d032c701b813dc94d3355a1fe88250a7c25883e7ca299cfcf9b5833d7cf9fbe2',url:'http://docker.me:10080/',proxy:'http://localhost:3000/oauthproxy'}})
+.constant('env', {name:'development',api:'http://localhost:3000/',gitlab:{key:'f460f7500009f79ba2115fd74bd750b9076575a1c9081e36a873e1e8c67c24de',url:'http://docker.me:10080/',proxy:'http://localhost:3000/oauthproxy'}})
 
 ;;(function() {
 
@@ -969,11 +969,16 @@ angular.module('config', [])
         .module('main')
         .controller('taskListController', taskListController);
 
-    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices'];
+    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'authServices', 'taskServices', 'boardServices', 'userServices'];
 
-    function taskListController($scope, $routeParams, $location, toastr, _tasks, _boards, _users) {
+    function taskListController($scope, $routeParams, $location, toastr, _auth, _tasks, _boards, _users) {
 
         // properties
+
+        var roles = _auth.authentication.user.roles;
+        
+        $scope.isAdmin = roles.indexOf('admin') > -1;
+        $scope.isOwner = roles.indexOf('owner') > -1;
 
         $scope.tasks = [];
 
@@ -1024,15 +1029,12 @@ angular.module('config', [])
                                 .pluck('name')
                                 .uniq()
                                 .value();                
-
-                console.log(boards);
-                console.log(users);
                 
                 filters.developers = users.filter(function(u) { return u.roles.indexOf('developer') > -1; });
                 filters.owners = users.filter(function(u) { return u.roles.indexOf('owner') > -1; });
                 
                 $scope.filters = filters;
-                console.log($scope.filters);
+                applyFilters();                
             });
         }
 
@@ -1235,6 +1237,23 @@ angular.module('config', [])
             }
 
             return output;
+        }
+    }
+
+})();;(function() {
+
+    angular
+        .module('main')
+        .directive('taskList', taskList);
+
+    function taskList() {
+        return {
+            restrict: 'E',
+            scope: {
+                tasks: '=tasks',
+                editable: '=editable'
+            },
+            templateUrl: 'app/tasks/directives/task-list-tmpl.html',            
         }
     }
 

@@ -60,8 +60,49 @@ i.fa {
     margin-bottom: 1rem;
     display: block; }
 
-#TaskList .filters {
-  margin: 0 3rem; }
+#TaskList {
+  margin-top: -20px; }
+  #TaskList .action-bar {
+    margin-bottom: 1rem; }
+  #TaskList .task-filters form {
+    margin-bottom: 0;
+    padding: 1rem; }
+  #TaskList .task-filters button {
+    margin-left: 2rem; }
+  #TaskList .task-items h4 {
+    display: inline-block;
+    margin: 0;
+    font-size: 1.25rem; }
+    #TaskList .task-items h4 a {
+      text-decoration: none;
+      color: inherit; }
+      #TaskList .task-items h4 a:hover {
+        text-decoration: none;
+        color: inherit; }
+  #TaskList .task-items .task-item {
+    margin-top: 1rem;
+    border: 0.0625rem solid #ccc;
+    border-radius: .25rem; }
+    #TaskList .task-items .task-item:first-child {
+      margin-top: 0; }
+  #TaskList .task-items .card-header {
+    cursor: pointer; }
+    #TaskList .task-items .card-header .fa-edit:hover {
+      color: #f0ad4e; }
+    #TaskList .task-items .card-header span.attribute {
+      display: inline-block;
+      padding: 0.25rem 0.4rem;
+      font-size: 75%;
+      line-height: 1;
+      white-space: nowrap;
+      vertical-align: baseline;
+      border-radius: 0.25rem;
+      color: white; }
+    #TaskList .task-items .card-header span.attribute.developer {
+      color: #55595c;
+      border: 0.0625rem solid #ccc; }
+  #TaskList .task-items .card-block {
+    padding: 1rem; }
 
 #NewBoard .dev-stages {
   margin-bottom: 3rem; }

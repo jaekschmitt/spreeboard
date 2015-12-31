@@ -135,10 +135,9 @@ exports.search = function(req, res, next) {
     var params = req.query,
         options = {
             criteria: {},
-            select: 'id title description stage priority size project board issue.iid created_at developer owner approved'
-        };
-
-    logger.crit(params);
+            select: 'id title description stage priority size project board issue.iid created_at created_by developer owner',
+            populate: { 'created_by': 'name email', 'developer': 'name email' }
+        };    
 
     if(params.board) options.criteria.board = params.board;
     if(params.status) options.criteria.status = params.status;

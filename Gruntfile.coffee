@@ -21,8 +21,9 @@ module.exports = (grunt) ->
                         'client/app/**/*.module.js'
                         'client/app/**/*.intr.js'
                         'client/app/**/*.svc.js'
-                        'client/app/**/*.ctrl.js'
+                        'client/app/**/*.ctrl.js'                        
                         'client/app/**/*.filter.js'
+                        'client/app/**/*.dir.js'
                     ]
                 vendor:
                     dest: 'client/public/dist/js/vendor.js'

@@ -72,7 +72,84 @@
 }
 
 #TaskList {
-    .filters {
-        margin: 0 3rem;
+    margin-top: -20px;
+
+    .action-bar {
+        margin-bottom: 1rem;
+    }
+
+    .task-filters {        
+
+        form {            
+            margin-bottom: 0;
+            padding: 1rem;
+        }
+
+        button {
+            margin-left: 2rem;
+        }
+    }
+
+    .task-items {        
+
+        h4 {
+            display: inline-block;
+            margin: 0;
+
+            font-size: 1.25rem;
+            
+            a {
+                text-decoration: none;
+                color: inherit;
+
+                &:hover {
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }            
+        }
+
+        .task-item {
+            margin-top: 1rem;            
+
+            border: $border-light;
+            border-radius: .25rem;            
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        .card-header {
+            cursor: pointer;
+
+            .fa-edit {
+
+                &:hover {
+                    color: $warning-color;
+                }
+            }
+
+            span.attribute {
+                display: inline-block;
+                padding: 0.25rem 0.4rem;
+
+                font-size: 75%;
+                line-height: 1;
+                white-space: nowrap;
+                vertical-align: baseline;                
+                border-radius: 0.25rem;
+                color: white;
+            }
+
+            span.attribute.developer {
+                color: $text-base;
+                border: $border-light;
+            }
+        }    
+
+        .card-block {
+            padding: 1rem;
+        }    
     }
 }

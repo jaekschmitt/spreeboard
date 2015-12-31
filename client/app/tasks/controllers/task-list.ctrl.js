@@ -4,11 +4,16 @@
         .module('main')
         .controller('taskListController', taskListController);
 
-    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices'];
+    taskListController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'authServices', 'taskServices', 'boardServices', 'userServices'];
 
-    function taskListController($scope, $routeParams, $location, toastr, _tasks, _boards, _users) {
+    function taskListController($scope, $routeParams, $location, toastr, _auth, _tasks, _boards, _users) {
 
         // properties
+
+        var roles = _auth.authentication.user.roles;
+        
+        $scope.isAdmin = roles.indexOf('admin') > -1;
+        $scope.isOwner = roles.indexOf('owner') > -1;
 
         $scope.tasks = [];
 
@@ -59,15 +64,12 @@
                                 .pluck('name')
                                 .uniq()
                                 .value();                
-
-                console.log(boards);
-                console.log(users);
                 
                 filters.developers = users.filter(function(u) { return u.roles.indexOf('developer') > -1; });
                 filters.owners = users.filter(function(u) { return u.roles.indexOf('owner') > -1; });
                 
                 $scope.filters = filters;
-                console.log($scope.filters);
+                applyFilters();                
             });
         }
 
