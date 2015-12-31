@@ -140,13 +140,20 @@ exports.search = function(req, res, next) {
         };    
 
     if(params.board) options.criteria.board = params.board;
-    if(params.status) options.criteria.status = params.status;
-    if(params.stage) options.criteria['stage.name'] = params.stage;
+    if(params.status) options.criteria.status = params.status;    
     if(params.size) options.criteria['size.name'] = params.size;
-    if(params.priority) options.criteria['priority.name'] = params.priority;
-
+    if(params.priority) options.criteria['priority.name'] = params.priority;    
+    
+    if(params.stage) {
+        if(params.stage === 'Backlog') options.criteria['stage'] = null;
+        else options.criteria['stage.name'] = params.stage;
+    }   
+        
     db.Task.list(options, function(err, tasks) {
-        if(err) return res.status(500).json(err);
+        if(err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
         res.status(200).json(tasks);
     });
 }

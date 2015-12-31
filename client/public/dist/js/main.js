@@ -1027,6 +1027,8 @@ angular.module('config', [])
                                 .pluck('name')
                                 .uniq()
                                 .value();
+                
+                filters.stages.unshift('Backlog');
 
                 filters.priorities = _.chain(boards)
                                     .pluck('priorities')
@@ -1065,6 +1067,8 @@ angular.module('config', [])
                     stage: filters.stage
                 };            
 
+
+            console.log(params);
             _storage.set(STORAGE_KEY, params);
             
             _tasks.searchTasks(params, function(err, results) {
