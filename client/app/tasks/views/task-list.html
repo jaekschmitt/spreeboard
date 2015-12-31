@@ -48,7 +48,7 @@
 
     <div class="results container-fluid">
         <div class="col-sm-4">
-            <p class="well">
+            <!-- <p class="well" ng-hide="filters.board">
                 Please select a board to get specific counts.
             </p>
             <div class="attr-counts" ng-show="filters.board">                
@@ -58,7 +58,7 @@
                         <span ng-repeat="(label, count) in filters" class="count"><strong>{{count}}</strong>{{label}}</span>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="col-sm-8">
             <task-list tasks="tasks" editable="isAdmin"/>
