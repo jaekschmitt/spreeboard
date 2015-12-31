@@ -121,7 +121,6 @@
             },
 
             image: function(src, rel, type) {
-                console.log(arguments);
                 return '<img class="col-xs-12" src="' + src + '"></img>';
             }
         });

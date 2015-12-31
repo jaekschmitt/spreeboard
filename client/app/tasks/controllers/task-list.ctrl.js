@@ -149,16 +149,12 @@
         }
 
         function gatherCounts(tasks, filters) {
-            console.log('gathering counts');
-
             var counts = {
                 sizes: countAttribute('size', filters.sizes, tasks),
                 priorities: countAttribute('priority', filters.priorities, tasks),
                 stages: countAttribute('stage', filters.stages, tasks)
             };
             
-            console.log(counts);
-
             return $scope.counts = counts;
         }
 

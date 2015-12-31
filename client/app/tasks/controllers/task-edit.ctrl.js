@@ -4,9 +4,9 @@
         .module('main')
         .controller('editTaskController', editTaskController);
 
-    editTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authServices'];
+    editTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'localStorageService', 'taskServices', 'boardServices', 'userServices', 'authServices'];
 
-    function editTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users, _auth) {
+    function editTaskController($scope, $routeParams, $location, toastr, _storage, _tasks, _boards, _users, _auth) {
 
         // properties
 
@@ -26,7 +26,7 @@
 
         function activate() {
             var board_id = $routeParams.board_id,
-                task_id = $routeParams.task_id;
+                task_id = $routeParams.task_id;            
 
             async.parallel({
                 board: function(cb) { return _boards.fetchBoardInfo(board_id, cb); },
@@ -57,7 +57,7 @@
                 if(err) return toastr.error(err);
 
                 toastr.success('Task updated!');
-                $location.path('/boards/' + $scope.board._id);
+                window.history.back();
             });          
         }
 
@@ -69,7 +69,7 @@
                 $scope.working = false;
 
                 if(err) return toastr.error(err);
-                $location.path('/boards/' + $scope.board._id);
+                window.history.back();
             });
         }
     }

@@ -125,7 +125,6 @@ angular.module('config', [])
             },
 
             image: function(src, rel, type) {
-                console.log(arguments);
                 return '<img class="col-xs-12" src="' + src + '"></img>';
             }
         });
@@ -898,9 +897,9 @@ angular.module('config', [])
         .module('main')
         .controller('editTaskController', editTaskController);
 
-    editTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'taskServices', 'boardServices', 'userServices', 'authServices'];
+    editTaskController.$inject = ['$scope', '$routeParams', '$location', 'toastr', 'localStorageService', 'taskServices', 'boardServices', 'userServices', 'authServices'];
 
-    function editTaskController($scope, $routeParams, $location, toastr, _tasks, _boards, _users, _auth) {
+    function editTaskController($scope, $routeParams, $location, toastr, _storage, _tasks, _boards, _users, _auth) {
 
         // properties
 
@@ -920,7 +919,7 @@ angular.module('config', [])
 
         function activate() {
             var board_id = $routeParams.board_id,
-                task_id = $routeParams.task_id;
+                task_id = $routeParams.task_id;            
 
             async.parallel({
                 board: function(cb) { return _boards.fetchBoardInfo(board_id, cb); },
@@ -951,7 +950,7 @@ angular.module('config', [])
                 if(err) return toastr.error(err);
 
                 toastr.success('Task updated!');
-                $location.path('/boards/' + $scope.board._id);
+                window.history.back();
             });          
         }
 
@@ -963,7 +962,7 @@ angular.module('config', [])
                 $scope.working = false;
 
                 if(err) return toastr.error(err);
-                $location.path('/boards/' + $scope.board._id);
+                window.history.back();
             });
         }
     }
@@ -1119,16 +1118,12 @@ angular.module('config', [])
         }
 
         function gatherCounts(tasks, filters) {
-            console.log('gathering counts');
-
             var counts = {
                 sizes: countAttribute('size', filters.sizes, tasks),
                 priorities: countAttribute('priority', filters.priorities, tasks),
                 stages: countAttribute('stage', filters.stages, tasks)
             };
             
-            console.log(counts);
-
             return $scope.counts = counts;
         }
 
